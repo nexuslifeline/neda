@@ -18,109 +18,6 @@ CREATE DATABASE `procure`
 
 USE `procure`;
 
-/* Structure for the `account_classes` table : */
-
-CREATE TABLE `account_classes` (
-  `account_class_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `account_class` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `description` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `account_type_id` INTEGER(11) DEFAULT 0,
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_modified` DATE DEFAULT '0000-00-00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `created_by_user` INTEGER(11) DEFAULT 0,
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`account_class_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=35 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `account_integration` table : */
-
-CREATE TABLE `account_integration` (
-  `integration_id` INTEGER(11) NOT NULL,
-  `input_tax_account_id` BIGINT(20) DEFAULT 0,
-  `payable_account_id` BIGINT(20) DEFAULT 0,
-  `payable_discount_account_id` BIGINT(20) DEFAULT 0,
-  `payment_to_supplier_id` BIGINT(20) DEFAULT 0,
-  `output_tax_account_id` BIGINT(20) DEFAULT 0,
-  `receivable_account_id` BIGINT(20) DEFAULT 0,
-  `receivable_discount_account_id` BIGINT(20) DEFAULT 0,
-  `payment_from_customer_id` BIGINT(20) DEFAULT 0,
-  `retained_earnings_id` BIGINT(20) DEFAULT 0,
-  `petty_cash_account_id` INTEGER(11) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`integration_id`)
-) ENGINE=InnoDB
-CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `account_titles` table : */
-
-CREATE TABLE `account_titles` (
-  `account_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `account_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `account_title` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `account_class_id` INTEGER(11) DEFAULT 0,
-  `parent_account_id` INTEGER(11) DEFAULT 0,
-  `grand_parent_id` INTEGER(11) DEFAULT 0,
-  `description` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `created_by_user` INTEGER(11) DEFAULT 0,
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`account_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=15 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `account_types` table : */
-
-CREATE TABLE `account_types` (
-  `account_type_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-  `account_type` VARCHAR(155) COLLATE latin1_swedish_ci DEFAULT '',
-  `description` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  PRIMARY KEY USING BTREE (`account_type_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=6 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `account_year` table : */
-
-CREATE TABLE `account_year` (
-  `account_year_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `account_year` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
-  `description` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `status` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `created_by_user` INTEGER(11) DEFAULT 0,
-  `date_closed` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `closed_by_user` INTEGER(11) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`account_year_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `accounting_period` table : */
-
-CREATE TABLE `accounting_period` (
-  `accounting_period_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `period_start` DATE DEFAULT '0000-00-00',
-  `period_end` DATE DEFAULT '0000-00-00',
-  `closed_by_user` BIGINT(20) DEFAULT 0,
-  `date_time_closed` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `remarks` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  PRIMARY KEY USING BTREE (`accounting_period_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
 /* Structure for the `adjustment_info` table : */
 
 CREATE TABLE `adjustment_info` (
@@ -144,7 +41,7 @@ CREATE TABLE `adjustment_info` (
   `is_deleted` BIT(1) DEFAULT 0,
   PRIMARY KEY USING BTREE (`adjustment_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `adjustment_items` table : */
@@ -166,7 +63,7 @@ CREATE TABLE `adjustment_items` (
   `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`adjustment_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `approval_status` table : */
@@ -182,56 +79,6 @@ CREATE TABLE `approval_status` (
 AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
-/* Structure for the `asset_property_status` table : */
-
-CREATE TABLE `asset_property_status` (
-  `asset_status_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-  `asset_property_status` VARCHAR(50) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `is_active` TINYINT(4) DEFAULT 1,
-  `is_deleted` TINYINT(4) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`asset_status_id`),
-  UNIQUE KEY `asset_property_id` USING BTREE (`asset_status_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=6 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `batch_info` table : */
-
-CREATE TABLE `batch_info` (
-  `batch_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `batch_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `date_replenished` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `replenished_by` INTEGER(11) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`batch_id`),
-  UNIQUE KEY `batch_id` USING BTREE (`batch_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `brands` table : */
-
-CREATE TABLE `brands` (
-  `brand_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `brand_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`brand_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `cards` table : */
-
-CREATE TABLE `cards` (
-  `card_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `card_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`card_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
 /* Structure for the `categories` table : */
 
 CREATE TABLE `categories` (
@@ -245,7 +92,7 @@ CREATE TABLE `categories` (
   `is_active` BIT(1) DEFAULT 1,
   PRIMARY KEY USING BTREE (`category_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=11 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=12 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `chat` table : */
@@ -263,50 +110,6 @@ CREATE TABLE `chat` (
 AUTO_INCREMENT=26 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
-/* Structure for the `check_layout` table : */
-
-CREATE TABLE `check_layout` (
-  `check_layout_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-  `check_layout` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `description` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `particular_pos_left` DECIMAL(20,0) DEFAULT 0,
-  `particular_pos_top` DECIMAL(20,0) DEFAULT 0,
-  `particular_font_family` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT 'Tahoma',
-  `particular_font_size` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '12pt',
-  `particular_is_italic` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'normal',
-  `particular_is_bold` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'bold',
-  `words_pos_left` DECIMAL(20,4) DEFAULT 0.0000,
-  `words_pos_top` DECIMAL(20,4) DEFAULT 0.0000,
-  `words_font_family` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT 'Tahoma',
-  `words_font_size` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '12pt',
-  `words_is_italic` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'normal',
-  `words_is_bold` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'bold',
-  `amount_pos_left` DECIMAL(20,4) DEFAULT 0.0000,
-  `amount_pos_top` DECIMAL(20,4) DEFAULT 0.0000,
-  `amount_font_family` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
-  `amount_font_size` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '12pt',
-  `amount_is_italic` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'normal',
-  `amount_is_bold` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT 'bold',
-  `date_pos_left` DECIMAL(20,4) DEFAULT 0.0000,
-  `date_pos_top` DECIMAL(20,4) DEFAULT 0.0000,
-  `date_font_family` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
-  `date_font_size` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '12pt',
-  `date_is_italic` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'normal',
-  `date_is_bold` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'bold',
-  `is_portrait` BIT(1) DEFAULT 1,
-  `posted_by_user` BIGINT(20) DEFAULT 0,
-  `date_posted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `modified_by_user` BIGINT(20) DEFAULT 0,
-  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `deleted_by_user` BIGINT(20) DEFAULT 0,
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`check_layout_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
 /* Structure for the `company_info` table : */
 
 CREATE TABLE `company_info` (
@@ -321,49 +124,6 @@ CREATE TABLE `company_info` (
   `registered_to` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
   `logo_path` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`company_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `customer_photos` table : */
-
-CREATE TABLE `customer_photos` (
-  `photo_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-  `customer_id` INTEGER(11) DEFAULT 0,
-  `photo_path` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-  PRIMARY KEY USING BTREE (`photo_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=30 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `customers` table : */
-
-CREATE TABLE `customers` (
-  `customer_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `customer_code` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT '',
-  `customer_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT '',
-  `contact_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT '',
-  `address` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT '',
-  `email_address` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT '',
-  `contact_no` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
-  `term` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
-  `department_id` BIGINT(20) DEFAULT 0,
-  `link_department_id` INTEGER(11) DEFAULT 0,
-  `refcustomertype_id` BIGINT(20) DEFAULT 0,
-  `tin_no` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
-  `photo_path` VARCHAR(500) COLLATE latin1_swedish_ci DEFAULT '',
-  `total_receivable_amount` DECIMAL(19,2) DEFAULT 0.00,
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `posted_by_user` INTEGER(11) DEFAULT 0,
-  `credit_limit` DECIMAL(20,4) DEFAULT 0.0000,
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_paid` BIT(1) DEFAULT 0,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`customer_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
@@ -403,7 +163,7 @@ CREATE TABLE `delivery_invoice` (
   PRIMARY KEY USING BTREE (`dr_invoice_id`),
   UNIQUE KEY `dr_invoice_no` USING BTREE (`dr_invoice_no`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=6 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `delivery_invoice_items` table : */
@@ -425,7 +185,7 @@ CREATE TABLE `delivery_invoice_items` (
   `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`dr_invoice_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=7 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=8 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `departments` table : */
@@ -444,89 +204,6 @@ CREATE TABLE `departments` (
   PRIMARY KEY USING BTREE (`department_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `discounts` table : */
-
-CREATE TABLE `discounts` (
-  `discount_id` BIGINT(100) NOT NULL AUTO_INCREMENT,
-  `discount_code` BIGINT(100) DEFAULT NULL,
-  `discount_type` VARCHAR(200) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `discount_desc` VARCHAR(200) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `discount_percent` BIGINT(100) DEFAULT NULL,
-  `discount_amount` BIGINT(100) DEFAULT NULL,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`discount_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `fixed_assets` table : */
-
-CREATE TABLE `fixed_assets` (
-  `fixed_asset_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `asset_code` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
-  `asset_description` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
-  `serial_no` VARCHAR(155) COLLATE latin1_swedish_ci DEFAULT '',
-  `location_id` INTEGER(11) DEFAULT 0,
-  `department_id` INTEGER(11) DEFAULT 0,
-  `category_id` INTEGER(11) DEFAULT 0,
-  `acquisition_cost` DECIMAL(20,4) DEFAULT 0.0000,
-  `salvage_value` DECIMAL(20,4) DEFAULT 0.0000,
-  `life_years` INTEGER(11) DEFAULT 0,
-  `asset_status_id` INTEGER(11) DEFAULT 0,
-  `date_acquired` DATE DEFAULT '0000-00-00',
-  `remarks` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `date_posted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `posted_by_user` INTEGER(11) DEFAULT 0,
-  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_deleted` TINYINT(1) DEFAULT 0,
-  `is_active` TINYINT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`fixed_asset_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=12 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `generics` table : */
-
-CREATE TABLE `generics` (
-  `generic_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `generic_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`generic_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `giftcards` table : */
-
-CREATE TABLE `giftcards` (
-  `giftcard_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `giftcard_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`giftcard_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `invoice_counter` table : */
-
-CREATE TABLE `invoice_counter` (
-  `counter_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
-  `user_id` INTEGER(11) DEFAULT NULL,
-  `counter_start` BIGINT(20) DEFAULT 0,
-  `counter_end` BIGINT(20) DEFAULT 0,
-  `last_invoice` BIGINT(20) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`counter_id`),
-  UNIQUE KEY `user_id` USING BTREE (`user_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=17 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `issuance_info` table : */
@@ -555,7 +232,7 @@ CREATE TABLE `issuance_info` (
   `terms` VARCHAR(50) COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY USING BTREE (`issuance_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `issuance_items` table : */
@@ -578,7 +255,7 @@ CREATE TABLE `issuance_items` (
   `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`issuance_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `item_types` table : */
@@ -592,93 +269,6 @@ CREATE TABLE `item_types` (
   PRIMARY KEY USING BTREE (`item_type_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `journal_accounts` table : */
-
-CREATE TABLE `journal_accounts` (
-  `journal_account_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `journal_id` BIGINT(20) DEFAULT 0,
-  `account_id` INTEGER(11) DEFAULT 0,
-  `memo` VARCHAR(700) COLLATE latin1_swedish_ci DEFAULT '',
-  `dr_amount` DECIMAL(25,2) DEFAULT 0.00,
-  `cr_amount` DECIMAL(25,2) DEFAULT 0.00,
-  PRIMARY KEY USING BTREE (`journal_account_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `journal_entry_templates` table : */
-
-CREATE TABLE `journal_entry_templates` (
-  `entry_template_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `template_id` BIGINT(20) DEFAULT 0,
-  `account_id` BIGINT(20) DEFAULT 0,
-  `memo` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `dr_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `cr_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  PRIMARY KEY USING BTREE (`entry_template_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `journal_info` table : */
-
-CREATE TABLE `journal_info` (
-  `journal_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `txn_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
-  `department_id` INTEGER(11) DEFAULT 0,
-  `customer_id` INTEGER(11) DEFAULT 0,
-  `supplier_id` INTEGER(11) DEFAULT 0,
-  `remarks` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
-  `book_type` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '',
-  `date_txn` DATE DEFAULT '0000-00-00',
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `created_by_user` INTEGER(11) DEFAULT 0,
-  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `modified_by_user` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `date_cancelled` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `cancelled_by_user` INTEGER(11) DEFAULT 0,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `payment_method_id` INTEGER(11) DEFAULT 0,
-  `bank` VARCHAR(10) COLLATE latin1_swedish_ci DEFAULT '',
-  `check_no` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '',
-  `check_date` DATE DEFAULT '0000-00-00',
-  `ref_type` VARCHAR(4) COLLATE latin1_swedish_ci DEFAULT '',
-  `ref_no` VARCHAR(15) COLLATE latin1_swedish_ci DEFAULT '',
-  `amount` DECIMAL(10,2) DEFAULT 0.00,
-  `or_no` VARCHAR(50) COLLATE latin1_swedish_ci DEFAULT '',
-  `check_status` TINYINT(4) DEFAULT 0,
-  `accounting_period_id` BIGINT(20) DEFAULT 0,
-  `is_replenished` TINYINT(1) DEFAULT 0,
-  `batch_id` INTEGER(11) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`journal_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `journal_templates_info` table : */
-
-CREATE TABLE `journal_templates_info` (
-  `template_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `template_code` VARCHAR(155) COLLATE latin1_swedish_ci DEFAULT '',
-  `payee` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `template_description` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `supplier_id` BIGINT(20) DEFAULT 0,
-  `customer_id` BIGINT(20) DEFAULT 0,
-  `method_id` BIGINT(20) DEFAULT 0,
-  `amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `remarks` VARCHAR(1000) COLLATE latin1_swedish_ci DEFAULT '',
-  `posted_by` INTEGER(11) DEFAULT NULL,
-  `book_type` VARCHAR(5) COLLATE latin1_swedish_ci DEFAULT '',
-  `is_active` TINYINT(1) DEFAULT 1,
-  `is_deleted` TINYINT(1) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`template_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `locations` table : */
@@ -717,62 +307,6 @@ CREATE TABLE `order_status` (
   PRIMARY KEY USING BTREE (`order_status_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `other_sales_invoice` table : */
-
-CREATE TABLE `other_sales_invoice` (
-  `sales_invoice_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sales_inv_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `sales_order_id` BIGINT(20) DEFAULT 0,
-  `sales_order_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `department_id` INTEGER(11) DEFAULT 0,
-  `customer_id` INTEGER(11) DEFAULT 0,
-  `journal_id` BIGINT(20) DEFAULT 0,
-  `remarks` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `total_discount` DECIMAL(20,2) DEFAULT 0.00,
-  `total_before_tax` DECIMAL(20,2) DEFAULT 0.00,
-  `total_tax_amount` DECIMAL(20,2) DEFAULT 0.00,
-  `total_after_tax` DECIMAL(20,2) DEFAULT 0.00,
-  `date_due` DATE DEFAULT '0000-00-00',
-  `date_invoice` DATE DEFAULT '0000-00-00',
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `posted_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `is_paid` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_journal_posted` BIT(1) DEFAULT 0,
-  `ref_product_type_id` INTEGER(11) DEFAULT NULL,
-  PRIMARY KEY USING BTREE (`sales_invoice_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `other_sales_invoice_items` table : */
-
-CREATE TABLE `other_sales_invoice_items` (
-  `sales_item_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sales_invoice_id` BIGINT(20) DEFAULT 0,
-  `product_id` INTEGER(11) DEFAULT 0,
-  `unit_id` INTEGER(11) DEFAULT 0,
-  `inv_price` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_discount` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_line_total_discount` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_tax_rate` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_qty` DECIMAL(20,0) DEFAULT 0,
-  `inv_line_total_price` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_tax_amount` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_non_tax_amount` DECIMAL(20,2) DEFAULT 0.00,
-  `inv_notes` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `dr_invoice_id` INTEGER(11) DEFAULT NULL,
-  `exp_date` DATE DEFAULT NULL,
-  PRIMARY KEY USING BTREE (`sales_item_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=93 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `payable_payments` table : */
@@ -858,21 +392,7 @@ CREATE TABLE `po_messages` (
   `is_deleted` BIT(1) DEFAULT 0,
   PRIMARY KEY USING BTREE (`po_message_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=111 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `product_batch_inventory` table : */
-
-CREATE TABLE `product_batch_inventory` (
-  `product_key` VARCHAR(100) COLLATE latin1_swedish_ci NOT NULL,
-  `product_id` BIGINT(20) DEFAULT 0,
-  `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
-  `exp_date` DATE DEFAULT '0000-00-00',
-  `batch_exp_on_hand` DECIMAL(20,2) DEFAULT 0.00,
-  PRIMARY KEY USING BTREE (`product_key`),
-  UNIQUE KEY `product_key` USING BTREE (`product_key`)
-) ENGINE=InnoDB
-CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=112 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `products` table : */
@@ -921,7 +441,7 @@ CREATE TABLE `products` (
   `is_active` BIT(1) DEFAULT 1,
   PRIMARY KEY USING BTREE (`product_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=6 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order` table : */
@@ -958,7 +478,7 @@ CREATE TABLE `purchase_order` (
   UNIQUE KEY `po_no` USING BTREE (`po_no`),
   UNIQUE KEY `po_no_2` USING BTREE (`po_no`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=5 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order_items` table : */
@@ -978,67 +498,7 @@ CREATE TABLE `purchase_order_items` (
   `non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
   PRIMARY KEY USING BTREE (`po_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `receivable_payments` table : */
-
-CREATE TABLE `receivable_payments` (
-  `payment_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `receipt_no` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '',
-  `customer_id` INTEGER(11) DEFAULT 0,
-  `journal_id` BIGINT(20) DEFAULT 0,
-  `receipt_type` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT 'AR',
-  `department_id` INTEGER(11) DEFAULT 0,
-  `payment_method_id` INTEGER(11) DEFAULT 0,
-  `check_date_type` TINYINT(4) DEFAULT 1 COMMENT '1 is Date, 2 is PDC',
-  `check_date` DATE DEFAULT '0000-00-00',
-  `check_no` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
-  `remarks` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `total_paid_amount` DECIMAL(20,2) DEFAULT 0.00,
-  `date_paid` DATE DEFAULT '0000-00-00',
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_cancelled` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `cancelled_by_user` INTEGER(11) DEFAULT 0,
-  `created_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_journal_posted` BIT(1) DEFAULT 0,
-  `is_posted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`payment_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `receivable_payments_list` table : */
-
-CREATE TABLE `receivable_payments_list` (
-  `payment_list_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `payment_id` BIGINT(20) DEFAULT 0,
-  `sales_invoice_id` BIGINT(20) DEFAULT 0,
-  `receivable_amount` DECIMAL(20,2) DEFAULT 0.00,
-  `payment_amount` DECIMAL(20,2) DEFAULT 0.00,
-  PRIMARY KEY USING BTREE (`payment_list_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `refcustomertype` table : */
-
-CREATE TABLE `refcustomertype` (
-  `refcustomertype_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `customer_type` VARCHAR(255) COLLATE latin1_swedish_ci NOT NULL,
-  `description` VARCHAR(255) COLLATE latin1_swedish_ci NOT NULL,
-  `created_by_user_id` INTEGER(11) NOT NULL,
-  `modified_by_user_id` INTEGER(11) NOT NULL,
-  `date_created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `is_deleted` TINYINT(1) NOT NULL,
-  PRIMARY KEY USING BTREE (`refcustomertype_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=8 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `refproduct` table : */
@@ -1057,6 +517,50 @@ CREATE TABLE `refproduct` (
 AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
+/* Structure for the `requisition_info` table : */
+
+CREATE TABLE `requisition_info` (
+  `requisition_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
+  `requisition_no` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
+  `department_id` INTEGER(11) DEFAULT 0,
+  `purpose` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
+  `center_code` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
+  `fund_cluster` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
+  `remarks` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
+  `created_by_user` INTEGER(11) DEFAULT 0,
+  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
+  `deleted_by_user` INTEGER(11) DEFAULT 0,
+  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
+  `modified_by_user` INTEGER(11) DEFAULT 0,
+  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
+  `status` TINYINT(4) DEFAULT 1 COMMENT '0-closed, 1-open',
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  PRIMARY KEY USING BTREE (`requisition_id`)
+) ENGINE=InnoDB
+AUTO_INCREMENT=8 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+;
+
+/* Structure for the `requisition_items` table : */
+
+CREATE TABLE `requisition_items` (
+  `req_item_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `requisition_id` BIGINT(20) DEFAULT 0,
+  `product_id` INTEGER(11) DEFAULT 0,
+  `unit_id` INTEGER(11) DEFAULT 0,
+  `req_qty` DECIMAL(10,0) DEFAULT 0,
+  `req_cost` DECIMAL(10,0) DEFAULT 0,
+  `req_discount` DECIMAL(10,0) DEFAULT 0,
+  `req_line_total_discount` DECIMAL(10,0) DEFAULT 0,
+  `req_tax_rate` DECIMAL(10,0) DEFAULT 0,
+  `req_line_total` DECIMAL(10,0) DEFAULT 0,
+  `tax_amount` DECIMAL(10,0) DEFAULT 0,
+  `non_tax_amount` DECIMAL(10,0) DEFAULT 0,
+  PRIMARY KEY USING BTREE (`req_item_id`)
+) ENGINE=InnoDB
+AUTO_INCREMENT=17 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+;
+
 /* Structure for the `rights_links` table : */
 
 CREATE TABLE `rights_links` (
@@ -1066,123 +570,7 @@ CREATE TABLE `rights_links` (
   `link_name` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`link_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=51 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `sales_invoice` table : */
-
-CREATE TABLE `sales_invoice` (
-  `sales_invoice_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sales_inv_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `sales_order_id` BIGINT(20) DEFAULT 0,
-  `sales_order_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `department_id` INTEGER(11) DEFAULT 0,
-  `issue_to_department` INTEGER(11) DEFAULT 0,
-  `customer_id` INTEGER(11) DEFAULT 0,
-  `journal_id` BIGINT(20) DEFAULT 0,
-  `terms` INTEGER(11) DEFAULT 0,
-  `remarks` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `total_discount` DECIMAL(20,4) DEFAULT 0.0000,
-  `total_before_tax` DECIMAL(20,4) DEFAULT 0.0000,
-  `total_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `total_after_tax` DECIMAL(20,4) DEFAULT 0.0000,
-  `date_due` DATE DEFAULT '0000-00-00',
-  `date_invoice` DATE DEFAULT '0000-00-00',
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  `posted_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `is_paid` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_journal_posted` BIT(1) DEFAULT 0,
-  `ref_product_type_id` INTEGER(11) DEFAULT 0,
-  `inv_type` INTEGER(11) DEFAULT 1,
-  `salesperson_id` INTEGER(11) DEFAULT 0,
-  `address` VARCHAR(150) COLLATE latin1_swedish_ci DEFAULT '',
-  PRIMARY KEY USING BTREE (`sales_invoice_id`),
-  UNIQUE KEY `sales_inv_no` USING BTREE (`sales_inv_no`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `sales_invoice_items` table : */
-
-CREATE TABLE `sales_invoice_items` (
-  `sales_item_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sales_invoice_id` BIGINT(20) DEFAULT 0,
-  `product_id` INTEGER(11) DEFAULT 0,
-  `unit_id` INTEGER(11) DEFAULT 0,
-  `inv_price` DECIMAL(20,4) DEFAULT 0.0000,
-  `orig_so_price` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_discount` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_line_total_discount` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_tax_rate` DECIMAL(20,4) DEFAULT 0.0000,
-  `cost_upon_invoice` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_qty` DECIMAL(20,0) DEFAULT 0,
-  `inv_line_total_price` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `inv_notes` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `dr_invoice_id` INTEGER(11) DEFAULT NULL,
-  `exp_date` DATE DEFAULT '0000-00-00',
-  `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
-  PRIMARY KEY USING BTREE (`sales_item_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `sales_order` table : */
-
-CREATE TABLE `sales_order` (
-  `sales_order_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `so_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
-  `customer_id` BIGINT(20) DEFAULT 0,
-  `department_id` INTEGER(11) DEFAULT 0,
-  `remarks` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
-  `total_discount` DECIMAL(20,2) DEFAULT 0.00,
-  `total_before_tax` DECIMAL(20,2) DEFAULT 0.00,
-  `total_after_tax` DECIMAL(20,2) DEFAULT 0.00,
-  `total_tax_amount` DECIMAL(20,2) DEFAULT 0.00,
-  `order_status_id` INTEGER(11) DEFAULT 1,
-  `date_order` DATE DEFAULT '0000-00-00',
-  `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `date_deleted` DATETIME DEFAULT NULL,
-  `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `posted_by_user` INTEGER(11) DEFAULT 0,
-  `modified_by_user` INTEGER(11) DEFAULT 0,
-  `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `salesperson_id` INTEGER(11) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`sales_order_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `sales_order_items` table : */
-
-CREATE TABLE `sales_order_items` (
-  `sales_order_item_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `sales_order_id` BIGINT(20) DEFAULT NULL,
-  `product_id` INTEGER(11) DEFAULT 0,
-  `unit_id` INTEGER(11) DEFAULT NULL,
-  `so_qty` DECIMAL(20,0) DEFAULT 0,
-  `so_price` DECIMAL(20,4) DEFAULT 0.0000,
-  `so_discount` DECIMAL(20,4) DEFAULT 0.0000,
-  `so_line_total_discount` DECIMAL(20,4) DEFAULT 0.0000,
-  `so_tax_rate` DECIMAL(20,4) DEFAULT 0.0000,
-  `so_line_total_price` DECIMAL(20,4) DEFAULT 0.0000,
-  `so_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `so_non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
-  `exp_date` DATE DEFAULT '0000-00-00',
-  `dr_invoice_id` INTEGER(11) DEFAULT NULL,
-  `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
-  PRIMARY KEY USING BTREE (`sales_order_item_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=52 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `salesperson` table : */
@@ -1205,18 +593,6 @@ CREATE TABLE `salesperson` (
   PRIMARY KEY USING BTREE (`salesperson_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
-;
-
-/* Structure for the `sched_expense_integration` table : */
-
-CREATE TABLE `sched_expense_integration` (
-  `sched_expense_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `account_id` BIGINT(20) DEFAULT 0,
-  `group_id` INTEGER(11) DEFAULT 0,
-  PRIMARY KEY USING BTREE (`sched_expense_id`),
-  UNIQUE KEY `account_id` USING BTREE (`account_id`)
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `supplier_photos` table : */
@@ -1254,7 +630,7 @@ CREATE TABLE `suppliers` (
   `is_active` BIT(1) DEFAULT 1,
   PRIMARY KEY USING BTREE (`supplier_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `tax_types` table : */
@@ -1315,7 +691,7 @@ CREATE TABLE `user_accounts` (
   `is_online` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`user_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=32 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=34 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `user_group_rights` table : */
@@ -1326,7 +702,7 @@ CREATE TABLE `user_group_rights` (
   `link_code` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`user_rights_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=231 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=234 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `user_groups` table : */
@@ -1341,93 +717,19 @@ CREATE TABLE `user_groups` (
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY USING BTREE (`user_group_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=7 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=9 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
-/* Data for the `account_classes` table  (LIMIT 0,500) */
+/* Data for the `adjustment_info` table  (LIMIT 0,500) */
 
-INSERT INTO `account_classes` (`account_class_id`, `account_class`, `description`, `account_type_id`, `date_created`, `date_modified`, `date_deleted`, `created_by_user`, `modified_by_user`, `deleted_by_user`, `is_active`, `is_deleted`) VALUES
-  (1,'Current Assets','',1,'0000-00-00 00:00:00','0000-00-00','0000-00-00 00:00:00',0,0,0,1,0),
-  (2,'Non-Current Assets','',1,'0000-00-00 00:00:00','0000-00-00','0000-00-00 00:00:00',0,0,0,1,0),
-  (3,'Current Liabilities','',2,'0000-00-00 00:00:00','0000-00-00','0000-00-00 00:00:00',0,0,0,1,0),
-  (4,'Long-term Liabilities','',2,'0000-00-00 00:00:00','0000-00-00','0000-00-00 00:00:00',0,0,0,1,0),
-  (5,'Owners Equity','',3,'0000-00-00 00:00:00','0000-00-00','0000-00-00 00:00:00',0,0,0,1,0),
-  (6,'Selling Expenses','',5,'0000-00-00 00:00:00','2017-02-04','0000-00-00 00:00:00',0,19,0,1,0),
-  (7,'Income','',4,'0000-00-00 00:00:00','0000-00-00','0000-00-00 00:00:00',0,0,0,1,0),
-  (8,'Non-Current Assets','',1,'2016-09-23 14:44:53','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (9,'Property, Plant and Equipment','',1,'2016-11-29 10:23:07','2016-12-09','0000-00-00 00:00:00',1,1,0,1,0),
-  (10,'Other Asset','',1,'2016-11-29 10:44:09','0000-00-00','0000-00-00 00:00:00',1,0,0,1,0),
-  (11,'Contra Asset','',1,'2016-11-29 10:47:36','2016-12-09','0000-00-00 00:00:00',1,1,0,1,0),
-  (12,'COS','',5,'2016-11-29 11:26:03','2016-12-15','0000-00-00 00:00:00',1,1,0,1,0),
-  (13,'General and Administrative Expenses','',5,'2016-11-29 11:27:53','0000-00-00','0000-00-00 00:00:00',1,0,0,1,0),
-  (14,'','',NULL,'2016-12-08 17:39:51','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (15,'Test','test',3,'2016-12-09 11:31:27','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (16,'test','test',4,'2016-12-09 11:36:27','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (17,'Test','',NULL,'2016-12-09 12:23:18','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (18,'Test Income','',4,'2016-12-09 12:29:15','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (19,'Test Asset','',1,'2016-12-09 12:33:30','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (20,'test','test',3,'2016-12-09 13:15:31','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (21,'123','',3,'2016-12-09 13:16:10','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (22,'test','',3,'2016-12-09 13:20:03','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (23,'Test3','',3,'2016-12-09 13:21:59','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (24,'test','',5,'2016-12-09 13:23:05','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (25,'text','',3,'2016-12-09 13:36:48','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (26,'gs','',1,'2016-12-09 13:37:35','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (27,'asdsad','',3,'2016-12-09 13:38:17','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (28,'test','',3,'2016-12-09 13:40:18','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (29,'Test','',4,'2016-12-09 13:46:43','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (30,'JK testst','',2,'2016-12-09 13:48:11','2016-12-09','0000-00-00 00:00:00',1,1,0,1,1),
-  (31,'DamDam','',4,'2016-12-09 13:50:17','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (32,'Ice Plant','',3,'2016-12-09 13:50:57','0000-00-00','0000-00-00 00:00:00',1,0,0,1,1),
-  (33,'Operating Expenses','',5,'2017-02-14 16:17:49','2017-02-14','0000-00-00 00:00:00',19,19,0,1,0),
-  (34,'c','c',1,'2017-06-16 15:27:08','0000-00-00','0000-00-00 00:00:00',12,0,0,1,0);
+INSERT INTO `adjustment_info` (`adjustment_id`, `adjustment_code`, `department_id`, `remarks`, `adjustment_type`, `total_discount`, `total_before_tax`, `total_after_tax`, `total_tax_amount`, `date_adjusted`, `date_created`, `date_modified`, `date_deleted`, `posted_by_user`, `modified_by_user`, `deleted_by_user`, `is_active`, `is_deleted`) VALUES
+  (1,'ADJ-20170817-1',1,'ddd','OUT',0.00,1000.00,1000.00,0.00,'2017-08-17','2017-08-17 21:27:44','2017-08-17 21:28:02',NULL,1,1,0,1,0);
 COMMIT;
 
-/* Data for the `account_integration` table  (LIMIT 0,500) */
+/* Data for the `adjustment_items` table  (LIMIT 0,500) */
 
-INSERT INTO `account_integration` (`integration_id`, `input_tax_account_id`, `payable_account_id`, `payable_discount_account_id`, `payment_to_supplier_id`, `output_tax_account_id`, `receivable_account_id`, `receivable_discount_account_id`, `payment_from_customer_id`, `retained_earnings_id`, `petty_cash_account_id`) VALUES
-  (1,10,4,12,1,11,2,12,1,5,13);
-COMMIT;
-
-/* Data for the `account_titles` table  (LIMIT 0,500) */
-
-INSERT INTO `account_titles` (`account_id`, `account_no`, `account_title`, `account_class_id`, `parent_account_id`, `grand_parent_id`, `description`, `date_created`, `date_modified`, `date_deleted`, `created_by_user`, `modified_by_user`, `deleted_by_user`, `is_active`, `is_deleted`) VALUES
-  (1,'101','Cash',1,0,1,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (2,'120','Account Receivable',1,0,2,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (3,'140','Inventory',1,0,3,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (4,'210','Accounts Payable',3,0,4,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (5,'300','Capital',5,0,5,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (6,'400','Sales Income',7,0,6,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (7,'410','Service Income',7,0,7,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (8,'500','Salaries Expense',6,0,8,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (9,'510','Supplies Expense',6,0,9,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (10,'150','Input Tax',1,0,10,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (11,'220','Output Tax',3,0,4,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (12,'510','Miscellaneous Expense',6,0,12,'','0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,0,0,1,0),
-  (13,'160','Petty Cash',1,0,13,'','2017-04-19 14:42:10','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0),
-  (14,'f','f',1,1,1,'','2017-06-16 15:36:37','0000-00-00 00:00:00','0000-00-00 00:00:00',12,0,0,1,0);
-COMMIT;
-
-/* Data for the `account_types` table  (LIMIT 0,500) */
-
-INSERT INTO `account_types` (`account_type_id`, `account_type`, `description`) VALUES
-  (1,'Asset',''),
-  (2,'Liability',''),
-  (3,'Capital',''),
-  (4,'Income',''),
-  (5,'Expense','');
-COMMIT;
-
-/* Data for the `account_year` table  (LIMIT 0,500) */
-
-INSERT INTO `account_year` (`account_year_id`, `account_year`, `description`, `status`, `date_created`, `created_by_user`, `date_closed`, `closed_by_user`) VALUES
-  (1,'2016','',NULL,'0000-00-00 00:00:00',0,'0000-00-00 00:00:00',0);
-COMMIT;
-
-/* Data for the `accounting_period` table  (LIMIT 0,500) */
-
-INSERT INTO `accounting_period` (`accounting_period_id`, `period_start`, `period_end`, `closed_by_user`, `date_time_closed`, `remarks`) VALUES
-  (1,'2017-06-16','2017-06-19',12,'2017-06-19 09:40:45','test');
+INSERT INTO `adjustment_items` (`adjustment_item_id`, `adjustment_id`, `product_id`, `unit_id`, `adjust_qty`, `adjust_price`, `adjust_discount`, `adjust_tax_rate`, `adjust_line_total_price`, `adjust_line_total_discount`, `adjust_tax_amount`, `adjust_non_tax_amount`, `exp_date`, `batch_no`) VALUES
+  (2,1,1,3,2,500.0000,0.0000,0.0000,1000.0000,0.0000,0.0000,1000.0000,'0000-00-00','');
 COMMIT;
 
 /* Data for the `approval_status` table  (LIMIT 0,500) */
@@ -1435,31 +737,6 @@ COMMIT;
 INSERT INTO `approval_status` (`approval_id`, `approval_status`, `approval_description`, `is_active`, `is_deleted`) VALUES
   (1,'Approved','',1,0),
   (2,'Pending','',1,0);
-COMMIT;
-
-/* Data for the `asset_property_status` table  (LIMIT 0,500) */
-
-INSERT INTO `asset_property_status` (`asset_status_id`, `asset_property_status`, `is_active`, `is_deleted`) VALUES
-  (1,'Active',1,0),
-  (2,'Inactive',1,0),
-  (3,'Obsolete',1,0),
-  (4,'Lost',1,0),
-  (5,'Damage',1,0);
-COMMIT;
-
-/* Data for the `batch_info` table  (LIMIT 0,500) */
-
-INSERT INTO `batch_info` (`batch_id`, `batch_no`, `date_replenished`, `replenished_by`) VALUES
-  (1,'PCVB-20170424-1','2017-04-24 12:33:40',1),
-  (2,'PCVB-20170424-2','2017-04-24 12:42:12',1),
-  (3,'PCVB-20170424-3','2017-04-24 12:55:24',1);
-COMMIT;
-
-/* Data for the `brands` table  (LIMIT 0,500) */
-
-INSERT INTO `brands` (`brand_id`, `brand_name`, `is_deleted`, `is_active`) VALUES
-  (2,'FFF',0,0),
-  (3,'ddd',0,1);
 COMMIT;
 
 /* Data for the `categories` table  (LIMIT 0,500) */
@@ -1474,7 +751,8 @@ INSERT INTO `categories` (`category_id`, `category_code`, `category_name`, `cate
   (7,NULL,'Office Supplies','',NULL,'0000-00-00 00:00:00',0,1),
   (8,NULL,'Computers','',NULL,'0000-00-00 00:00:00',0,1),
   (9,NULL,'xx','xx',NULL,'0000-00-00 00:00:00',0,1),
-  (10,NULL,'xx','xx',NULL,'0000-00-00 00:00:00',0,1);
+  (10,NULL,'xx','xx',NULL,'0000-00-00 00:00:00',0,1),
+  (11,NULL,'category','1',NULL,'0000-00-00 00:00:00',0,1);
 COMMIT;
 
 /* Data for the `chat` table  (LIMIT 0,500) */
@@ -1513,54 +791,25 @@ INSERT INTO `company_info` (`company_id`, `company_name`, `company_address`, `em
   (1,'National Economic and Development Authority Regional Office III','Diosdado Macapagal Government Center, Maimpis, City of San Fernando, Pampanga','nedaregion3@gmail.com','0935-746-7611','(045) 322-3542','1234-5678-91112',2,'','assets/img/company/598fd89a4c6c1.jpg');
 COMMIT;
 
-/* Data for the `customer_photos` table  (LIMIT 0,500) */
-
-INSERT INTO `customer_photos` (`photo_id`, `customer_id`, `photo_path`) VALUES
-  (2,2,NULL),
-  (4,2,NULL),
-  (5,3,NULL),
-  (6,4,NULL),
-  (7,5,NULL),
-  (8,6,NULL),
-  (9,7,NULL),
-  (10,8,NULL),
-  (11,9,NULL),
-  (13,2,NULL),
-  (14,3,'assets/img/anonymous-icon.png'),
-  (15,4,'assets/img/anonymous-icon.png'),
-  (16,5,'assets/img/anonymous-icon.png'),
-  (17,6,'assets/img/anonymous-icon.png'),
-  (18,7,'assets/img/anonymous-icon.png'),
-  (19,8,'assets/img/anonymous-icon.png'),
-  (20,9,'assets/img/anonymous-icon.png'),
-  (21,10,'assets/img/anonymous-icon.png'),
-  (22,11,'assets/img/anonymous-icon.png'),
-  (24,2,'assets/img/anonymous-icon.png'),
-  (25,3,'assets/img/anonymous-icon.png'),
-  (26,4,'assets/img/anonymous-icon.png'),
-  (28,1,'assets/img/customer/5943883821785.png'),
-  (29,1,NULL);
-COMMIT;
-
-/* Data for the `customers` table  (LIMIT 0,500) */
-
-INSERT INTO `customers` (`customer_id`, `customer_code`, `customer_name`, `contact_name`, `address`, `email_address`, `contact_no`, `term`, `department_id`, `link_department_id`, `refcustomertype_id`, `tin_no`, `photo_path`, `total_receivable_amount`, `date_created`, `date_modified`, `date_deleted`, `posted_by_user`, `credit_limit`, `modified_by_user`, `deleted_by_user`, `is_paid`, `is_deleted`, `is_active`) VALUES
-  (1,'','d','d','d','',NULL,NULL,NULL,0,NULL,NULL,NULL,0.00,'2017-06-19 14:08:48','0000-00-00 00:00:00','0000-00-00 00:00:00',12,NULL,0,0,0,0,1);
-COMMIT;
-
 /* Data for the `delivery_invoice` table  (LIMIT 0,500) */
 
 INSERT INTO `delivery_invoice` (`dr_invoice_id`, `dr_invoice_no`, `purchase_order_id`, `external_ref_no`, `contact_person`, `terms`, `duration`, `supplier_id`, `department_id`, `tax_type_id`, `journal_id`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `is_active`, `is_deleted`, `is_paid`, `is_journal_posted`, `date_due`, `date_delivered`, `date_created`, `date_modified`, `date_deleted`, `posted_by_user`, `modified_by_user`, `deleted_by_user`, `batch_no`) VALUES
-  (1,'P-INV-20170616-1',0,'','','','',2,3,2,1,'remarks',0.0000,3928.5714,471.4286,4400.0000,1,0,0,1,'2017-06-16','2017-06-16','2017-06-16 17:14:00','2017-06-16 17:15:01','0000-00-00 00:00:00',12,0,0,NULL),
-  (2,'P-INV-20170619-2',0,'','SH','','',2,2,1,0,'ddd',0.0000,1914.2900,85.7100,2000.0000,1,0,0,0,'2017-06-19','2017-06-19','2017-06-19 09:44:42','2017-06-19 09:47:12','0000-00-00 00:00:00',12,12,0,NULL);
+  (1,'P-INV-20170817-1',0,'','SH','','',2,1,1,0,'',0.0000,50000.0000,0.0000,50000.0000,1,0,0,0,'2017-08-17','2017-08-17','2017-08-17 21:17:09','2017-08-20 09:48:12','0000-00-00 00:00:00',1,1,0,NULL),
+  (2,'P-INV-20170820-2',1,'','','','',1,1,NULL,0,'da',0.0000,1000.0000,0.0000,1000.0000,1,0,0,0,'2017-08-20','2017-08-20','2017-08-20 10:02:12','2017-08-20 10:02:13','0000-00-00 00:00:00',1,0,0,NULL),
+  (3,'P-INV-20170824-3',4,'','','60','',3,2,NULL,0,'',0.0000,25.0000,0.0000,25.0000,1,0,0,0,'2017-08-24','2017-08-24','2017-08-24 19:34:15','2017-08-24 19:34:15','0000-00-00 00:00:00',1,0,0,NULL),
+  (4,'P-INV-20170824-4',4,'','','60','',3,2,NULL,0,'',0.0000,25.0000,0.0000,25.0000,1,0,0,0,'2017-08-24','2017-08-24','2017-08-24 19:35:21','2017-08-24 19:35:21','0000-00-00 00:00:00',1,0,0,NULL),
+  (5,'P-INV-20170824-5',0,'','na','','',3,3,2,0,'',0.0000,700.0000,0.0000,700.0000,1,0,0,0,'2017-08-24','2017-08-24','2017-08-24 20:01:12','2017-08-24 20:01:12','0000-00-00 00:00:00',1,0,0,NULL);
 COMMIT;
 
 /* Data for the `delivery_invoice_items` table  (LIMIT 0,500) */
 
 INSERT INTO `delivery_invoice_items` (`dr_invoice_item_id`, `dr_invoice_id`, `product_id`, `unit_id`, `dr_qty`, `dr_discount`, `dr_price`, `dr_line_total_discount`, `dr_line_total_price`, `dr_tax_rate`, `dr_tax_amount`, `dr_non_tax_amount`, `exp_date`, `batch_no`) VALUES
-  (1,1,1,1,11,0.0000,400.0000,0.0000,4400.0000,12.0000,471.4286,3928.5714,'1970-01-01',NULL),
-  (5,2,2,2,1,0.0000,1200.0000,0.0000,1200.0000,0.0000,0.0000,1200.0000,'1970-01-01',NULL),
-  (6,2,1,1,2,0.0000,400.0000,0.0000,800.0000,12.0000,85.7100,714.2900,'1970-01-01',NULL);
+  (2,1,1,3,99,0.0000,500.0000,0.0000,49500.0000,0.0000,0.0000,49500.0000,'1970-01-01',NULL),
+  (3,1,1,3,1,0.0000,500.0000,0.0000,500.0000,0.0000,0.0000,500.0000,'1970-01-01',NULL),
+  (4,2,1,3,2,0.0000,500.0000,0.0000,1000.0000,0.0000,0.0000,1000.0000,'1970-01-01',NULL),
+  (5,3,2,4,5,0.0000,5.0000,0.0000,25.0000,0.0000,0.0000,25.0000,'1970-01-01',NULL),
+  (6,4,2,4,5,0.0000,5.0000,0.0000,25.0000,0.0000,0.0000,25.0000,'1970-01-01',NULL),
+  (7,5,1,3,2,0.0000,350.0000,0.0000,700.0000,0.0000,0.0000,700.0000,'1970-01-01',NULL);
 COMMIT;
 
 /* Data for the `departments` table  (LIMIT 0,500) */
@@ -1571,37 +820,18 @@ INSERT INTO `departments` (`department_id`, `department_code`, `department_name`
   (3,'','Kitchen','Kitchen',NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,1);
 COMMIT;
 
-/* Data for the `fixed_assets` table  (LIMIT 0,500) */
+/* Data for the `issuance_info` table  (LIMIT 0,500) */
 
-INSERT INTO `fixed_assets` (`fixed_asset_id`, `asset_code`, `asset_description`, `serial_no`, `location_id`, `department_id`, `category_id`, `acquisition_cost`, `salvage_value`, `life_years`, `asset_status_id`, `date_acquired`, `remarks`, `date_posted`, `posted_by_user`, `date_modified`, `modified_by_user`, `date_deleted`, `deleted_by_user`, `is_deleted`, `is_active`) VALUES
-  (5,'787465','Desktop Computer','795563',4,35,30,4500.0000,1222.0000,7,1,'2017-03-23','asdasd','2017-03-21 14:25:55',1,'2017-03-22 16:16:11',1,'0000-00-00 00:00:00',0,0,1),
-  (6,'213123','ACER Laptop','1231241',8,1,1,8000.0000,2500.0000,12,2,'2017-03-21','aaa','2017-03-21 14:49:10',1,'2017-03-22 16:16:27',1,'0000-00-00 00:00:00',0,0,1),
-  (7,'','','',NULL,NULL,NULL,1000.0000,5000.2500,0,NULL,'1970-01-01','','2017-03-21 15:37:42',1,'0000-00-00 00:00:00',0,'2017-03-21 15:46:11',1,1,1),
-  (8,'12321','Electric Fan','899633',12,36,36,6000.0000,100.0000,10,1,'2017-03-24','','2017-03-21 16:03:14',1,'2017-03-22 11:35:04',1,'0000-00-00 00:00:00',0,0,1),
-  (9,'112','Motor Vehicle','455',2,37,37,100000.0000,50.0000,10,1,'2016-12-01','Brought Last December','2017-03-22 11:54:34',1,'0000-00-00 00:00:00',0,'0000-00-00 00:00:00',0,0,1),
-  (10,'5222','Delivery Van','322-789-456',12,37,37,200000.0000,85000.0000,12,1,'2017-04-28','','2017-03-22 15:34:15',1,'2017-03-22 15:58:37',1,'0000-00-00 00:00:00',0,0,1),
-  (11,'1001','Bike','123',1,1,5,10000.0000,1.0000,5,1,'2017-04-04','test','2017-04-04 15:37:57',12,'2017-04-04 15:38:16',12,'0000-00-00 00:00:00',0,0,1);
+INSERT INTO `issuance_info` (`issuance_id`, `slip_no`, `issued_department_id`, `remarks`, `issued_to_person`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `date_issued`, `date_created`, `date_modified`, `date_deleted`, `modified_by_user`, `posted_by_user`, `deleted_by_user`, `is_active`, `is_deleted`, `customer_id`, `address`, `terms`) VALUES
+  (1,'SLP-20170817-1',1,'dd','',0.00,0.00,0.00,0.00,'2017-08-17','2017-08-17 21:19:20','2017-08-17 21:19:20','0000-00-00 00:00:00',0,1,0,1,0,NULL,NULL,'1111'),
+  (2,'SLP-20170824-2',3,'','',0.00,0.00,0.00,0.00,'2017-08-24','2017-08-24 20:04:33','2017-08-24 20:04:33','0000-00-00 00:00:00',0,1,0,1,0,NULL,NULL,'g');
 COMMIT;
 
-/* Data for the `invoice_counter` table  (LIMIT 0,500) */
+/* Data for the `issuance_items` table  (LIMIT 0,500) */
 
-INSERT INTO `invoice_counter` (`counter_id`, `user_id`, `counter_start`, `counter_end`, `last_invoice`) VALUES
-  (1,1,0,0,0),
-  (2,10,0,0,0),
-  (3,11,0,0,0),
-  (4,12,0,0,0),
-  (5,14,0,0,0),
-  (6,13,25521,25530,25530),
-  (7,15,26199,26210,26210),
-  (8,16,26141,26150,26150),
-  (9,17,222,225,222),
-  (10,18,25286,25293,25293),
-  (11,20,26111,26120,26120),
-  (12,23,27201,27250,27234),
-  (13,24,25651,25700,25700),
-  (14,22,25974,25995,25995),
-  (15,26,27301,27350,27347),
-  (16,21,26551,26600,26600);
+INSERT INTO `issuance_items` (`issuance_item_id`, `issuance_id`, `product_id`, `unit_id`, `issue_qty`, `issue_price`, `issue_discount`, `issue_tax_rate`, `issue_line_total_price`, `issue_line_total_discount`, `issue_tax_amount`, `issue_non_tax_amount`, `dr_invoice_id`, `exp_date`, `batch_no`) VALUES
+  (1,1,1,3,1.00,500.00,0.00,0.00,500.00,0.00,0.00,500.00,0,'0000-00-00',''),
+  (2,2,1,3,2.00,500.00,0.00,0.00,1000.00,0.00,0.00,1000.00,0,'0000-00-00','');
 COMMIT;
 
 /* Data for the `item_types` table  (LIMIT 0,500) */
@@ -1610,33 +840,6 @@ INSERT INTO `item_types` (`item_type_id`, `item_type`, `description`, `is_active
   (1,'Inventory','',1,0),
   (2,'Non-inventory','',1,0),
   (3,'Services','',1,0);
-COMMIT;
-
-/* Data for the `journal_accounts` table  (LIMIT 0,500) */
-
-INSERT INTO `journal_accounts` (`journal_account_id`, `journal_id`, `account_id`, `memo`, `dr_amount`, `cr_amount`) VALUES
-  (1,1,9,'',3928.57,0.00),
-  (2,1,10,'',471.43,0.00),
-  (3,1,4,'',0.00,4400.00);
-COMMIT;
-
-/* Data for the `journal_entry_templates` table  (LIMIT 0,500) */
-
-INSERT INTO `journal_entry_templates` (`entry_template_id`, `template_id`, `account_id`, `memo`, `dr_amount`, `cr_amount`) VALUES
-  (1,1,3,'',22.0000,0.0000),
-  (2,1,4,'',0.0000,22.0000);
-COMMIT;
-
-/* Data for the `journal_info` table  (LIMIT 0,500) */
-
-INSERT INTO `journal_info` (`journal_id`, `txn_no`, `department_id`, `customer_id`, `supplier_id`, `remarks`, `book_type`, `date_txn`, `date_created`, `created_by_user`, `date_modified`, `modified_by_user`, `date_deleted`, `deleted_by_user`, `date_cancelled`, `cancelled_by_user`, `is_deleted`, `is_active`, `payment_method_id`, `bank`, `check_no`, `check_date`, `ref_type`, `ref_no`, `amount`, `or_no`, `check_status`, `accounting_period_id`, `is_replenished`, `batch_id`) VALUES
-  (1,'TXN-20170616-1',3,0,2,'','PJE','2017-06-16','2017-06-16 17:15:01',12,'0000-00-00 00:00:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'0000-00-00 00:00:00',0,0,1,0,'','','0000-00-00','','',0.00,'',0,1,0,0);
-COMMIT;
-
-/* Data for the `journal_templates_info` table  (LIMIT 0,500) */
-
-INSERT INTO `journal_templates_info` (`template_id`, `template_code`, `payee`, `template_description`, `supplier_id`, `customer_id`, `method_id`, `amount`, `remarks`, `posted_by`, `book_type`, `is_active`, `is_deleted`) VALUES
-  (1,'test','','test',1,0,0,0.0000,'',12,'GJE',1,0);
 COMMIT;
 
 /* Data for the `locations` table  (LIMIT 0,500) */
@@ -1662,19 +865,6 @@ INSERT INTO `order_status` (`order_status_id`, `order_status`, `order_descriptio
   (1,'Open','',1,0),
   (2,'Closed','',1,0),
   (3,'Partially received','',1,0);
-COMMIT;
-
-/* Data for the `other_sales_invoice` table  (LIMIT 0,500) */
-
-INSERT INTO `other_sales_invoice` (`sales_invoice_id`, `sales_inv_no`, `sales_order_id`, `sales_order_no`, `department_id`, `customer_id`, `journal_id`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `date_due`, `date_invoice`, `date_created`, `date_deleted`, `date_modified`, `posted_by_user`, `deleted_by_user`, `modified_by_user`, `is_paid`, `is_active`, `is_deleted`, `is_journal_posted`, `ref_product_type_id`) VALUES
-  (1,'INV-20161209-1',0,'',0,1,0,'haha',0.00,1.00,0.00,1.00,'2016-12-09','2016-12-09','2016-12-09 12:04:08','0000-00-00 00:00:00','2016-12-09 04:04:08',1,0,0,0,1,0,0,NULL);
-COMMIT;
-
-/* Data for the `other_sales_invoice_items` table  (LIMIT 0,500) */
-
-INSERT INTO `other_sales_invoice_items` (`sales_item_id`, `sales_invoice_id`, `product_id`, `unit_id`, `inv_price`, `inv_discount`, `inv_line_total_discount`, `inv_tax_rate`, `inv_qty`, `inv_line_total_price`, `inv_tax_amount`, `inv_non_tax_amount`, `inv_notes`, `dr_invoice_id`, `exp_date`) VALUES
-  (91,28,41,0,3.00,0.00,0.00,0.00,1,3.00,0.00,3.00,NULL,NULL,NULL),
-  (92,1,3,0,1.00,0.00,0.00,0.00,1,1.00,0.00,1.00,NULL,2,'2016-07-20');
 COMMIT;
 
 /* Data for the `payment_methods` table  (LIMIT 0,500) */
@@ -1768,25 +958,37 @@ INSERT INTO `po_messages` (`po_message_id`, `purchase_order_id`, `user_id`, `mes
   (107,28,1,'','2016-12-05 14:43:33','0000-00-00 00:00:00',0),
   (108,29,1,'Hello','2016-12-14 11:38:54','0000-00-00 00:00:00',0),
   (109,1,1,'hi','2017-04-26 16:43:25','0000-00-00 00:00:00',0),
-  (110,1,1,'hello','2017-04-26 16:43:39','0000-00-00 00:00:00',0);
+  (110,1,1,'hello','2017-04-26 16:43:39','0000-00-00 00:00:00',0),
+  (111,4,1,'hello','2017-08-24 20:10:44','0000-00-00 00:00:00',0);
 COMMIT;
 
 /* Data for the `products` table  (LIMIT 0,500) */
 
 INSERT INTO `products` (`product_id`, `product_code`, `product_desc`, `product_desc1`, `unit`, `size`, `supplier_id`, `tax_type_id`, `refproduct_id`, `category_id`, `department_id`, `unit_id`, `equivalent_points`, `product_warn`, `product_ideal`, `purchase_cost`, `purchase_cost_2`, `markup_percent`, `sale_price`, `whole_sale`, `retailer_price`, `special_disc`, `discounted_price`, `dealer_price`, `distributor_price`, `public_price`, `valued_customer`, `income_account_id`, `expense_account_id`, `on_hand`, `item_type_id`, `date_created`, `date_modified`, `date_deleted`, `created_by_user`, `modified_by_user`, `deleted_by_user`, `is_inventory`, `is_tax_exempt`, `is_deleted`, `is_active`) VALUES
-  (1,'1000','Bond Paper1','','',NULL,NULL,1,NULL,7,0,3,0.00,0.00,0.00,500.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-08-13 13:57:49','2017-08-13 15:16:48','0000-00-00 00:00:00',1,1,0,1,0,0,1);
+  (1,'1000','Bond Paper','','',NULL,NULL,1,NULL,7,0,3,0.00,0.00,0.00,500.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,99.00,1,'2017-08-13 13:57:49','2017-08-24 20:00:18','0000-00-00 00:00:00',1,1,0,1,0,0,1),
+  (2,'1002','Ballpen','','',NULL,NULL,1,NULL,7,0,4,0.00,0.00,0.00,5.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,10.00,1,'2017-08-24 19:05:15','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1),
+  (3,'1002','Folder','','',NULL,NULL,1,NULL,7,0,4,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-08-24 19:07:06','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1),
+  (4,'1002','f','','',NULL,NULL,1,NULL,1,0,1,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-08-24 19:14:55','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1),
+  (5,'222','hhh','','',NULL,NULL,1,NULL,2,0,1,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-08-24 19:15:45','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1);
 COMMIT;
 
 /* Data for the `purchase_order` table  (LIMIT 0,500) */
 
 INSERT INTO `purchase_order` (`purchase_order_id`, `po_no`, `terms`, `duration`, `deliver_to_address`, `supplier_id`, `department_id`, `tax_type_id`, `contact_person`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `approval_id`, `order_status_id`, `is_email_sent`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `date_approved`, `approved_by_user`, `posted_by_user`, `deleted_by_user`, `modified_by_user`) VALUES
-  (1,'PO-20170806-1','',NULL,'ddd',1,2,1,'',NULL,0.0000,714.2857,85.7143,800.0000,2,1,0,1,0,'2017-08-06 21:24:13','2017-08-06 21:24:13','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0);
+  (1,'PO-20170817-1','',NULL,'San Jose, San Simon, Pampanga',1,1,1,'','da',0.0000,1000.0000,0.0000,1000.0000,2,2,0,1,0,'2017-08-17 20:45:39','2017-08-20 10:02:13','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
+  (2,'PO-20170819-2','',NULL,'San Jose, San Simon, Pampanga',3,2,1,'','',0.0000,850000.0000,0.0000,850000.0000,2,1,0,1,0,'2017-08-19 09:05:24','2017-08-19 11:30:56','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,1),
+  (3,'PO-20170819-3','',NULL,'San Fernando Pampanga',2,1,2,'','',0.0000,50000.0000,0.0000,50000.0000,2,1,0,1,0,'2017-08-19 11:00:59','2017-08-19 11:00:59','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
+  (4,'PO-20170824-4','60',NULL,'san fernando',3,2,2,'','',0.0000,50.0000,0.0000,50.0000,2,2,0,1,0,'2017-08-24 19:30:25','2017-08-24 19:35:21','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0);
 COMMIT;
 
 /* Data for the `purchase_order_items` table  (LIMIT 0,500) */
 
 INSERT INTO `purchase_order_items` (`po_item_id`, `purchase_order_id`, `product_id`, `unit_id`, `po_price`, `po_discount`, `po_line_total_discount`, `po_tax_rate`, `po_qty`, `po_line_total`, `tax_amount`, `non_tax_amount`) VALUES
-  (1,1,1,1,400.0000,0.0000,0.0000,12.0000,2,800.0000,85.7143,714.2857);
+  (1,1,1,3,500.0000,0.0000,0.0000,0.0000,2,1000.0000,0.0000,1000.0000),
+  (4,3,1,3,500.0000,0.0000,0.0000,0.0000,100,50000.0000,0.0000,50000.0000),
+  (5,2,1,3,500.0000,0.0000,0.0000,0.0000,1699,849500.0000,0.0000,849500.0000),
+  (6,2,1,3,500.0000,0.0000,0.0000,0.0000,1,500.0000,0.0000,500.0000),
+  (7,4,2,4,5.0000,0.0000,0.0000,0.0000,10,50.0000,0.0000,50.0000);
 COMMIT;
 
 /* Data for the `refproduct` table  (LIMIT 0,500) */
@@ -1797,38 +999,83 @@ INSERT INTO `refproduct` (`refproduct_id`, `product_type`, `description`, `creat
   (3,'All Product type','',0,0,'2017-04-03 10:53:40','0000-00-00 00:00:00',0);
 COMMIT;
 
+/* Data for the `requisition_info` table  (LIMIT 0,500) */
+
+INSERT INTO `requisition_info` (`requisition_id`, `requisition_no`, `department_id`, `purpose`, `center_code`, `fund_cluster`, `remarks`, `created_by_user`, `date_created`, `deleted_by_user`, `date_deleted`, `modified_by_user`, `date_modified`, `status`, `is_deleted`, `is_active`) VALUES
+  (2,'PO-20170820-2',3,'p','a',NULL,'r',1,'2017-08-20 22:19:25',1,'2017-08-20 22:47:08',0,'0000-00-00 00:00:00',1,1,1),
+  (3,'PO-20170820-3',2,'purpose','code',NULL,'remarks',1,'2017-08-20 22:19:45',1,'2017-08-20 22:47:14',1,'2017-08-20 22:21:06',0,1,1),
+  (4,'PO-20170820-4',1,'dd','dd',NULL,'re',1,'2017-08-20 22:52:51',0,'0000-00-00 00:00:00',1,'2017-08-20 22:53:02',0,0,1),
+  (5,'PO-20170820-5',1,'dd','ddd',NULL,'sdfsdf',1,'2017-08-20 22:52:59',0,'0000-00-00 00:00:00',1,'2017-08-20 22:53:05',0,0,1),
+  (6,'REQ-20170823-6',2,'ddd','121',NULL,'dd',1,'2017-08-23 20:46:31',0,'0000-00-00 00:00:00',1,'2017-08-23 20:46:39',1,0,1),
+  (7,'REQ-20170824-7',3,'gg','',NULL,'',1,'2017-08-24 19:43:35',0,'0000-00-00 00:00:00',0,'0000-00-00 00:00:00',1,0,1);
+COMMIT;
+
+/* Data for the `requisition_items` table  (LIMIT 0,500) */
+
+INSERT INTO `requisition_items` (`req_item_id`, `requisition_id`, `product_id`, `unit_id`, `req_qty`, `req_cost`, `req_discount`, `req_line_total_discount`, `req_tax_rate`, `req_line_total`, `tax_amount`, `non_tax_amount`) VALUES
+  (6,2,1,3,2,54,0,0,0,108,0,108),
+  (8,3,1,3,1,500,0,0,0,500,0,500),
+  (11,4,1,3,2,500,0,0,0,1000,0,1000),
+  (12,5,1,3,2,500,0,0,0,1000,0,1000),
+  (14,6,1,3,20,500,0,0,0,10000,0,10000),
+  (15,7,2,4,1,5,0,0,0,5,0,5),
+  (16,7,1,3,1,500,0,0,0,500,0,500);
+COMMIT;
+
 /* Data for the `rights_links` table  (LIMIT 0,500) */
 
 INSERT INTO `rights_links` (`link_id`, `parent_code`, `link_code`, `link_name`) VALUES
+  (1,'1','1-1','General Journal'),
+  (2,'1','1-2','Cash Disbursement'),
+  (3,'1','1-3','Purchase Journal'),
+  (4,'1','1-4','Sales Journal'),
+  (5,'1','1-5','Cash Receipt'),
   (6,'2','2-1','Purchase Order'),
   (7,'2','2-2','Purchase Invoice'),
   (8,'2','2-3','Account Payables'),
   (9,'2','2-4','Item Issuance'),
   (10,'2','2-5','Item Adjustment (In)'),
+  (11,'3','3-1','Sales Order'),
+  (12,'3','3-2','Sales Invoice'),
+  (13,'3','3-3','Record Payment'),
   (14,'4','4-2','Category Management'),
   (15,'4','4-3','Department Management'),
   (16,'4','4-4','Unit Management'),
   (17,'5','5-1','Product Management'),
+  (18,'5','5-2','Supplier Management'),
   (19,'5','5-3','Supplier Management'),
   (20,'6','6-1','Setup Tax'),
+  (21,'6','6-2','Setup Chart of Accounts'),
+  (22,'6','6-3','Account Integration'),
   (23,'6','6-4','Setup User Group'),
   (24,'6','6-5','Create User Account'),
   (25,'6','6-6','Setup Company Info'),
   (26,'7','7-1','Purchase Order for Approval'),
+  (27,'9','9-1','Balance Sheet Report'),
+  (28,'9','9-2','Income Statement'),
+  (29,'4','4-4','Product Types'),
+  (30,'8','8-1','Sales Report'),
+  (31,'8','8-2','Batch Inventory Report'),
+  (32,'5','5-4','Salesperson Management'),
+  (33,'2','2-6','Item Adjustment (Out)'),
+  (34,'8','8-3','Export Sales Summary'),
+  (35,'9','9-3','Export Trial Balance'),
+  (36,'6','6-7','Setup Check Layout'),
+  (37,'9','9-4','AR Schedule'),
+  (38,'9','9-6','Customer Subsidiary'),
+  (39,'9','9-8','Account Subsidiary'),
+  (40,'9','9-7','Supplier Subsidiary'),
+  (41,'9','9-5','AP Schedule'),
+  (42,'8','8-4','Purchase Invoice Report'),
+  (43,'4','4-4','Locations Management'),
+  (44,'10','10-1','Fixed Asset Management'),
+  (45,'9','9-9','Depreciation Expense'),
+  (46,'6','6-8','Recurring Template'),
+  (47,'9','9-10','VAT Relief Report'),
+  (48,'1','1-6','Petty Cash Journal'),
   (49,'9','9-13','Replenishment Report'),
-  (50,'6','6-9','Backup Database');
-COMMIT;
-
-/* Data for the `sales_invoice` table  (LIMIT 0,500) */
-
-INSERT INTO `sales_invoice` (`sales_invoice_id`, `sales_inv_no`, `sales_order_id`, `sales_order_no`, `department_id`, `issue_to_department`, `customer_id`, `journal_id`, `terms`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `date_due`, `date_invoice`, `date_created`, `date_deleted`, `date_modified`, `posted_by_user`, `deleted_by_user`, `modified_by_user`, `is_paid`, `is_active`, `is_deleted`, `is_journal_posted`, `ref_product_type_id`, `inv_type`, `salesperson_id`, `address`) VALUES
-  (1,'INV-20170619-1',0,'',1,NULL,1,0,0,'',0.0000,0.0000,0.0000,0.0000,'2017-06-19','2017-06-19','2017-06-19 14:08:55','0000-00-00 00:00:00','2017-06-19 14:08:55',12,0,0,0,1,0,0,0,1,NULL,'d');
-COMMIT;
-
-/* Data for the `sales_invoice_items` table  (LIMIT 0,500) */
-
-INSERT INTO `sales_invoice_items` (`sales_item_id`, `sales_invoice_id`, `product_id`, `unit_id`, `inv_price`, `orig_so_price`, `inv_discount`, `inv_line_total_discount`, `inv_tax_rate`, `cost_upon_invoice`, `inv_qty`, `inv_line_total_price`, `inv_tax_amount`, `inv_non_tax_amount`, `inv_notes`, `dr_invoice_id`, `exp_date`, `batch_no`) VALUES
-  (1,1,2,2,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,2,0.0000,0.0000,0.0000,NULL,NULL,'0000-00-00','');
+  (50,'6','6-9','Backup Database'),
+  (51,'2','2-6','Requisition');
 COMMIT;
 
 /* Data for the `salesperson` table  (LIMIT 0,500) */
@@ -1841,8 +1088,9 @@ COMMIT;
 /* Data for the `suppliers` table  (LIMIT 0,500) */
 
 INSERT INTO `suppliers` (`supplier_id`, `supplier_code`, `supplier_name`, `contact_name`, `contact_person`, `address`, `email_address`, `contact_no`, `tin_no`, `term`, `tax_type_id`, `photo_path`, `total_payable_amount`, `posted_by_user`, `date_created`, `date_modified`, `credit_limit`, `is_deleted`, `is_active`) VALUES
-  (1,'N/A','N/A','','','','','','','',1,'',0.00,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,0,1),
-  (2,'','SH','SH','','SH','',NULL,'','',2,'assets/img/anonymous-icon.png',6400.00,12,'2017-06-16 17:13:35','0000-00-00 00:00:00',NULL,0,1);
+  (1,'N/A','N/A','','','','','','','',1,'',1000.00,0,'0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,0,1),
+  (2,'','SH','SH','','SH','',NULL,'','',2,'assets/img/anonymous-icon.png',50000.00,12,'2017-06-16 17:13:35','0000-00-00 00:00:00',NULL,0,1),
+  (3,'','National Bookstore','na','','na','',NULL,'','',2,'assets/img/anonymous-icon.png',750.00,1,'2017-08-19 09:05:55','0000-00-00 00:00:00',NULL,0,1);
 COMMIT;
 
 /* Data for the `tax_types` table  (LIMIT 0,500) */
@@ -1864,7 +1112,7 @@ COMMIT;
 /* Data for the `user_accounts` table  (LIMIT 0,500) */
 
 INSERT INTO `user_accounts` (`user_id`, `user_name`, `user_pword`, `user_lname`, `user_fname`, `user_mname`, `user_address`, `user_email`, `user_mobile`, `user_telephone`, `user_bdate`, `user_group_id`, `photo_path`, `file_directory`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `modified_by_user`, `posted_by_user`, `deleted_by_user`, `is_online`) VALUES
-  (1,'admin','d033e22ae348aeb5660fc2140aec35850c4da997','Flores','Liezel','','Mabalacat City, Pampanga','','0935-746-7601','','2016-08-01',1,'assets/img/user/5902dd0367504.jpg',NULL,1,0,NULL,'2017-08-07 17:43:06',0,1,0,0,1),
+  (1,'admin','d033e22ae348aeb5660fc2140aec35850c4da997','Flores','Liezel','','Mabalacat City, Pampanga','','0935-746-7601','','2016-08-01',1,'assets/img/user/59959d3648bf1.jpg',NULL,1,0,NULL,'2017-08-17 21:42:15',0,1,0,0,1),
   (10,'gelyn','356a192b7913b04c54574d18c28d46e6395428ab','Manalang','Gelyn Joy','','','joyeous_jhoye@yahoo.com','','','2016-08-04',2,'assets/img/user/57e17900670ab.jpg',NULL,1,1,NULL,'2017-01-27 17:07:08',2147483647,10,0,1,0),
   (11,'mario','356a192b7913b04c54574d18c28d46e6395428ab','FLores','Mario','','','','','','2016-09-23',2,'assets/img/anonymous-icon.png',NULL,1,1,'2016-09-22 16:47:04','2017-01-27 17:07:22',2147483647,0,1,1,0),
   (12,'alona','356a192b7913b04c54574d18c28d46e6395428ab','Faderon','Alona','','','','','','2016-12-19',1,'assets/img/user/59006af05888e.jpg',NULL,1,0,'2016-12-19 14:25:09','2017-08-06 21:36:06',0,1,1,0,1),
@@ -1886,7 +1134,9 @@ INSERT INTO `user_accounts` (`user_id`, `user_name`, `user_pword`, `user_lname`,
   (28,'Nathalie','92c8b10157e05856af182a643de7dcea14472f74','Bognot','Nathalie','Fausto','Capas Tarlac','','','','1986-10-17',2,'assets/img/anonymous-icon.png','',1,1,'2017-02-03 10:09:09','2017-08-06 21:36:44',2147483647,0,19,1,0),
   (29,'elsa.isla','dbcb2310dfdb313a67cc49adcaf0a9c17bc1beef','Isla','Elsa','Valdez','5422 Dalandan St. Dau Homesite, Mabalacat, Pampanga','evrvetoptionselsa@gmail.com','09333198902','6241218','1973-01-27',4,'assets/img/anonymous-icon.png','',1,1,'2017-02-22 09:47:36','2017-08-06 21:36:46',2147483647,0,24,1,0),
   (30,'emil','84896d3e067884621c0f54334b8d840949665844','Aquinaldo','Emilio','','','','','','2017-04-04',6,'assets/img/anonymous-icon.png','',1,1,'2017-04-04 15:30:49','2017-08-06 21:36:49',2147483647,0,12,1,0),
-  (31,'Paul','a027184a55211cd23e3f3094f1fdc728df5e0500','Rueda','Paul','','','','','','2017-04-26',1,'assets/img/user/59006d107c755.jpg','',1,1,'2017-04-26 17:49:06','2017-08-06 21:36:51',2147483647,0,12,1,0);
+  (31,'Paul','a027184a55211cd23e3f3094f1fdc728df5e0500','Rueda','Paul','','','','','','2017-04-26',1,'assets/img/user/59006d107c755.jpg','',1,1,'2017-04-26 17:49:06','2017-08-06 21:36:51',2147483647,0,12,1,0),
+  (32,'june','356a192b7913b04c54574d18c28d46e6395428ab','June','June','','','','','','2017-08-17',7,'assets/img/user/59959c4c467e7.png','',1,0,'2017-08-17 21:40:01','0000-00-00 00:00:00',0,0,1,0,0),
+  (33,'arvin','356a192b7913b04c54574d18c28d46e6395428ab','Pogi','Arvin','','','','','','2017-08-24',8,'assets/img/anonymous-icon.png','',1,0,'2017-08-24 18:29:38','0000-00-00 00:00:00',0,0,1,0,0);
 COMMIT;
 
 /* Data for the `user_group_rights` table  (LIMIT 0,500) */
@@ -1920,7 +1170,7 @@ INSERT INTO `user_group_rights` (`user_rights_id`, `user_group_id`, `link_code`)
   (26,1,'7-1'),
   (27,1,'9-1'),
   (28,1,'9-2'),
-  (29,1,'4-1'),
+  (29,1,'4-4'),
   (30,1,'8-1'),
   (31,1,'8-2'),
   (32,1,'5-4'),
@@ -1934,7 +1184,7 @@ INSERT INTO `user_group_rights` (`user_rights_id`, `user_group_id`, `link_code`)
   (40,1,'9-7'),
   (41,1,'9-5'),
   (42,1,'8-4'),
-  (43,1,'4-5'),
+  (43,1,'4-4'),
   (44,1,'10-1'),
   (45,1,'9-9'),
   (46,1,'6-8'),
@@ -1942,130 +1192,18 @@ INSERT INTO `user_group_rights` (`user_rights_id`, `user_group_id`, `link_code`)
   (48,1,'1-6'),
   (49,1,'9-13'),
   (50,1,'6-9'),
-  (51,1,'9-14'),
-  (52,1,'9-16'),
-  (53,1,'4-6'),
-  (54,1,'10-2'),
-  (55,1,'11-1'),
-  (57,1,'12-1'),
-  (58,1,'12-2'),
-  (59,1,'12-3'),
-  (60,1,'12-4'),
-  (61,1,'12-5'),
-  (62,1,'9-11'),
-  (63,1,'9-15'),
-  (64,1,'9-12'),
-  (67,1,'1-1'),
-  (68,1,'1-2'),
-  (69,1,'1-3'),
-  (70,1,'1-4'),
-  (71,1,'1-5'),
-  (72,1,'2-1'),
-  (73,1,'2-2'),
-  (74,1,'2-3'),
-  (75,1,'2-4'),
-  (76,1,'2-5'),
-  (77,1,'3-1'),
-  (78,1,'3-2'),
-  (79,1,'3-3'),
-  (80,1,'4-1'),
-  (81,1,'4-2'),
-  (82,1,'4-3'),
-  (83,1,'5-1'),
-  (84,1,'5-2'),
-  (85,1,'5-3'),
-  (86,1,'6-1'),
-  (87,1,'6-2'),
-  (88,1,'6-3'),
-  (89,1,'6-4'),
-  (90,1,'6-5'),
-  (91,1,'6-6'),
-  (92,1,'7-1'),
-  (93,1,'8-1'),
-  (94,1,'8-2'),
-  (95,1,'1-1'),
-  (96,1,'1-2'),
-  (97,1,'1-3'),
-  (98,1,'1-4'),
-  (99,1,'1-5'),
-  (100,1,'2-1'),
-  (101,1,'2-2'),
-  (102,1,'2-3'),
-  (103,1,'2-4'),
-  (104,1,'2-5'),
-  (105,1,'3-1'),
-  (106,1,'3-2'),
-  (107,1,'3-3'),
-  (108,1,'4-1'),
-  (109,1,'4-2'),
-  (110,1,'4-3'),
-  (111,1,'5-1'),
-  (112,1,'5-2'),
-  (113,1,'5-3'),
-  (114,1,'6-1'),
-  (115,1,'6-2'),
-  (116,1,'6-3'),
-  (117,1,'6-4'),
-  (118,1,'6-5'),
-  (119,1,'6-6'),
-  (120,1,'7-1'),
-  (121,1,'8-1'),
-  (122,1,'8-2'),
-  (123,1,'4-4'),
-  (124,1,'4-4'),
-  (125,1,'8-3'),
-  (179,2,'1-1'),
-  (180,2,'1-2'),
-  (181,2,'1-3'),
-  (182,2,'1-4'),
-  (183,2,'1-5'),
-  (184,2,'8-1'),
-  (185,2,'8-2'),
-  (186,2,'8-3'),
-  (187,2,'8-5'),
-  (188,2,'8-6'),
-  (189,2,'8-10'),
-  (190,2,'8-11'),
-  (202,5,'1-2'),
-  (203,5,'3-3'),
-  (204,5,'5-2'),
-  (205,5,'1-3'),
-  (206,5,'6-1'),
-  (207,5,'8-10'),
-  (208,5,'8-11'),
-  (209,4,'3-1'),
-  (210,4,'3-2'),
-  (211,4,'2-1'),
-  (212,4,'2-2'),
-  (213,4,'2-3'),
-  (214,4,'2-4'),
-  (215,4,'4-1'),
-  (216,4,'4-2'),
-  (217,4,'4-3'),
-  (218,4,'5-1'),
-  (219,4,'5-2'),
-  (220,4,'5-3'),
-  (221,4,'6-1'),
-  (222,4,'7-1'),
-  (223,4,'4-4'),
-  (224,4,'8-3'),
-  (225,4,'8-4'),
-  (226,4,'5-4'),
-  (227,6,'2-1'),
-  (228,6,'2-2'),
-  (229,6,'3-1'),
-  (230,6,'3-2');
+  (51,1,'2-6'),
+  (231,7,'2-1'),
+  (232,8,'2-1'),
+  (233,8,'2-2');
 COMMIT;
 
 /* Data for the `user_groups` table  (LIMIT 0,500) */
 
 INSERT INTO `user_groups` (`user_group_id`, `user_group`, `user_group_desc`, `is_active`, `is_deleted`, `date_created`, `date_modified`) VALUES
   (1,'System Administrator','Can access all features.',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
-  (2,'Financing','',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
-  (3,'wee','wee',1,1,'0000-00-00 00:00:00','2016-12-14 01:10:30'),
-  (4,'Sales Invoice User','',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
-  (5,'Disbursement','',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
-  (6,'Encoder','Encoders',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+  (7,'PO User','PO User',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
+  (8,'Group 1','Receiving',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
