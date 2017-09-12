@@ -785,6 +785,28 @@ $(document).ready(function(){
     }();
 
     var bindEventHandlers=(function(){
+
+        $(document).on('click','button.btnFinalizeIssuance',function(){
+            var parentContainer = $(this).closest('div.request-container');
+
+            var data = [];
+            data.push({name:"requisition_id",value:$(this).data('requisition-id')});
+            data.push({name:"department_id",value:$(this).data('department-id')});
+
+            console.log(data);
+
+
+        });
+
+
+        $(document).on('keyup','input.request-qty',function(){
+            var qty = $(this).val();
+            var row = $(this).closest('tr');
+
+
+        });
+
+
         var detailRows = [];
         $('#tbl_issuances tbody').on( 'click', 'tr td.details-control', function () {
             var tr = $(this).closest('tr');
@@ -844,8 +866,8 @@ $(document).ready(function(){
                 var d=row.data();
                 $.ajax({
                     "dataType":"html",
-                    "type":"POST",
-                    "url":"Requisition/transaction/review-requisitions",
+                    "type":"GET",
+                    "url":"Requisition/transaction/review-requisitions?id=" + d.requisition_id,
                     "beforeSend" : function(){
                         row.child( '<center><br /><img src="assets/img/loader/ajax-loader-lg.gif" /><br /><br /></center>' ).show();
                     }

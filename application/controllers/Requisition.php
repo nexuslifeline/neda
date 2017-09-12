@@ -253,7 +253,27 @@ class Requisition extends CORE_Controller
                 break;
 
             case 'review-requisitions':
-                $this->load->view('template/rpt_requisition_review');
+
+                $id = $this->input->get('id');
+                $m_requisitions = $this->Requisition_info_model;
+                $m_req_items = $this->Requisition_items_model;
+
+                $data['requisition_info'] = $m_requisitions->get_list(
+                    $id,
+                    array(
+                        'requisition_info.*',
+                        'd.department_name'
+                    ),
+                    array(
+                        array('departments as d','d.department_id=requisition_info.department_id','left')
+                    )
+                );
+
+                $data['items'] = $m_req_items->get_requisition_items( $id );
+
+
+
+                $this->load->view('template/rpt_requisition_review',$data);
                 break;
 
 
