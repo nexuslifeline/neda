@@ -436,9 +436,10 @@ CREATE TABLE `products` (
   `is_tax_exempt` BIT(1) DEFAULT 0,
   `is_deleted` BIT(1) DEFAULT 0,
   `is_active` BIT(1) DEFAULT 1,
-  PRIMARY KEY USING BTREE (`product_id`)
+  PRIMARY KEY USING BTREE (`product_id`),
+  UNIQUE KEY `product_code` USING BTREE (`product_code`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=8 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order` table : */
@@ -475,7 +476,7 @@ CREATE TABLE `purchase_order` (
   UNIQUE KEY `po_no` USING BTREE (`po_no`),
   UNIQUE KEY `po_no_2` USING BTREE (`po_no`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order_items` table : */
@@ -495,7 +496,7 @@ CREATE TABLE `purchase_order_items` (
   `non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
   PRIMARY KEY USING BTREE (`po_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `refproduct` table : */
@@ -553,6 +554,7 @@ CREATE TABLE `requisition_items` (
   `req_line_total` DECIMAL(10,0) DEFAULT 0,
   `tax_amount` DECIMAL(10,0) DEFAULT 0,
   `non_tax_amount` DECIMAL(10,0) DEFAULT 0,
+  `is_available` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`req_item_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
@@ -801,22 +803,21 @@ COMMIT;
 /* Data for the `issuance_info` table  (LIMIT 0,500) */
 
 INSERT INTO `issuance_info` (`issuance_id`, `slip_no`, `requisition_id`, `issued_department_id`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `date_issued`, `date_created`, `date_modified`, `date_deleted`, `modified_by_user`, `posted_by_user`, `deleted_by_user`, `is_active`, `is_deleted`) VALUES
-  (1,'SLP-20170912-1',1,1,'na',0.00,0.00,0.00,0.00,'2017-09-12','2017-09-12 21:42:47','2017-09-12 21:42:47','0000-00-00 00:00:00',0,1,0,1,0);
+  (1,'SLP-20170913-1',1,2,'purpose',0.00,0.00,0.00,0.00,'2017-09-13','2017-09-13 14:15:06','2017-09-13 14:15:06','0000-00-00 00:00:00',0,1,0,1,0);
 COMMIT;
 
 /* Data for the `issuance_items` table  (LIMIT 0,500) */
 
 INSERT INTO `issuance_items` (`issuance_item_id`, `issuance_id`, `product_id`, `unit_id`, `issue_qty`, `issue_price`, `issue_discount`, `issue_tax_rate`, `issue_line_total_price`, `issue_line_total_discount`, `issue_tax_amount`, `issue_non_tax_amount`, `dr_invoice_id`, `exp_date`, `batch_no`) VALUES
   (1,1,1,3,2.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,'0000-00-00',''),
-  (2,1,2,4,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,'0000-00-00','');
+  (2,1,6,1,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,'0000-00-00','');
 COMMIT;
 
 /* Data for the `item_types` table  (LIMIT 0,500) */
 
 INSERT INTO `item_types` (`item_type_id`, `item_type`, `description`, `is_active`, `is_deleted`) VALUES
   (1,'Inventory','',1,0),
-  (2,'Non-inventory','',1,0),
-  (3,'Services','',1,0);
+  (2,'Non-inventory','',1,0);
 COMMIT;
 
 /* Data for the `locations` table  (LIMIT 0,500) */
@@ -942,21 +943,26 @@ COMMIT;
 /* Data for the `products` table  (LIMIT 0,500) */
 
 INSERT INTO `products` (`product_id`, `product_code`, `product_desc`, `product_desc1`, `unit`, `size`, `supplier_id`, `tax_type_id`, `refproduct_id`, `category_id`, `department_id`, `unit_id`, `equivalent_points`, `product_warn`, `product_ideal`, `purchase_cost`, `purchase_cost_2`, `markup_percent`, `sale_price`, `whole_sale`, `retailer_price`, `special_disc`, `discounted_price`, `dealer_price`, `distributor_price`, `public_price`, `valued_customer`, `income_account_id`, `expense_account_id`, `on_hand`, `item_type_id`, `date_created`, `date_modified`, `date_deleted`, `created_by_user`, `modified_by_user`, `deleted_by_user`, `is_inventory`, `is_tax_exempt`, `is_deleted`, `is_active`) VALUES
-  (1,'121','Bond Paper','','',NULL,NULL,2,NULL,7,0,3,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,48.00,1,'2017-09-12 21:39:31','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1),
-  (2,'122','Ballpen','','',NULL,NULL,1,NULL,7,0,4,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,299.00,1,'2017-09-12 21:40:28','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1);
+  (1,'121','Bond Paper','','',NULL,NULL,2,NULL,7,0,3,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,48.00,1,'2017-09-12 21:39:31','2017-09-13 12:34:08','0000-00-00 00:00:00',1,1,0,1,0,0,1),
+  (2,'122','Ballpen','','',NULL,NULL,1,NULL,7,0,4,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,299.00,1,'2017-09-12 21:40:28','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1),
+  (3,'001','Folder','','',NULL,NULL,2,NULL,1,0,4,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-09-13 12:34:29','2017-09-13 12:34:33','0000-00-00 00:00:00',1,1,0,1,0,0,1),
+  (6,'145','Envelope','','',NULL,NULL,2,NULL,2,0,1,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,-1.00,1,'2017-09-13 12:47:37','2017-09-13 12:48:17','0000-00-00 00:00:00',1,1,0,1,0,0,1),
+  (7,'0911','Paste','','',NULL,NULL,1,NULL,1,0,2,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-09-13 12:48:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1);
 COMMIT;
 
 /* Data for the `purchase_order` table  (LIMIT 0,500) */
 
 INSERT INTO `purchase_order` (`purchase_order_id`, `po_no`, `terms`, `duration`, `deliver_to_address`, `supplier_id`, `department_id`, `tax_type_id`, `contact_person`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `approval_id`, `order_status_id`, `is_email_sent`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `date_approved`, `approved_by_user`, `posted_by_user`, `deleted_by_user`, `modified_by_user`) VALUES
-  (1,'PO-20170912-1','',NULL,'San Fernando Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,2,2,0,1,0,'2017-09-12 21:41:16','2017-09-12 21:41:25','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0);
+  (1,'PO-20170912-1','',NULL,'San Fernando Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,1,2,0,1,0,'2017-09-12 21:41:16','2017-09-13 10:55:14','0000-00-00 00:00:00','2017-09-13 10:55:14',1,1,0,0),
+  (2,'PO-20170913-2','',NULL,'Angeles City, Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,1,1,0,1,0,'2017-09-13 11:46:24','2017-09-13 11:46:36','0000-00-00 00:00:00','2017-09-13 11:46:36',1,1,0,0);
 COMMIT;
 
 /* Data for the `purchase_order_items` table  (LIMIT 0,500) */
 
 INSERT INTO `purchase_order_items` (`po_item_id`, `purchase_order_id`, `product_id`, `unit_id`, `po_price`, `po_discount`, `po_line_total_discount`, `po_tax_rate`, `po_qty`, `po_line_total`, `tax_amount`, `non_tax_amount`) VALUES
   (1,1,1,3,0.0000,0.0000,0.0000,12.0000,50,0.0000,0.0000,0.0000),
-  (2,1,2,4,0.0000,0.0000,0.0000,0.0000,300,0.0000,0.0000,0.0000);
+  (2,1,2,4,0.0000,0.0000,0.0000,0.0000,300,0.0000,0.0000,0.0000),
+  (3,2,1,3,0.0000,0.0000,0.0000,12.0000,2,0.0000,0.0000,0.0000);
 COMMIT;
 
 /* Data for the `refproduct` table  (LIMIT 0,500) */
@@ -970,14 +976,14 @@ COMMIT;
 /* Data for the `requisition_info` table  (LIMIT 0,500) */
 
 INSERT INTO `requisition_info` (`requisition_id`, `requisition_no`, `department_id`, `purpose`, `center_code`, `fund_cluster`, `remarks`, `created_by_user`, `date_created`, `deleted_by_user`, `date_deleted`, `modified_by_user`, `date_modified`, `status`, `is_deleted`, `is_active`) VALUES
-  (1,'REQ-20170912-1',1,'na','',NULL,'',1,'2017-09-12 21:42:14',0,'0000-00-00 00:00:00',0,'0000-00-00 00:00:00',0,0,1);
+  (1,'REQ-20170913-1',2,'purpose','','','',1,'2017-09-13 14:14:44',0,'0000-00-00 00:00:00',0,'0000-00-00 00:00:00',0,0,1);
 COMMIT;
 
 /* Data for the `requisition_items` table  (LIMIT 0,500) */
 
-INSERT INTO `requisition_items` (`req_item_id`, `requisition_id`, `product_id`, `unit_id`, `req_qty`, `req_cost`, `req_discount`, `req_line_total_discount`, `req_tax_rate`, `req_line_total`, `tax_amount`, `non_tax_amount`) VALUES
-  (1,1,1,3,2,0,0,0,12,0,0,0),
-  (2,1,2,4,1,0,0,0,0,0,0,0);
+INSERT INTO `requisition_items` (`req_item_id`, `requisition_id`, `product_id`, `unit_id`, `req_qty`, `req_cost`, `req_discount`, `req_line_total_discount`, `req_tax_rate`, `req_line_total`, `tax_amount`, `non_tax_amount`, `is_available`) VALUES
+  (1,1,1,3,2,0,0,0,12,0,0,0,1),
+  (2,1,6,1,1,0,0,0,12,0,0,0,0);
 COMMIT;
 
 /* Data for the `rights_links` table  (LIMIT 0,500) */
