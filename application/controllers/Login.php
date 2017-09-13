@@ -17,8 +17,7 @@ class Login extends CORE_Controller {
         $this->load->model('Rights_link_model');
         $this->load->model('User_group_right_model');
         $this->load->model('Company_model');
-
-
+        $this->load->model('User_group_right_model');
     }
 
 
@@ -119,9 +118,34 @@ class Login extends CORE_Controller {
                             )
                         );
 
+                        //check if 7-1 is in the rights
+                        $m_group = $this->User_group_right_model;
+                        $exists = $m_group->get_list(array(
+                            'user_group_id' => $result->row()->user_group_id,
+                            'link_code' => '7-1'
+                        ));
+
+                        if(count($exists)>0){
+                            $startup = 'Dashboard';
+                        }else{
+                            $list_rights = $m_group->get_list(
+                                array(
+                                    'user_group_id' => $result->row()->user_group_id
+                                ),
+                                array(
+                                    'rl.controller'
+                                ),
+                                array(
+                                    array('rights_links as rl','rl.link_code=user_group_rights.link_code','left')
+                                )
+                            );
+                            $startup = $list_rights[0]->controller;
+                        }
+
                         $response['title']='Success';
                         $response['stat']='success';
                         $response['msg']='User successfully authenticated.';
+                        $response['startup'] = $startup;
                         echo json_encode($response);
                     }
 

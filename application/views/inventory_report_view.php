@@ -152,7 +152,7 @@
 
                     <ol class="breadcrumb" style="margin-bottom: 0px;">
                         <li><a href="dashboard">Dashboard</a></li>
-                        <li><a href="Account_payable_schedule">Accounts Payable Schedule</a></li>
+                        <li><a href="Inventory">Inventory</a></li>
                     </ol>
 
                     <div class="container-fluid">
@@ -195,7 +195,7 @@
                                                         <br />
 
                                                         <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 5px;padding-bottom: 2%;">
-                                                            <table id="tbl_inventory" class="" cellspacing="0" width="100%">
+                                                            <table id="tbl_inventory" class="table custom-design" cellspacing="0" width="100%">
                                                                 <thead class="">
                                                                 <tr>
                                                                     <th width="5%"></th>
@@ -238,7 +238,7 @@
         <footer role="contentinfo">
             <div class="clearfix">
                 <ul class="list-unstyled list-inline pull-left">
-                    <li><h6 style="margin: 0;">&copy; 2016 - Paul Christian Rueda</h6></li>
+                    <li><h6 style="margin: 0;">&copy; 2017</h6></li>
                 </ul>
                 <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
             </div>

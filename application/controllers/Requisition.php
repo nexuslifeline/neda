@@ -12,6 +12,9 @@ class Requisition extends CORE_Controller
         $this->load->model('Departments_model');
         $this->load->model('Requisition_info_model');
         $this->load->model('Requisition_items_model');
+        $this->load->model('Issuance_model');
+        $this->load->model('Issuance_item_model');
+
     }
 
     public function index() {
@@ -271,11 +274,74 @@ class Requisition extends CORE_Controller
 
                 $data['items'] = $m_req_items->get_requisition_items( $id );
 
-
-
                 $this->load->view('template/rpt_requisition_review',$data);
                 break;
 
+            case 'issue-requisition':
+                $m_issuance=$this->Issuance_model;
+                $m_issue_items=$this->Issuance_item_model;
+                $m_requisitions = $this->Requisition_info_model;
+
+                $m_issuance->begin();
+
+                $requisition_id = $this->input->post('requisition_id');
+                $department_id = $this->input->post('department_id');
+                $purpose = $this->input->post('purpose');
+
+                $product_id = $this->input->post('product_id');
+                $request_qty = $this->input->post('request_qty');
+                $unit_id = $this->input->post('unit_id');
+
+
+                $m_issuance->set('date_created','NOW()'); //treat NOW() as function and not string
+                $m_issuance->set('date_issued','NOW()');
+                $m_issuance->posted_by_user = $this->session->user_id;
+                $m_issuance->issued_department_id = $department_id;
+                $m_issuance->requisition_id = $requisition_id;
+                $m_issuance->remarks = $purpose;
+                $m_issuance->save();
+
+                $issuance_id = $m_issuance->last_insert_id();
+
+                $m_issuance->slip_no='SLP-'.date('Ymd').'-'.$issuance_id;
+                $m_issuance->modify($issuance_id);
+
+
+                for($i=0;$i<count($product_id);$i++){
+                    $m_issue_items->issuance_id = $issuance_id;
+                    $m_issue_items->product_id = $product_id[$i];
+                    $m_issue_items->issue_qty = $this->get_numeric_value($request_qty[$i]);
+                    $m_issue_items->unit_id = $unit_id[$i];
+                    $m_issue_items->save();
+                }
+
+                $m_products=$this->Products_model;
+                $tmp_prod_id = $m_issue_items->get_list(
+                    array('issuance_id'=>$issuance_id),
+                    'product_id'
+                );
+
+                for($i=0;$i<count($tmp_prod_id);$i++) {
+                    $m_products->on_hand=$m_products->get_product_qty($this->get_numeric_value($tmp_prod_id[$i]->product_id));
+                    $m_products->modify($this->get_numeric_value($tmp_prod_id[$i]->product_id));
+                }
+
+                //mark requisition as closed
+                $m_requisitions->status = 0;
+                $m_requisitions->modify($requisition_id);
+
+
+                $m_issuance->commit();
+
+                if($m_issuance->status()===TRUE){
+                    $response['title'] = 'Success!';
+                    $response['stat'] = 'success';
+                    $response['msg'] = 'Items successfully issued.';
+                    //$response['row_added']=$this->response_rows($issuance_id);
+                    echo json_encode($response);
+                }
+
+                break;
 
         }
 

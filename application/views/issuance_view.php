@@ -198,25 +198,7 @@ echo $_side_bar_navigation;
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <!-- <div class="col-xs-12 col-lg-4">
-                                                    * Issue to : <br />
-                                                    <select name="issued_to_person" id="cbo_customers" data-error-msg="Customer is required." required>
-                                                        <option value="0">[ Create New Customer ]</option>
-                                                        <?php foreach($customers as $customer){ ?>
-                                                            <option data-address="<?php echo $customer->address; ?>" value="<?php echo $customer->customer_id; ?>"><?php echo $customer->customer_name; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div> -->
-                                                <div class="col-xs-12 col-lg-4">
-                                                    * Terms :<br />
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="fa fa-code"></i>
-                                                        </span>
-                                                        <input type="text" name="terms" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4"></div>
+
                                                 <div class="col-xs-12 col-lg-4">
                                                     Date issued : <br />
                                                     <div class="input-group">
@@ -253,17 +235,17 @@ echo $_side_bar_navigation;
                                                             <thead class="">
                                                                 <tr>
                                                                     <th width="10%">Qty</th>
-                                                                    <th width="10%">UM</th>
-                                                                    <th width="30%">Item</th>
-                                                                    <th width="20%" style="text-align: right;">Unit Price</th>
-                                                                    <th width="12%" style="text-align: right; display: none;">Discount</th>
+                                                                    <th width="15%">UM</th>
+                                                                    <th width="70%">Item</th>
+                                                                    <th width="0%" style="text-align: right;display: none;">Unit Price</th>
+                                                                    <th width="0%" style="text-align: right; display: none;">Discount</th>
                                                                     <th style="display: none;">T.D</th> <!-- total discount -->
                                                                     <th style="display: none;">Tax %</th>
-                                                                    <th width="20%" style="text-align: right;">Total</th>
+                                                                    <th width="0%" style="text-align: right;display: none;">Total</th>
                                                                     <th style="display: none;">V.I</th> <!-- vat input -->
                                                                     <th style="display: none;">N.V</th> <!-- net of vat -->
                                                                     <th style="display: none;">Item ID</td><!-- product id -->
-                                                                    <th><center>Action</center></th>
+                                                                    <th width="5%"><center>Action</center></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -287,7 +269,7 @@ echo $_side_bar_navigation;
                                                                     <td><button type="button" class="btn btn-default"><i class="fa fa-trash"></i></button></td>
                                                                 </tr>-->
                                                             </tbody>
-                                                            <tfoot>
+                                                            <tfoot style="display: none;">
                                                                 <tr>
                                                                     <td colspan="6" style="height: 50px;">&nbsp;</td>
                                                                 </tr>
@@ -788,12 +770,30 @@ $(document).ready(function(){
 
         $(document).on('click','button.btnFinalizeIssuance',function(){
             var parentContainer = $(this).closest('div.request-container');
+            var btn = $(this);
 
-            var data = [];
+            var data = $('#frmRequisition').serializeArray();
             data.push({name:"requisition_id",value:$(this).data('requisition-id')});
             data.push({name:"department_id",value:$(this).data('department-id')});
+            data.push({name:"purpose",value:$(this).data('purpose')});
 
-            console.log(data);
+            $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":'Requisition/transaction/issue-requisition',
+                'data' : data,
+                "beforeSend" : function(){
+                    showSpinningProgress(btn);
+                }
+            }).done(function(response){
+                showNotification(response);
+
+                dtRequisitions.ajax.reload();
+                dt.ajax.reload();
+
+                showSpinningProgress(btn);
+
+            });
 
 
         });
@@ -803,6 +803,15 @@ $(document).ready(function(){
             var qty = $(this).val();
             var row = $(this).closest('tr');
 
+            var available = getFloat(row.data('available-qty'));
+            if( available < qty ){
+                showNotification({
+                    'title' : 'Insufficient!',
+                    'type' : 'error',
+                    'msg' : 'Sorry, item is insufficient.'
+                });
+                $(this).val(0);
+            }
 
         });
 
@@ -851,7 +860,7 @@ $(document).ready(function(){
         $('#tbl_requisitions tbody').on( 'click', 'tr td.details-control', function () {
             var tr = $(this).closest('tr');
             var row = dtRequisitions.row( tr );
-            var d=row.data();
+            var d = row.data();
 
             var idx = $.inArray( tr.attr('id'), detailRows );
             if ( row.child.isShown() ) {
@@ -1213,11 +1222,11 @@ $(document).ready(function(){
         '<td width="10%"><input name="issue_qty[]" type="text" class="numeric form-control" value="'+ d.issue_qty+'"></td>'+
         '<td width="5%">'+ d.unit_name+'</td>'+
         '<td width="30%">'+d.product_desc+'</td>'+
-        '<td width="11%"><input name="issue_price[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.issue_price,2)+'" style="text-align:right;"></td>'+
+        '<td width="11%" style="display: none;"><input name="issue_price[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.issue_price,2)+'" style="text-align:right;"></td>'+
         '<td width="11%" style="display: none;"><input name="issue_discount[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.issue_discount,2)+'" style="text-align:right;"></td>'+
         '<td style="display: none;" width="11%"><input name="issue_line_total_discount[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.issue_line_total_discount,2)+'" readonly></td>'+
         '<td width="11%" style="display: none;"><input name="issue_tax_rate[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.issue_tax_rate,2)+'"></td>'+
-        '<td width="11%" align="right"><input name="issue_line_total_price[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.issue_line_total_price,2)+'" readonly></td>'+
+        '<td width="11%" style="display: none;" align="right"><input name="issue_line_total_price[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.issue_line_total_price,2)+'" readonly></td>'+
         '<td style="display: none;"><input name="issue_tax_amount[]" type="text" class="numeric form-control" value="'+ d.issue_tax_amount+'" readonly></td>'+
         '<td style="display: none;"><input name="issue_non_tax_amount[]" type="text" class="numeric form-control" value="'+ d.issue_non_tax_amount+'" readonly></td>'+
         '<td style="display: none;"><input name="product_id[]" type="text" class="numeric form-control" value="'+ d.product_id+'" readonly></td>'+

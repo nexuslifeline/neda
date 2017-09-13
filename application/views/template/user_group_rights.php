@@ -1,20 +1,9 @@
 <style>
 
-    .tab-container .nav.nav-tabs li a {
-        background: #414141 !important;
-        color: white !important;
+    #tbl_user_group_rights td{
+        padding: 6px;
     }
 
-    .tab-container .nav.nav-tabs li a:hover {
-        background: #414141 !important;
-        color: white !important;
-    }
-
-    .tab-container .nav.nav-tabs li a:focus {
-        background: #414141 !important;
-        color: white !important;
-    }
-    
 </style>
 
 <center>
@@ -39,7 +28,7 @@
                             <span style="margin-left: 1%"><b><i class="fa fa-list"></i> User Group Rights</b></span>
                             <hr />
                             <div class="table-responsive">
-                                <table id="tbl_user_group_rights" class="" style="background-color: #1f1f1f;" cellspacing="0" width="100%">
+                                <table id="tbl_user_group_rights" class="" style="" cellspacing="0" width="100%">
                                     <thead>
                                     <tr>
                                         <th width="80%">Description</th>

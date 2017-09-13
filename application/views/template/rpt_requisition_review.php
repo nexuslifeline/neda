@@ -38,6 +38,8 @@
 
 
 <br />
+
+<form id="frmRequisition">
 <table id="tbl_requisition" width="100%">
 
     <thead>
@@ -58,6 +60,8 @@
             </td>
             <td>
                 <input type="number" name="request_qty[]" class="request-qty" value="<?php echo number_format($item->request_qty,0); ?>" style="width: 100%;text-align: right;" />
+                <input type="hidden" name="product_id[]" value="<?php echo $item->product_id; ?>">
+                <input type="hidden" name="unit_id[]" value="<?php echo $item->unit_id; ?>">
             </td>
             <td align="right">
                 <?php echo number_format($item->on_hand,0); ?>
@@ -72,9 +76,9 @@
         <?php } ?>
     </tbody>
 
-</table>
+</table></form>
 
     <br />
-    <button type="button" class="btn btn-primary btnFinalizeIssuance" style="text-transform: none;" data-department-id="<?php echo $requisition_info[0]->department_id; ?>" data-requisition-id="<?php echo $requisition_info[0]->requisition_id; ?>">Finalize Issuance</button>
+    <button type="button" class="btn btn-primary btnFinalizeIssuance" style="text-transform: none;" data-purpose="<?php echo $requisition_info[0]->purpose; ?>" data-department-id="<?php echo $requisition_info[0]->department_id; ?>" data-requisition-id="<?php echo $requisition_info[0]->requisition_id; ?>"><span class=""></span> Finalize Issuance of Items</button>
 
 </div>

@@ -154,7 +154,7 @@ class Products_model extends CORE_Model {
                 ii.date_issued as txn_date,
                 ii.slip_no as ref_no,
                 'Issuance' as type,
-                ii.issued_to_person as Description,
+                '' as Description,
 
                 iit.product_id,iit.exp_date,iit.batch_no,0 as in_qty,
                 issue_qty as out_qty

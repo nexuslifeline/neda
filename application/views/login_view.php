@@ -97,7 +97,7 @@
                         showNotification(response);
                         if(response.stat=="success"){
                             setTimeout(function(){
-                                window.location.href = "dashboard";
+                                window.location.href = response.startup;
                             },600);
                         }
                     }).always(function(){

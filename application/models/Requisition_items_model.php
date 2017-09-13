@@ -14,7 +14,7 @@ class Requisition_items_model extends CORE_Model
 
     function get_requisition_items( $requisition_id ){
         $sql = "SELECT ri.product_id,p.product_desc,
-                SUM(ri.req_qty) as request_qty,p.on_hand,u.unit_name
+                SUM(ri.req_qty) as request_qty,p.on_hand,u.unit_name,ri.unit_id
                 
                 FROM `requisition_items` as ri
                 LEFT JOIN units as u ON ri.unit_id=u.unit_id
