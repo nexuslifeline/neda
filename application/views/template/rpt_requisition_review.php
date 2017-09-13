@@ -62,6 +62,7 @@
                 <input type="number" name="request_qty[]" class="request-qty" value="<?php echo number_format($item->request_qty,0); ?>" style="width: 100%;text-align: right;" />
                 <input type="hidden" name="product_id[]" value="<?php echo $item->product_id; ?>">
                 <input type="hidden" name="unit_id[]" value="<?php echo $item->unit_id; ?>">
+                <input type="hidden" name="on_hand[]" value="<?php echo $item->on_hand; ?>">
             </td>
             <td align="right">
                 <?php echo number_format($item->on_hand,0); ?>

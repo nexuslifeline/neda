@@ -145,6 +145,9 @@
                     <br />Very truly yours,
                     <br /><br />
                     <div style="width: 90%;border-bottom: 1px solid black;">
+                        <?php if($purchase_info->approval_id == 1){ ?>
+                            <center><img src="<?php echo base_url(); ?>assets/img/signatory/sign-1.png" height="5%" width="40%" /></center>
+                        <?php } ?>
                         <center><b>SEVERINO C. SANTOS</b></center>
                     </div><br />
                 </td>
@@ -177,5 +180,5 @@
 
 
 
-<script>/*window.print();*/</script>
+<script>window.print();</script>
 </html>

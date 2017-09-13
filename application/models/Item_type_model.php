@@ -18,8 +18,7 @@ class Item_type_model extends CORE_Model{
                   item_types(item_type_id,item_type,description,is_active,is_deleted)
               VALUES
                   (1,'Inventory','',TRUE,FALSE),
-                  (2,'Non-inventory','',TRUE,FALSE),
-                  (3,'Services','',TRUE,FALSE)
+                  (2,'Non-inventory','',TRUE,FALSE)
               ON DUPLICATE KEY UPDATE
                   item_types.item_type=VALUES(item_types.item_type),
                   item_types.description=VALUES(item_types.description),

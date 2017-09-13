@@ -81,6 +81,21 @@ class Products extends CORE_Controller
             case 'create':
                 $m_products = $this->Products_model;
 
+                //make sure PLU or Stock # do not exist
+                $plu_code = $m_products->get_list(array(
+                    'product_code' => $this->input->post('product_code', TRUE),
+                    'is_deleted' => 0
+                ));
+
+                if(count($plu_code)>0){
+                    $response['title'] = 'Duplicate!';
+                    $response['stat'] = 'error';
+                    $response['msg'] = 'Sorry, stock number already exists. Please make sure stock number is unique.';
+                    echo json_encode($response);
+                    return;
+                }
+
+
                 $m_products->set('date_created','NOW()');
                 $m_products->created_by_user = $this->session->user_id;
 

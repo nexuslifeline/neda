@@ -183,16 +183,15 @@
 
 
                                             <div class="panel-body table-responsive">
-
                                                 <table id="tbl_requisitions" class="table-striped custom-design" cellspacing="0" width="100%">
                                                     <thead class="">
                                                     <tr>
-                                                        <th></th>
-                                                        <th>REQ#</th>
-                                                        <th>Department</th>
-                                                        <th>Purpose</th>
-                                                        <th>Status</th>
-                                                        <th><center>Action</center></th>
+
+                                                        <th width="10%">REQ#</th>
+                                                        <th width="30%">Department</th>
+                                                        <th width="40%">Purpose</th>
+                                                        <th width="10%">Status</th>
+                                                        <th width="10%"><center>Action</center></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -214,7 +213,7 @@
                                                     <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 5px;">
                                                         <div class="row">
                                                             <div class="col-sm-5" >
-                                                                Department * : <br />
+                                                                Requisitioning Department * : <br />
                                                                 <select name="department_id" id="cbo_departments"  data-error-msg="Department is required." required>
                                                                     <option value="0">[ Create New Department ]</option>
                                                                     <?php foreach($departments as $department){ ?>
@@ -225,7 +224,7 @@
 
 
                                                             <div class="col-sm-3 col-sm-offset-4">
-                                                                PO # : <br />
+                                                                Requisition # : <br />
                                                                 <div class="input-group">
                                                                     <span class="input-group-addon">
                                                                         <i class="fa fa-code"></i>
@@ -233,33 +232,6 @@
                                                                     <input type="text" name="req_no" class="form-control" placeholder="REQ-YYYYMMDD-XXX" readonly>
                                                                 </div>
                                                             </div>
-
-
-                                                        </div>
-
-                                                        <div class="row">
-
-
-                                                            <div class="col-sm-5">
-                                                                Responsibility Center Code : <br />
-                                                                <div class="input-group">
-                                                                <span class="input-group-addon">
-                                                                    <i class="fa fa-code"></i>
-                                                                </span>
-                                                                    <input type="text" name="center_code" class="form-control" placeholder="Responsibility Center Code">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-sm-3 col-sm-offset-4">
-                                                                Fund Cluster : <br />
-                                                                <div class="input-group">
-                                                                <span class="input-group-addon">
-                                                                    <i class="fa fa-code"></i>
-                                                                </span>
-                                                                    <input type="text" name="func_cluster" class="form-control" placeholder="Fund Cluster">
-                                                                </div>
-                                                            </div>
-
 
 
                                                         </div>
@@ -285,28 +257,28 @@
 
                                             <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 5px;"><br />
 
-                                                <label class="control-label" style="font-family: Tahoma;"><strong>Enter PLU or Search Item :</strong></label>
+                                                <label class="control-label" style="font-family: Tahoma;"><strong>Enter Stock # or Search Item :</strong></label>
                                                 <div id="custom-templates">
-                                                    <input class="typeahead" type="text" placeholder="Enter PLU or Search Item">
+                                                    <input class="typeahead" type="text" placeholder="Enter Stock # or Search Item">
                                                 </div><br />
 
                                                 <form id="frm_items">
-                                                    <div class="table-responsive">
+                                                    <div class="table-responsive" style="overflow: hidden !important;padding: 5px !important;">
                                                         <table id="tbl_items" class="table-striped custom-design" cellspacing="0" width="100%" style="font-font:tahoma;">
                                                             <thead class="">
                                                             <tr>
-                                                                <th width="10%">Qty</th>
+                                                                <th width="15%">Qty</th>
                                                                 <th width="10%">UM</th>
-                                                                <th width="30%">Item</th>
-                                                                <th width="20%" style="text-align: right;">Unit Price</th>
+                                                                <th width="75%">Item</th>
+                                                                <th width="20%" style="text-align: right;display: none;">Unit Price</th>
                                                                 <th width="12%" style="text-align: right; display: none;">Discount</th>
                                                                 <th style="display: none;">T.D</th> <!-- total discount -->
                                                                 <th style="display: none;">Tax %</th>
-                                                                <th width="20%" style="text-align: right;">Total</th>
+                                                                <th width="0%" style="text-align: right;display: none;">Total</th>
                                                                 <th style="display: none;">V.I</th> <!-- vat input -->
                                                                 <th style="display: none;">N.V</th> <!-- net of vat -->
                                                                 <td style="display: none;">Item ID</td><!-- product id -->
-                                                                <th><center>Action</center></th>
+                                                                <th width="10%"><center>Action</center></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -314,27 +286,30 @@
                                                             </tbody>
 
                                                             <tfoot>
-                                                            <tr>
-                                                                <td colspan="6" style="height: 50px;">&nbsp;</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Discount :</strong></td>
-                                                                <td align="right" colspan="1" id="td_discount color="red">0.00</td>
-                                                                <td colspan="2" id="" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total Before Tax :</strong></td>
-                                                                <td align="right" colspan="1" id="td_before_tax" color="red">0.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Tax :</strong></td>
-                                                                <td align="right" colspan="1" id="td_tax" color="red">0.00</td>
-                                                                <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total After Tax :</strong></td>
-                                                                <td align="right" colspan="1" id="td_after_tax" color="red">0.00</td>
-                                                            </tr>
+
+                                                                <tr>
+                                                                    <td colspan="6" style="height: 50px;">&nbsp;</td>
+                                                                </tr>
+                                                                <tr style="display:none;">
+                                                                    <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Discount :</strong></td>
+                                                                    <td align="right" colspan="1" id="td_discount color="red">0.00</td>
+                                                                    <td colspan="2" id="" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total Before Tax :</strong></td>
+                                                                    <td align="right" colspan="1" id="td_before_tax" color="red">0.00</td>
+                                                                </tr>
+                                                                <tr style="display:none;">
+                                                                    <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Tax :</strong></td>
+                                                                    <td align="right" colspan="1" id="td_tax" color="red">0.00</td>
+                                                                    <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total After Tax :</strong></td>
+                                                                    <td align="right" colspan="1" id="td_after_tax" color="red">0.00</td>
+                                                                </tr>
                                                             </tfoot>
 
 
                                                         </table>
                                                     </div>
                                                 </form>
+
+
 
 
 
@@ -774,19 +749,20 @@
                 "pageLength":15,
                 "ajax" : "Requisition/transaction/list",
                 "columns": [
+
+                    { targets:[0],data: "requisition_no" },
+                    { targets:[1],data: "department_name" },
+                    { targets:[2],data: "purpose" },
                     {
-                        "targets": [0],
-                        "class":          "details-control",
-                        "orderable":      false,
-                        "data":           null,
-                        "defaultContent": ""
+                        targets:[3],
+                        data: "status",
+                        render: function (data, type, full, meta){
+
+                            return (data == 1 ? 'Pending' : 'Issued');
+                        }
                     },
-                    { targets:[1],data: "requisition_no" },
-                    { targets:[2],data: "department_name" },
-                    { targets:[3],data: "purpose" },
-                    { targets:[4],data: "status" },
                     {
-                        targets:[5],
+                        targets:[4],
                         render: function (data, type, full, meta){
                             var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
                             var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
@@ -963,8 +939,6 @@
                     tr.addClass( 'details' );
                     //console.log(row.data());
                     var d=row.data();
-
-
 
                     window.open("Templates/layout/po/"+d.requisition_id+"?type=preview","dsv", "location=0,status=0,scrollbars=0,width=700,height=400");
                     //dualDisplayHandle.location.href = "Templates/layout/po/"+d.requisition_id+"?type=preview";
@@ -1184,9 +1158,13 @@
                     }else{
                         updateRequistion().done(function(response){
                             showNotification(response);
-                            dt.row(_selectRowObj).data(response.row_updated[0]).draw(false);
-                            clearFields($('#frm_requistion'));
-                            showList(true);
+
+                            if(response.stat == 'success'){
+                                dt.row(_selectRowObj).data(response.row_updated[0]).draw(false);
+                                clearFields($('#frm_requistion'));
+                                showList(true);
+                            }
+
                         }).always(function(){
                             showSpinningProgress($('#btn_save'));
                         });
@@ -1381,11 +1359,11 @@
                 '<td width="10%"><input name="req_qty[]" type="text" class="number form-control" value="'+ d.req_qty+'"></td>'+
                 '<td width="5%">'+ d.unit_name+'</td>'+
                 '<td width="30%">'+d.product_desc+'</td>'+
-                '<td width="11%"><input name="req_cost[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.req_cost,4)+'" style="text-align:right;"></td>'+
+                '<td width="11%" style="display:none;"><input name="req_cost[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.req_cost,4)+'" style="text-align:right;"></td>'+
                 '<td width="11%" style="display:none;"><input name="req_discount[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.req_discount,4)+'" style="text-align:right;"></td>'+
                 '<td style="display: none;" width="11%"><input name="req_line_total_discount[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.req_line_total_discount,4)+'" readonly></td>'+
                 '<td width="11%" style="display:none;"><input name="req_tax_rate[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.req_tax_rate,4)+'"></td>'+
-                '<td width="11%" align="right"><input name="req_line_total[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.req_line_total,4)+'" readonly></td>'+
+                '<td width="11%" align="right" style="display:none;"><input name="req_line_total[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.req_line_total,4)+'" readonly></td>'+
                 '<td style="display: none;"><input name="tax_amount[]" type="text" class="numeric form-control" value="'+ d.req_tax_amount+'" readonly></td>'+
                 '<td style="display: none;"><input name="non_tax_amount[]" type="text" class="numeric form-control" value="'+ d.req_non_tax_amount+'" readonly></td>'+
                 '<td style="display: none;"><input name="product_id[]" type="text" class="form-control" value="'+ d.product_id+'" readonly></td>'+

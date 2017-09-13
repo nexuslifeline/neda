@@ -3,7 +3,7 @@
 <!-- Mirrored from avenxo.kaijuthemes.com/ui-typography.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 Jun 2016 12:09:25 GMT -->
 <head>
     <meta charset="utf-8">
-    <title>JCORE - <?php echo $title; ?></title>
+    <title>Dashboard -  Procurement System</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,6 +22,11 @@
     html{
         zoom: 0.8;
         zoom: 80%;
+    }
+
+    #tbl_po_list{
+        margin-top: 10px !important;
+        border-top: 1px solid #aeaeae !important;
     }
 
     .data-container {
@@ -78,17 +83,6 @@
         .page-content {
             overflow-x: hidden!important;
         }
-
-        #tbl_po_list {
-            color: white!important;
-            border: none!important;
-        }
-
-        th {
-          background: rgba(255, 255, 255, .2)!important;
-          border-bottom: 1px solid #525252;
-        }
-
         @media (min-width: 768px){
           .seven-cols .col-md-1,
           .seven-cols .col-sm-1,
@@ -117,183 +111,7 @@
         }
     </style>
 
-    <style>
-      .v-timeline {
-          position: relative;
-          padding: 0;
-          margin-top: 2em;
-          margin-bottom: 2em;
-      }
-      .vertical-container {
-          width: 98%;
-          margin: 0 auto;
-      }
 
-      .v-timeline::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 18px;
-          height: 100%;
-          width: 4px;
-          background: #525252;
-      }
-
-      .vertical-timeline-block:first-child {
-        margin-top: 0;
-      }
-
-      .vertical-timeline-block {
-          position: relative;
-          margin: 2em 0;
-      }
-
-      .vertical-timeline-icon {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          font-size: 16px;
-          border: 1px solid #525252;
-          text-align: center;
-          background: #525252;
-          color: #ffffff;
-      }
-
-      .vertical-timeline-icon i {
-          display: block;
-          width: 24px;
-          height: 24px;
-          position: relative;
-          left: 50%;
-          top: 50%;
-          margin-left: -12px;
-          margin-top: -9px;
-      }
-
-      .c-accent {
-          color: #f6a821;
-      }
-
-      .vertical-timeline-content {
-          position: relative;
-          margin-left: 60px;
-          background-color: rgba(68, 70, 79, 0.5);
-          border-radius: 0.25em;
-          border: 1px solid #3d404c;
-      }
-
-      .vertical-timeline-content:before {
-          border-color: transparent;
-          border-right-color: #3d404c;
-          border-width: 11px;
-          margin-top: -11px;
-      }
-
-      .vertical-timeline-content:after, .vertical-timeline-content:before {
-          right: 100%;
-          top: 20px;
-          border: solid transparent;
-          content: " ";
-          height: 0;
-          width: 0;
-          position: absolute;
-          pointer-events: none;
-      }
-
-      .p-sm {
-          padding: 15px !important;
-      }
-
-      .vertical-timeline-content .vertical-date {
-          font-weight: 500;
-          text-align: right;
-      }
-
-      .vertical-timeline-content p {
-          margin: 1em 0 0 0;
-          line-height: 1.6;
-      }
-
-      .vertical-timeline-content:after {
-          border-color: transparent;
-          border-right-color: #3d404c;
-          border-width: 10px;
-          margin-top: -10px;
-      }
-
-      .vertical-timeline-content:after, .vertical-timeline-content:before {
-          right: 100%;
-          top: 20px;
-          border: solid transparent;
-          content: " ";
-          height: 0;
-          width: 0;
-          position: absolute;
-          pointer-events: none;
-      }
-
-      .vertical-timeline-content:after {
-          content: "";
-          display: table;
-          clear: both;
-      }
-
-      .vertical-timeline-content {
-          position: relative;
-          margin-left: 60px;
-          background-color: rgba(68, 70, 79, 0.5);
-          border-radius: 0.25em;
-          border: 1px solid #3d404c;
-      }
-
-      .vertical-timeline-block:after {
-          content: "";
-          display: table;
-          clear: both;
-      }
-
-      .vertical-container::after {
-          content: '';
-          display: table;
-          clear: both;
-      }
-
-      .v-timeline {
-          position: relative;
-          padding: 0;
-          margin-top: 2em;
-          margin-bottom: 2em;
-      }
-
-      .vertical-container {
-          width: 98%;
-          margin: 0 auto;
-      }
-
-      #style-1::-webkit-scrollbar-track
-      {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        border-radius: 10px;
-        background-color: transparent;
-      }
-
-      #style-1::-webkit-scrollbar
-      {
-        width: 10px;
-        border-radius: 11px;
-        background-color: transparent;
-      }
-
-      #style-1::-webkit-scrollbar-thumb
-      {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background-color: #555;
-      }
-    </style>
 
 </head>
 
@@ -307,7 +125,36 @@
         <div class="static-content-wrapper">
             <div class="static-content">
                     <div class="page-content"><!-- #page-content -->
+                            <div data-widget-group="group1">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default" style="overflow-x: hidden!important;"> 
+                                            <div class="panel-body table-responsive">
+                                                <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-xs-12 col-sm-12 <?php echo (in_array('7-1',$this->session->user_rights)?'':'hidden'); ?>">
+                                                      <div class="data-container table-responsive" >
+                                                            <table id="tbl_po_list" class="table custom-design" c width="100%">
+                                                                <thead>
+                                                                    <th></th>
+                                                                    <th>PO #</th>
+                                                                    <th>Vendor</th>
+                                                                    <th>Terms </th>
+                                                                    <th>Posted by </th>
+                                                                    <th style="text-align: center;"> <i class="fa fa-paperclip"></i></th>
+                                                                    <th><center>Action</center></th>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                      </div>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </div> <!-- #page-content -->
             </div>
 
@@ -315,7 +162,7 @@
             <footer role="contentinfo">
                 <div class="clearfix">
                     <ul class="list-unstyled list-inline pull-left">
-                        <li><h6 style="margin: 0;">&copy; 2017</h6></li>
+                        <li><h6 style="margin: 0;">&copy; 2017 - JDEV IT BUSINESS SOLUTION</h6></li>
                     </ul>
                     <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="ti ti-arrow-up"></i></button>
                 </div>

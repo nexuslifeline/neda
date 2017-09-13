@@ -119,8 +119,8 @@ class Requisition extends CORE_Controller
                 $m_requisitions->set('date_created','NOW()'); //treat NOW() as function and not string
                 $m_requisitions->purpose=$this->input->post('purpose',TRUE);
                 $m_requisitions->department_id=$this->input->post('department_id',TRUE);
-                $m_requisitions->center_code=$this->input->post('center_code',TRUE);
-                $m_requisitions->fund_cluster=$this->input->post('fund_cluster',TRUE);
+                //$m_requisitions->center_code=$this->input->post('center_code',TRUE);
+                //$m_requisitions->fund_cluster=$this->input->post('fund_cluster',TRUE);
                 $m_requisitions->remarks=$this->input->post('remarks',TRUE);
                 $m_requisitions->created_by_user=$this->session->user_id;
                 $m_requisitions->save();
@@ -155,6 +155,7 @@ class Requisition extends CORE_Controller
                     $m_req_items->save();
                 }
 
+
                 //update po number base on formatted last insert id
                 $m_requisitions->requisition_no='REQ-'.date('Ymd').'-'.$req_id;
                 $m_requisitions->modify($req_id);
@@ -181,12 +182,27 @@ class Requisition extends CORE_Controller
                 $m_requisitions=$this->Requisition_info_model;
                 $req_id=$this->input->post('requisition_id',TRUE);
 
+                //check if already been issued
+                $issued = $m_requisitions->get_list(array(
+                    'requisition_id' => $req_id,
+                    'status' => 0
+                ));
+
+                if(count($issued)>0){
+                    $response['title'] = 'Warning!';
+                    $response['stat'] = 'warning';
+                    $response['msg'] = 'Sorry, this requisition record is already been Issued. You are not allowed to modify this record.';
+                    echo json_encode($response);
+                    return;
+                }
+
+
                 $m_requisitions->begin();
                 $m_requisitions->set('date_modified','NOW()'); //treat NOW() as function and not string
                 $m_requisitions->purpose=$this->input->post('purpose',TRUE);
                 $m_requisitions->department_id=$this->input->post('department_id',TRUE);
-                $m_requisitions->center_code=$this->input->post('center_code',TRUE);
-                $m_requisitions->fund_cluster=$this->input->post('fund_cluster',TRUE);
+                //$m_requisitions->center_code=$this->input->post('center_code',TRUE);
+                //$m_requisitions->fund_cluster=$this->input->post('fund_cluster',TRUE);
                 $m_requisitions->remarks=$this->input->post('remarks',TRUE);
                 $m_requisitions->modified_by_user=$this->session->user_id;
                 $m_requisitions->modify($req_id);
@@ -281,6 +297,7 @@ class Requisition extends CORE_Controller
                 $m_issuance=$this->Issuance_model;
                 $m_issue_items=$this->Issuance_item_model;
                 $m_requisitions = $this->Requisition_info_model;
+                $m_req_items=$this->Requisition_items_model;
 
                 $m_issuance->begin();
 
@@ -291,6 +308,7 @@ class Requisition extends CORE_Controller
                 $product_id = $this->input->post('product_id');
                 $request_qty = $this->input->post('request_qty');
                 $unit_id = $this->input->post('unit_id');
+                $on_hand=$this->input->post('on_hand',TRUE);
 
 
                 $m_issuance->set('date_created','NOW()'); //treat NOW() as function and not string
@@ -306,7 +324,6 @@ class Requisition extends CORE_Controller
                 $m_issuance->slip_no='SLP-'.date('Ymd').'-'.$issuance_id;
                 $m_issuance->modify($issuance_id);
 
-
                 for($i=0;$i<count($product_id);$i++){
                     $m_issue_items->issuance_id = $issuance_id;
                     $m_issue_items->product_id = $product_id[$i];
@@ -320,6 +337,19 @@ class Requisition extends CORE_Controller
                     array('issuance_id'=>$issuance_id),
                     'product_id'
                 );
+
+                //mark if available
+                for($i=0;$i<count($product_id);$i++){
+                    if($this->get_numeric_value($on_hand[$i])<=0){
+                        $m_req_items->is_available = 0;
+                        $m_req_items->modify(
+                            array(
+                                'product_id' => $product_id[$i],
+                                'requisition_id' => $requisition_id
+                            )
+                        );
+                    }
+                }
 
                 for($i=0;$i<count($tmp_prod_id);$i++) {
                     $m_products->on_hand=$m_products->get_product_qty($this->get_numeric_value($tmp_prod_id[$i]->product_id));
@@ -341,6 +371,10 @@ class Requisition extends CORE_Controller
                     echo json_encode($response);
                 }
 
+                break;
+
+            case 'requisition-slip':
+                $this->load->view('template/rpt_requisition_slip');
                 break;
 
         }

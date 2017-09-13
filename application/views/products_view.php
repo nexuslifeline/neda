@@ -6,7 +6,7 @@
 
     <meta charset="utf-8">
 
-    <title>JCORE - <?php echo $title; ?></title>
+    <title>PRODUCTS - <?php echo $title; ?></title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
@@ -18,7 +18,7 @@
     <?php echo $_def_css_files; ?>
 
     <link rel="stylesheet" href="assets/plugins/spinner/dist/ladda-themeless.min.css">
-    <link href="assets/css/dark-theme.css" rel="stylesheet">
+<!--    <link href="assets/css/dark-theme.css" rel="stylesheet">-->
 
     <link type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
     <link type="text/css" href="assets/plugins/datatables/dataTables.themify.css" rel="stylesheet">
@@ -26,11 +26,11 @@
     <link href="assets/plugins/select2/select2.min.css" rel="stylesheet">
 
 
-    <link href="assets/plugins/datapicker/datepicker3.css" rel="stylesheet">
+  <!--  <link href="assets/plugins/datapicker/datepicker3.css" rel="stylesheet">
 
 
     <link href="assets/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-
+-->
     <style>
         html{
             zoom: 0.82;
@@ -48,19 +48,19 @@
     <script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
 
 
-    <!-- Date range use moment.js same as full calendar plugin -->
-    <script src="assets/plugins/fullcalendar/moment.min.js"></script>
+<!--    <!-- Date range use moment.js same as full calendar plugin -->
+ <!--   <script src="assets/plugins/fullcalendar/moment.min.js"></script>-->
     <!-- Data picker -->
-    <script src="assets/plugins/datapicker/bootstrap-datepicker.js"></script>
+  <!--  <script src="assets/plugins/datapicker/bootstrap-datepicker.js"></script>-->-->
 
     <!-- Select2 -->
     <script src="assets/plugins/select2/select2.full.min.js"></script>
 
 
     <!-- Date range use moment.js same as full calendar plugin -->
-    <script src="assets/js/plugins/fullcalendar/moment.min.js"></script>
+  <!--  <script src="assets/js/plugins/fullcalendar/moment.min.js"></script>-->
     <!-- Data picker -->
-    <script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!--    <script src="assets/js/plugins/datapicker/bootstrap-datepicker.js"></script>-->
 
     <!-- twitter typehead -->
     <script src="assets/plugins/twittertypehead/handlebars.js"></script>
@@ -89,9 +89,7 @@ $(document).ready(function(){
 
     var initializeControls=function() {
         dt=$('#tbl_products').DataTable({
-            "fnInitComplete": function (oSettings, json) {
-                $.unblockUI();
-                },
+
             "dom": '<"toolbar">frtip',
             "bLengthChange":false,
             "pageLength":15,
@@ -450,12 +448,12 @@ $(document).ready(function(){
             $('#modal_create_product').modal('show');
             clearFields($('#frm_product'));
             _cboCategory.select2('val',null);
-            _cboSupplier.select2('val',null);
+            //_cboSupplier.select2('val',null);
             _cboTax.select2('val',null);
             _cboInventory.select2('val',null);
             _cboMeasurement.select2('val',null);
-            _cboCredit.select2('val',0);
-            _cboDebit.select2('val',0);
+           /* _cboCredit.select2('val',0);
+            _cboDebit.select2('val',0);*/
             $('#is_tax_exempt').attr('checked', false);
         });
 
@@ -519,9 +517,13 @@ $(document).ready(function(){
                 if(_txnMode=="new"){
                     createProduct().done(function(response){
                         showNotification(response);
-                        dt.row.add(response.row_added[0]).draw();
-                        clearFields($('#frm_product'))
-                        showList(true);
+
+                        if(response.stat == 'success'){
+                            dt.row.add(response.row_added[0]).draw();
+                            clearFields($('#frm_product'))
+                            showList(true);
+                        }
+
                     }).always(function(){
                         $('#modal_create_product').modal('toggle');
                         showSpinningProgress($('#btn_save'));
@@ -1033,7 +1035,7 @@ $(document).ready(function(){
                                                     <thead class="">
                                                     <tr>    
                                                         <th></th>
-                                                        <th>PLU</th>
+                                                        <th>Stock #</th>
                                                         <th>Item Description</th>
                                                         <th>Category</th>
                                                         <th>On Hand</th>
@@ -1353,7 +1355,7 @@ $(document).ready(function(){
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group" style="margin-bottom:0px;">
-                                            <label class="">PLU / Stock # * :</label>
+                                            <label class="">Stock # * :</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-file-code-o"></i>
@@ -1458,7 +1460,7 @@ $(document).ready(function(){
                                             </div>
                                         </div>
 
-                                        <div class="form-group" style="margin-bottom:0px;">
+                                      <!--  <div class="form-group" style="margin-bottom:0px;">
                                             <label class="">Ideal Quantity :</label>
                                             <div class="input-group">
                                                     <span class="input-group-addon">
@@ -1466,7 +1468,7 @@ $(document).ready(function(){
                                                     </span>
                                                 <input type="text" name="product_ideal" id="product_ideal" class="form-control numeric">
                                             </div>
-                                        </div>
+                                        </div>-->
 
                                         <div class="form-group" style="margin-bottom:0px;">
                                             <label class="">Tax Exempt ?</label><br>

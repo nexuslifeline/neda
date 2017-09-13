@@ -817,7 +817,7 @@ $(document).ready(function(){
                         var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
                         var btn_message='<a href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-green btn-sm" name="message_po" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Message"><i class="fa fa-envelope-o"></i> </a>';
 
-                        return '<center>'+btn_edit+'&nbsp;'+btn_message+'&nbsp;'+btn_trash+'</center>';
+                        return '<center>'+btn_edit+'&nbsp;'+'&nbsp;'+btn_trash+'</center>';
                     }
                 }
             ]
