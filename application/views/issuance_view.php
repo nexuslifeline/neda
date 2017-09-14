@@ -35,6 +35,15 @@
         tr.details td.details-control {
             background: url('assets/img/Folder_Opened.png') no-repeat center center;
         }
+
+        td.print-control {
+            background: url('assets/img/print.png') no-repeat center center;
+            cursor: pointer;
+        }
+
+        tr.print td.details-control {
+            background: url('assets/img/print.png') no-repeat center center;
+        }
         .child_table{
             padding: 5px;
             border: 1px #ff0000 solid;
@@ -656,7 +665,7 @@ $(document).ready(function(){
             "columns": [
                 {
                     "targets": [0],
-                    "class":          "details-control",
+                    "class":          "print-control",
                     "orderable":      false,
                     "data":           null,
                     "defaultContent": ""
@@ -817,7 +826,7 @@ $(document).ready(function(){
 
 
         var detailRows = [];
-        $('#tbl_issuances tbody').on( 'click', 'tr td.details-control', function () {
+        $('#tbl_issuances tbody').on( 'click', 'tr td.print-control', function () {
             var tr = $(this).closest('tr');
             var row = dt.row( tr );
             var d=row.data();
@@ -840,20 +849,23 @@ $(document).ready(function(){
                 tr.addClass( 'details' );
                 //console.log(row.data());
                 var d=row.data();
-                $.ajax({
+               /* $.ajax({
                     "dataType":"html",
                     "type":"POST",
                     "url":"Templates/layout/issuance/"+ d.issuance_id,
                     "beforeSend" : function(){
-                        row.child( '<center><br /><img src="assets/img/loader/ajax-loader-lg.gif" /><br /><br /></center>' ).show();
+                        //row.child( '<center><br /><img src="assets/img/loader/ajax-loader-lg.gif" /><br /><br /></center>' ).show();
                     }
                 }).done(function(response){
-                    row.child('<div style="padding: 20px;">'+response+'</div>','no-padding').show();
+                    //row.child('<div style="padding: 20px;">'+response+'</div>','no-padding').show();
                     // Add to the 'open' array
                     if ( idx === -1 ) {
                         detailRows.push( tr.attr('id') );
                     }
-                });
+                });*/
+               //console.log(d);
+
+                window.open("Requisition/transaction/requisition-slip?id="+d.requisition_id+"&type=preview","dsv", "location=0,status=0,scrollbars=0,width=700,height=400");
             }
         } );
 

@@ -279,6 +279,7 @@ class Issuances extends CORE_Controller
                 'issuance_info.issuance_id',
                 'issuance_info.slip_no',
                 'issuance_info.remarks',
+                'issuance_info.requisition_id',
                 //'customers.customer_name',
                 'issuance_info.date_created',
                 'DATE_FORMAT(issuance_info.date_issued,"%m/%d/%Y") as date_issued',

@@ -14,6 +14,7 @@ class Requisition extends CORE_Controller
         $this->load->model('Requisition_items_model');
         $this->load->model('Issuance_model');
         $this->load->model('Issuance_item_model');
+        $this->load->model('Requisition_items_model');
 
     }
 
@@ -374,7 +375,22 @@ class Requisition extends CORE_Controller
                 break;
 
             case 'requisition-slip':
-                $this->load->view('template/rpt_requisition_slip');
+                $m_requisition = $this->Requisition_items_model;
+                $m_issuance = $this->Issuance_model;
+
+                $requisition_id = $this->input->get('id');
+
+                $slip_no = $m_issuance->get_list(
+                    array(
+                        'requisition_id' => $requisition_id
+                    )
+                );
+
+                $data['slipno'] = (count($slip_no)>0?$slip_no[0]->slip_no:'');
+                $data['items'] = $m_requisition->get_requisition_issuance($requisition_id);
+                //print_r($data);
+
+                $this->load->view('template/rpt_requisition_slip',$data);
                 break;
 
         }
