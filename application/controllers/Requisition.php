@@ -63,7 +63,7 @@ class Requisition extends CORE_Controller
         );
 
         $data['title'] = 'Purchase Order';
-        (in_array('2-1',$this->session->user_rights)?
+        (in_array('2-6',$this->session->user_rights)?
             $this->load->view('requisition_view', $data)
             :redirect(base_url('dashboard')));
 
@@ -360,7 +360,6 @@ class Requisition extends CORE_Controller
                 //mark requisition as closed
                 $m_requisitions->status = 0;
                 $m_requisitions->modify($requisition_id);
-
 
                 $m_issuance->commit();
 
