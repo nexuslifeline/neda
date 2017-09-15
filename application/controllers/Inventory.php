@@ -29,9 +29,9 @@ class Inventory extends CORE_Controller
 
         $data['departments']=$this->Departments_model->get_list(array('is_deleted'=>FALSE,'is_active'=>TRUE));
         
-        (in_array('8-2',$this->session->user_rights)? 
+        (in_array('8-1',$this->session->user_rights)?
         $this->load->view('inventory_report_view',$data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
     }
 
 
@@ -56,12 +56,23 @@ class Inventory extends CORE_Controller
 
                 $data['products'] = $m_products->get_product_list_inventory($date,$depid);
                 $data['date'] = date('m/d/Y',strtotime($date));
-                $data['department'] =$info[0]->department_name;
+                $data['department'] =(count($info)>0?$info[0]->department_name:'');
 
                 $m_company_info=$this->Company_model;
                 $company_info=$m_company_info->get_list();
                 $data['company_info']=$company_info[0];
                 $this->load->view('template/batch_inventory_report',$data);
+                break;
+            case 'materials-issued':
+                $m_products = $this->Products_model;
+
+                $start = date('Y-m-d',strtotime($this->input->get('start')));
+                $end = date('Y-m-d',strtotime($this->input->get('end')));
+
+                $data['start'] = date('m/d/Y',strtotime($start));
+                $data['end'] = date('m/d/Y',strtotime($end));
+                $data['items'] = $m_products->get_supplies_materials_issued($start,$end);
+                $this->load->view('template/rpt_materials_issued',$data);
                 break;
         }
     }

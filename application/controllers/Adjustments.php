@@ -62,7 +62,7 @@ class Adjustments extends CORE_Controller
         
         (in_array('2-5',$this->session->user_rights)? 
         $this->load->view('adjustment_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
 
     }
 

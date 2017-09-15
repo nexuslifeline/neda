@@ -18,7 +18,7 @@ class Departments extends CORE_Controller {
         $data['title'] = 'Department Management';
         (in_array('4-3',$this->session->user_rights)? 
         $this->load->view('departments_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
     }
 

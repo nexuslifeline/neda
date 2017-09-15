@@ -125,7 +125,7 @@ class Login extends CORE_Controller {
                             'link_code' => '7-1'
                         ));
 
-                        if(count($exists)>0){
+                        if(count($exists)>0){ //PO for Approval is permitted to this group, show dashboard
                             $startup = 'Dashboard';
                         }else{
                             $list_rights = $m_group->get_list(
@@ -139,7 +139,8 @@ class Login extends CORE_Controller {
                                     array('rights_links as rl','rl.link_code=user_group_rights.link_code','left')
                                 )
                             );
-                            $startup = $list_rights[0]->controller;
+
+                            $startup = (count($list_rights)>0?$list_rights[0]->controller:'profile');
                         }
 
                         $response['title']='Success';

@@ -26,7 +26,7 @@ class Users extends CORE_Controller
 
         (in_array('6-5',$this->session->user_rights)? 
             $this->load->view('users_view', $data)
-            :redirect(base_url('dashboard')));
+            :redirect(base_url('profile')));
 
 
 

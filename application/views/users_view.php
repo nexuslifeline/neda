@@ -340,6 +340,8 @@
                                                                    </div>
                                                                </div>
 
+                                                               <br />
+
                                                                <button type="button" id="btn_browse" class="btn btn-primary "  style="margin-top: 2%;text-transform: capitalize;font-family: Tahoma, Georgia, Serif;">Browse Photo</button>
                                                                <button type="button" id="btn_remove_photo"  class="btn btn-danger" style="margin-top: 2%;text-transform: capitalize;font-family: Tahoma, Georgia, Serif;">Remove</button>
                                                            </div>

@@ -24,8 +24,8 @@
         <thead>
             <tr>
                 <td colspan="2" align="center">
-                    <h3 style="line-height: 0%"><strong><?php echo $company_info->company_name; ?></strong></h3>
-                    <p style="line-height: 0%"><?php echo $company_info->company_address; ?></p>
+                    <h3 style="line-height: 50%"><strong><?php echo $company_info->company_name; ?></strong></h3>
+                    <p style="line-height: 50%"><?php echo $company_info->company_address; ?></p>
                     <p style="line-height: 0%"><?php echo $company_info->landline.'/'.$company_info->mobile_no; ?></p><br />
                 </td>
             </tr>

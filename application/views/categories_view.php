@@ -30,70 +30,11 @@
                 zoom: 80%;
             }
              
-            .bg-color {
-                background-image: url('assets/img/main-bg.jpg');
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-            }
 
-            .modal-backdrop {
-                opacity:0.5 !important;
-            }
 
-            .form-control {
-                border-width: 3px!important;
-                border-color: #afafaf!important;
-                background: transparent!important;
-            }
 
-            .form-control:focus {
-                transition: .3s;
-                font-size: 20px;
-                -webkit-box-shadow: none!important;
-                -moz-box-shadow: none!important;
-                box-shadow: none!important;
-                background-color: transparent!important;
-                border-color: white!important;
-                font-weight: bolder;
-                color: white;
-            }
 
-            .panel {
-                -webkit-box-shadow: none!important;
-                -moz-box-shadow: none!important;
-                box-shadow: none!important;
-                background-color: transparent!important;
-                color: white;
-            }
 
-            .modal-header,
-            .panel-heading {
-                background-color: rgba(64, 64, 64, .8)!important;
-            }
-
-            .panel-body {
-                background-color: rgba(64, 64, 64, .5)!important;
-            }
-
-/*            tr:nth-child(even) {
-                background-color: rgba(64, 64, 64, .3)!important;
-            }
-
-            th {
-                background-color: rgba(64, 64, 64, .7)!important;
-                padding: 10px;
-                border: 1px solid #afafaf;
-            }
-
-            td {
-                padding:10px;
-                border: 1px solid #afafaf;
-            }
-*/
-            table {
-                color: white;
-            }
-              
             .toolbar{
                 float: left;
             }
@@ -153,14 +94,14 @@
                                     <div class="row">
                                         <div class="col-md-12">
 
-                                            <div id="div_category_list">
+                                            <div id="divcategory">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <b style="color: white; font-size: 12pt;"><i class="fa fa-bars"></i>&nbsp; Categories</b>
                                                     </div>
                                                     <div class="panel-body table-responsive">
 
-                                                        <table id="tbl_categories" class="table-striped custom-design" cellspacing="0" width="100%">
+                                                        <table id="tblcategories" class="table-striped custom-design" cellspacing="0" width="100%">
                                                             <thead class="">
 
                                                             <tr>
@@ -319,7 +260,7 @@
         var dt; var _txnMode; var _selectedID; var _selectRowObj;
 
         var initializeControls=function(){
-            dt=$('#tbl_categories').DataTable({
+            dt=$('#tblcategories').DataTable({
                 "dom": '<"toolbar">frtip',
                 "bLengthChange":false,
                 "ajax" : "Categories/transaction/list",
@@ -352,7 +293,7 @@
         var bindEventHandlers=(function(){
             var detailRows = [];
 
-            $('#tbl_categories tbody').on( 'click', 'tr td.details-control', function () {
+            $('#tblcategories tbody').on( 'click', 'tr td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = dt.row( tr );
                 var idx = $.inArray( tr.attr('id'), detailRows );
@@ -382,7 +323,7 @@
                 //showList(false);
             });
 
-            $('#tbl_categories tbody').on('click','button[name="edit_info"]',function(){
+            $('#tblcategories tbody').on('click','button[name="edit_info"]',function(){
                 _txnMode="edit";
                 _selectRowObj=$(this).closest('tr');
                 var data=dt.row(_selectRowObj).data();
@@ -401,7 +342,7 @@
                 //showList(false);
             });
 
-            $('#tbl_categories tbody').on('click','button[name="remove_info"]',function(){
+            $('#tblcategories tbody').on('click','button[name="remove_info"]',function(){
                 _selectRowObj=$(this).closest('tr');
                 var data=dt.row(_selectRowObj).data();
                 _selectedID=data.category_id;
@@ -526,10 +467,10 @@
 
         var showList=function(b){
             if(b){
-                $('#div_category_list').show();
+                $('#divcategory').show();
                 $('#div_category_fields').hide();
             }else{
-                $('#div_category_list').hide();
+                $('#divcategory').hide();
                 $('#div_category_fields').show();
             }
         };

@@ -65,7 +65,7 @@ class Requisition extends CORE_Controller
         $data['title'] = 'Purchase Order';
         (in_array('2-6',$this->session->user_rights)?
             $this->load->view('requisition_view', $data)
-            :redirect(base_url('dashboard')));
+            :redirect(base_url('profile')));
 
 
 

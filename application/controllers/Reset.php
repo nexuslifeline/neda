@@ -21,6 +21,9 @@ class Reset extends CORE_Controller
 
         $this->db->query('TRUNCATE products');
         $this->db->query('TRUNCATE suppliers');
+        $this->db->query('TRUNCATE categories');
+        $this->db->query('TRUNCATE departments');
+        $this->db->query('TRUNCATE units');
 
         $this->db->query('TRUNCATE purchase_order');
         $this->db->query('TRUNCATE purchase_order_items');
@@ -39,6 +42,9 @@ class Reset extends CORE_Controller
 
         $this->db->query('TRUNCATE payable_payments');
         $this->db->query('TRUNCATE payable_payments_list');
+
+        $this->db->query('TRUNCATE po_attachments');
+        $this->db->query('TRUNCATE po_messages');
 
         echo "Database successfully truncated. ";
 

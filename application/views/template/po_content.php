@@ -1,7 +1,7 @@
 
 
 <div>
-<center><table width="95%" cellpadding="5" style="font-family: tahoma;font-size: 11">
+<center><table width="95%" cellpadding="5" style="font-family: tahoma;font-size: 11px;">
     <tr>
         <td width="45%" valign="top">
             <span>Supplier :</span><br /><br />

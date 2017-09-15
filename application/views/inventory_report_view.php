@@ -317,7 +317,7 @@
             });
 
             $(document).on('click','#btn_print',function(){
-                window.open('Inventory/transaction/preview-inventory?depid'+$('#cbo_department').val()+'&date='+$('#txt_date').val());
+                window.open('Inventory/transaction/preview-inventory?depid='+$('#cbo_department').val()+'&date='+$('#txt_date').val());
             });
 
             $(document).on('click','#btn_refresh',function(){

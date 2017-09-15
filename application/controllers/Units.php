@@ -19,7 +19,7 @@ class Units extends CORE_Controller {
         $data['title'] = 'Unit Management';
         (in_array('4-4',$this->session->user_rights)? 
         $this->load->view('units_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
     }
 

@@ -26,7 +26,7 @@ class Company extends CORE_Controller
         $data['company']=$company[0];
         (in_array('6-6',$this->session->user_rights)? 
         $this->load->view('company_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
     }
 

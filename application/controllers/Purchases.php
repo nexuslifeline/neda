@@ -77,7 +77,7 @@ class Purchases extends CORE_Controller
         $data['title'] = 'Purchase Order';
         (in_array('2-1',$this->session->user_rights)? 
         $this->load->view('po_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
 
 

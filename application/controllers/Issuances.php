@@ -53,7 +53,7 @@ class Issuances extends CORE_Controller
         $data['title'] = 'Issuance';
         (in_array('2-4',$this->session->user_rights)? 
         $this->load->view('issuance_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
     }
     function transaction($txn = null,$id_filter=null) {

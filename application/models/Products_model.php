@@ -9,6 +9,149 @@ class Products_model extends CORE_Model {
     }
 
 
+    function get_supplies_materials_issued($start,$end){
+        $sql="SELECT 
+                    lQ.*,
+                    (lQ.BeginningQty+lQ.ProcurementQty+lQ.AdjustmentsIn-lQ.AdjustmentsOut-lQ.IssuancesQty) as EndingQty
+                FROM
+                
+                (SELECT 
+                
+                    p.product_id,p.product_code,u.unit_name,p.product_desc,p.purchase_cost,
+                    IFNULL(bQ.BeginningQty,0)as BeginningQty,
+                    IFNULL(pQ.ProcurementQty,0)as ProcurementQty,
+                    IFNULL(iQ.IssuancesQty,0) as IssuancesQty,
+                    IFNULL(aIQ.AdjustmentsIn,0) as AdjustmentsIn,
+                    IFNULL(aOQ.AdjustmentsOut,0) as AdjustmentsOut
+                    
+                    
+                FROM products as p
+                
+                LEFT JOIN
+                
+                
+                (
+                    SELECT beg.product_id,
+                    (beg.ReceiveQty+beg.AdjIn-beg.IssueQty-beg.AdjOut)as BeginningQty
+                
+                    FROM
+                
+                    (SELECT 
+                    m.product_id,
+                    SUM(m.ReceiveQty)as ReceiveQty,
+                    SUM(m.IssueQty)as IssueQty,
+                    SUM(m.AdjIn)as AdjIn,
+                    SUM(m.AdjOut)as AdjOut,
+                    (SUM(m.ReceiveQty)+SUM(m.AdjIn)-SUM(m.IssueQty)-SUM(m.AdjOut))as BeginningQty
+                
+                    FROM
+                
+                    (SELECT 
+                    dii.product_id,SUM(dii.dr_qty) as ReceiveQty,0 as IssueQty,0 as AdjIn,0 as AdjOut 
+                    FROM `delivery_invoice_items` as dii
+                    INNER JOIN `delivery_invoice` as di 
+                    ON di.`dr_invoice_id`=dii.`dr_invoice_id`
+                    WHERE di.is_active=1 AND di.is_deleted=0 AND di.date_delivered<'$start'
+                    GROUP BY dii.product_id
+                
+                    UNION ALL
+                
+                    SELECT 
+                    iii.product_id,0 as ReceiveQty,SUM(iii.issue_qty) as IssueQty,0 as AdjIn,0 as AdjOut 
+                    FROM `issuance_items` as iii
+                    INNER JOIN `issuance_info` as ii 
+                    ON ii.`issuance_id`=iii.`issuance_id`
+                    WHERE ii.is_active=1 AND ii.is_deleted=0 AND ii.date_issued<'$start'
+                    GROUP BY iii.product_id
+                
+                
+                    UNION ALL
+                
+                    SELECT 
+                    aii.product_id,0 as ReceiveQty,0 as IssueQty,SUM(aii.adjust_qty) as AdjIn,0 as AdjOut 
+                    FROM `adjustment_items` as aii
+                    INNER JOIN `adjustment_info` as ai 
+                    ON ai.`adjustment_id`=aii.`adjustment_id`
+                    WHERE ai.is_active=1 AND ai.is_deleted=0 AND ai.adjustment_type='IN'
+                    AND ai.date_adjusted<'$start'
+                    GROUP BY aii.product_id
+                
+                    UNION ALL
+                
+                    SELECT 
+                    aii.product_id,0 as ReceiveQty,0 as IssueQty,0 as AdjIn,SUM(aii.adjust_qty) as AdjOut 
+                    FROM `adjustment_items` as aii
+                    INNER JOIN `adjustment_info` as ai 
+                    ON ai.`adjustment_id`=aii.`adjustment_id`
+                    WHERE ai.is_active=1 AND ai.is_deleted=0 AND ai.adjustment_type='OUT'
+                    AND ai.date_adjusted<'$start'
+                    GROUP BY aii.product_id) as m GROUP BY m.product_id)as beg
+                ) as bQ ON bQ.product_id=p.product_id
+                
+                LEFT JOIN
+                
+                (
+                  SELECT 
+                  dii.product_id,SUM(dii.dr_qty) as ProcurementQty
+                  FROM `delivery_invoice_items` as dii
+                  INNER JOIN `delivery_invoice` as di 
+                  ON di.`dr_invoice_id`=dii.`dr_invoice_id`
+                  WHERE di.is_active=1 AND di.is_deleted=0 AND di.date_delivered BETWEEN
+                  '$start' AND '$end'
+                  GROUP BY dii.product_id
+                ) as pQ On pQ.product_id=p.product_id
+                
+                
+                LEFT JOIN
+                
+                
+                (
+                
+                  SELECT 
+                  iii.product_id,SUM(iii.issue_qty) as IssuancesQty
+                  FROM `issuance_items` as iii
+                  INNER JOIN `issuance_info` as ii 
+                  ON ii.`issuance_id`=iii.`issuance_id`
+                  WHERE ii.is_active=1 AND ii.is_deleted=0 AND ii.date_issued BETWEEN
+                  '$start' AND '$end'
+                  GROUP BY iii.product_id
+                
+                ) as iQ ON iQ.product_id=p.product_id
+                
+                LEFT JOIN
+                
+                (
+                SELECT 
+                aii.product_id,SUM(aii.adjust_qty) as AdjustmentsIn 
+                FROM `adjustment_items` as aii
+                INNER JOIN `adjustment_info` as ai 
+                ON ai.`adjustment_id`=aii.`adjustment_id`
+                WHERE ai.is_active=1 AND ai.is_deleted=0 AND ai.adjustment_type='IN'
+                AND ai.date_adjusted BETWEEN '$start' AND '$end'
+                GROUP BY aii.product_id
+                ) as aIQ ON aiQ.product_id=p.product_id
+                
+                LEFT JOIN
+                
+                (
+                SELECT 
+                aii.product_id,SUM(aii.adjust_qty) as AdjustmentsOut 
+                FROM `adjustment_items` as aii
+                INNER JOIN `adjustment_info` as ai 
+                ON ai.`adjustment_id`=aii.`adjustment_id`
+                WHERE ai.is_active=1 AND ai.is_deleted=0 AND ai.adjustment_type='OUT'
+                AND ai.date_adjusted BETWEEN '$start' AND '$end'
+                GROUP BY aii.product_id
+                ) as aOQ ON aOQ.product_id=p.product_id
+                
+                
+                LEFT JOIN units as u ON u.unit_id=p.unit_id 
+                
+                ) as lQ ORDER BY lQ.product_desc";
+        return $this->db->query($sql)->result();
+    }
+
+
     function getDepartment()
     {
         $query = $this->db->query('SELECT department_name FROM departments');
@@ -166,7 +309,7 @@ class Products_model extends CORE_Model {
                 AND iit.product_id=$product_id ".($as_of_date==null?"":" AND ii.date_issued<='".$as_of_date."'")."
 
 
-                ) as m ORDER BY m.txn_date ASC) as n  LEFT JOIN products as p ON n.product_id=p.product_id";
+                ) as m ORDER BY m.txn_date ASC) as n  LEFT JOIN products as p ON n.product_id=p.product_id ORDER BY n.txn_date ASC,field(type,'Purchase Invoice','Adjustment In','Issuance','Adjustment Out') ASC";
 
         return $this->db->query($sql)->result();
     }

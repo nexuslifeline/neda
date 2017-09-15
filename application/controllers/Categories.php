@@ -20,7 +20,7 @@ class Categories extends CORE_Controller
         $data['title'] = 'Category Management';
         (in_array('4-2',$this->session->user_rights)? 
         $this->load->view('categories_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
     }
 

@@ -23,7 +23,7 @@ class User_groups extends CORE_Controller
         $data['title'] = 'User Group Management';
         (in_array('6-4',$this->session->user_rights)? 
         $this->load->view('user_group_view', $data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
 
     }

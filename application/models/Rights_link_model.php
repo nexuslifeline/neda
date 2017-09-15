@@ -26,7 +26,9 @@ class Rights_link_model extends CORE_Model{
                                           (26,'7','7-1','Purchase Order for Approval','Dashboard'),                      
                   
                                           
-                                          (51,'2','2-6','Requisition','Requisition')
+                                          (51,'2','2-6','Requisition','Requisition'),
+                                          (52,'8','8-1','Inventory Report','Inventory'),
+                                          (53,'8','8-2','Supplies and Materials Issued Report','Supplies_issued')
 
                                           ON DUPLICATE KEY UPDATE
                                           rights_links.parent_code=VALUES(rights_links.parent_code),

@@ -22,7 +22,7 @@ class Tax extends CORE_Controller {
         $data['tax_type']=$this->Tax_types_model->get_list();
         (in_array('6-1',$this->session->user_rights)? 
         $this->load->view('tax_view',$data)
-        :redirect(base_url('dashboard')));
+        :redirect(base_url('profile')));
         
     }
 
