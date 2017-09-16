@@ -318,13 +318,24 @@
 
 
             <div class="row">
-
+<!--
                 <div class="col-sm-5">
                     Department * : <br />
                     <select name="department" id="cbo_departments" data-error-msg="Department is required." required>
                         <option value="0">[ Create New Department ]</option>
-                        <?php foreach($departments as $department){ ?>
-                            <option value="<?php echo $department->department_id; ?>"  data-default-cost="<?php echo $department->default_cost; ?>" ><?php echo $department->department_name; ?></option>
+                        <?php /*foreach($departments as $department){ */?>
+                            <option value="<?php /*echo $department->department_id; */?>"  data-default-cost="<?php /*echo $department->default_cost; */?>" ><?php /*echo $department->department_name; */?></option>
+                        <?php /*} */?>
+                    </select>
+                </div>-->
+
+
+                <div class="col-sm-5">
+                    Supplier :<br />
+                    <select name="supplier" id="cbo_suppliers" data-error-msg="Supplier is required." required>
+                        <option value="0">[ Create New Supplier ]</option>
+                        <?php foreach($suppliers as $supplier){ ?>
+                            <option value="<?php echo $supplier->supplier_id; ?>" data-tax-type="<?php echo $supplier->tax_type_id; ?>" data-contact-person="<?php echo $supplier->contact_name; ?>"><?php echo $supplier->supplier_name; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -343,21 +354,12 @@
 
             <div class="row">
 
+
+
+
+
+
                 <div class="col-sm-5">
-                    Supplier :<br />
-                    <select name="supplier" id="cbo_suppliers" data-error-msg="Supplier is required." required>
-                        <option value="0">[ Create New Supplier ]</option>
-                        <?php foreach($suppliers as $supplier){ ?>
-                            <option value="<?php echo $supplier->supplier_id; ?>" data-tax-type="<?php echo $supplier->tax_type_id; ?>" data-contact-person="<?php echo $supplier->contact_name; ?>"><?php echo $supplier->supplier_name; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-
-
-
-
-                <div class="col-sm-3 col-sm-offset-4">
                     Contact Person :<br />
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -1001,12 +1003,12 @@ $(document).ready(function(){
             dropdownParent: "#modal_new_supplier"
         });
 
-        _cboDepartments=$("#cbo_departments").select2({
+     /*   _cboDepartments=$("#cbo_departments").select2({
             placeholder: "Please select department.",
             allowClear: true
         });
 
-        _cboDepartments.select2('val',null); 
+        _cboDepartments.select2('val',null); */
 
         var raw_data = <?php echo json_encode($products); ?>;
 
@@ -1206,6 +1208,7 @@ $(document).ready(function(){
 
             }
         } );
+/*
 
         _cboDepartments.on("select2:select", function (e) {
 
@@ -1223,6 +1226,7 @@ $(document).ready(function(){
 
 
         });
+*/
 
         _cboSuppliers.on("select2:select", function (e) {
 
@@ -1263,7 +1267,7 @@ $(document).ready(function(){
             //$('.toggle-fullscreen').click();
             $('#span_invoice_no').html('INV-XXXX');
             clearFields($('#frm_deliveries'));
-            $('#cbo_departments').select2('val', null);
+           /* $('#cbo_departments').select2('val', null);*/
             $('#cbo_suppliers').select2('val', null);
             $('#img_user').attr('src','assets/img/anonymous-icon.png');
             $('#td_discount').html('0.00');
@@ -1296,7 +1300,7 @@ $(document).ready(function(){
 
             $('textarea[name="remarks"]').val(data.remarks);
             $('#cbo_suppliers').select2('val',data.supplier_id);
-            $('#cbo_departments').select2('val',data.department_id);
+          /*  $('#cbo_departments').select2('val',data.department_id);*/
 
 
             $('input,textarea').each(function(){
@@ -1485,7 +1489,7 @@ $(document).ready(function(){
 
                 $('textarea[name="remarks"]').val(data.remarks);
                 $('#cbo_suppliers').select2('val',data.supplier_id);
-                $('#cbo_departments').select2('val',data.department_id);
+               /* $('#cbo_departments').select2('val',data.department_id);*/
 
                 $('input,textarea').each(function(){
                     var _elem=$(this);

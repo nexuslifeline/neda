@@ -215,18 +215,18 @@
             <h4 style="margin-bottom: 6px;"><b>PO # : <span id="span_po_no">PO-XXXX</span></b></h4>
             <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 5px;">
                 <div class="row">
-                    <div class="col-sm-5" >
+                  <!--  <div class="col-sm-5" >
                         Department * : <br />
                         <select name="department" id="cbo_departments"  data-error-msg="Department is required." required>
                             <option value="0">[ Create New Department ]</option>
-                            <?php foreach($departments as $department){ ?>
-                                <option value="<?php echo $department->department_id; ?>" data-default-cost="<?php echo $department->default_cost; ?>" data-delivery-address="<?php echo $department->delivery_address;  ?>"><?php echo $department->department_name; ?></option>
-                            <?php } ?>
+                            <?php /*foreach($departments as $department){ */?>
+                                <option value="<?php /*echo $department->department_id; */?>" data-default-cost="<?php /*echo $department->default_cost; */?>" data-delivery-address="<?php /*echo $department->delivery_address;  */?>"><?php /*echo $department->department_name; */?></option>
+                            <?php /*} */?>
                         </select>
-                    </div>
+                    </div>-->
 
 
-                    <div class="col-sm-3 col-sm-offset-3">
+                    <div class="col-sm-5">
                         PO # : <br />
                         <div class="input-group">
                             <span class="input-group-addon">
@@ -848,6 +848,7 @@ $(document).ready(function(){
          placeholder: "Please select Product Type",
          allowClear: false
          });*/
+/*
 
         _cboDepartments=$("#cbo_departments").select2({
             placeholder: "Please select department.",
@@ -855,6 +856,7 @@ $(document).ready(function(){
         });
 
         _cboDepartments.select2('val',null);
+*/
 
 
 
@@ -1083,7 +1085,7 @@ $(document).ready(function(){
             clearFields($('#frm_purchases'));
             $('#cbo_tax_type').select2('val',null);
             $('#cbo_suppliers').select2('val',null);
-            $('#cbo_departments').select2('val',null);
+          /*  $('#cbo_departments').select2('val',null);*/
             $('textarea[name="remarks"]').val('');
             //$('#cbo_prodType').select2('val',3);
             showList(false);
@@ -1161,7 +1163,7 @@ $(document).ready(function(){
             });
 
             $('#cbo_suppliers').select2('val',data.supplier_id);
-            $('#cbo_departments').select2('val',data.department_id);
+           /* $('#cbo_departments').select2('val',data.department_id);*/
 
             //var tbl_summary=$('#tbl_purchase_summary');
             //tbl_summary.find(oTableDetails.discount).html(accounting.formatNumber(data.total_discount,2));
@@ -1582,7 +1584,7 @@ $(document).ready(function(){
 
 
 
-
+/*
     _cboDepartments.on("select2:select", function (e) {
 
         var i=$(this).select2('val');
@@ -1591,8 +1593,8 @@ $(document).ready(function(){
         _defCostType=obj_department.data('default-cost');
 
 
-    });
-
+    });*/
+/*
     _cboDepartments.on("select2:select", function (e) {
 
         var i=$(this).select2('val');
@@ -1608,7 +1610,7 @@ $(document).ready(function(){
         }
 
 
-    });
+    });*/
 
 
     _cboSuppliers.on("select2:select", function (e) {
