@@ -103,7 +103,7 @@ class Issuances extends CORE_Controller
                 $m_issuance->date_issued=date('Y-m-d',strtotime($this->input->post('date_issued',TRUE)));
                 //$m_issuance->customer_id=$this->input->post('customer_id',TRUE);
                 //$m_issuance->address=$this->input->post('address',TRUE);
-                $m_issuance->terms=$this->input->post('terms',TRUE);
+              /*  $m_issuance->terms=$this->input->post('terms',TRUE);*/
                 $m_issuance->total_discount=$this->get_numeric_value($this->input->post('summary_discount',TRUE));
                 $m_issuance->total_before_tax=$this->get_numeric_value($this->input->post('summary_before_discount',TRUE));
                 $m_issuance->total_tax_amount=$this->get_numeric_value($this->input->post('summary_tax_amount',TRUE));
@@ -177,7 +177,7 @@ class Issuances extends CORE_Controller
                 $m_issuance->date_issued=date('Y-m-d',strtotime($this->input->post('date_issued',TRUE)));
                 //$m_issuance->customer_id=$this->input->post('customer_id',TRUE);
                 //$m_issuance->address=$this->input->post('address',TRUE);
-                $m_issuance->terms=$this->input->post('terms',TRUE);
+               /* $m_issuance->terms=$this->input->post('terms',TRUE);*/
                 $m_issuance->total_discount=$this->get_numeric_value($this->input->post('summary_discount',TRUE));
                 $m_issuance->total_before_tax=$this->get_numeric_value($this->input->post('summary_before_discount',TRUE));
                 $m_issuance->total_tax_amount=$this->get_numeric_value($this->input->post('summary_tax_amount',TRUE));
