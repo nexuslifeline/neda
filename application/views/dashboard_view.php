@@ -76,7 +76,7 @@
 
     </style>
 
-    <link rel="stylesheet" type="text/css" href="assets/css/dark-theme.css">
+    <!--<link rel="stylesheet" type="text/css" href="assets/css/dark-theme.css">-->
 
     <style>
 
@@ -100,7 +100,7 @@
             *width: 14.285714285714285714285714285714%;
           }
         }
-         
+
         @media (min-width: 1200px) {
           .seven-cols .col-md-1,
           .seven-cols .col-sm-1,
@@ -109,7 +109,19 @@
             *width: 14.285714285714285714285714285714%;
           }
         }
-    </style>
+
+
+
+        .bg-purple{background: #2f9de0 !important}
+        .widget{border-radius:3px;overflow:hidden;margin-top: 10px;}
+        .widget{padding:15px}.widget{margin-bottom:20px;color:#fff}.widget.widget-stats{position:relative}
+        .widget-stats .stats-info h4{font-size:12px;margin:5px 0;color:#fff}
+        .widget-stats .stats-icon{font-size:42px;height:56px;width:56px;text-align:center;line-height:56px;margin-left:15px;color:#fff;position:absolute;right:15px;top:15px;opacity:.2;filter:alpha(opacity=20)}.widget-stats .stats-info p{font-size:24px;font-weight:300;margin-bottom:0}.widget-stats .stats-link a{display:block;margin:15px -15px -15px;padding:7px 15px;background:url(../img/transparent/black-0.4.png);background:rgba(0,0,0,.4);text-align:right;color:#ddd;font-weight:300;text-decoration:none}.widget-stats .stats-link a:focus,.widget-stats .stats-link a:hover{background:url(../img/transparent/black-0.6.png);background:rgba(0,0,0,.6);color:#fff}
+        .widget-stats .stats-icon.stats-icon-lg{font-size:52px;top:12px;right:21px}.widget-stats .stats-title{position:relative;line-height:1.1;font-size:12px;margin:2px 0 7px}
+        .widget-stats .stats-desc,.widget-stats .stats-title{color:#fff;color:rgba(255,255,255,.6)}
+        .widget-stats .stats-desc{font-weight:300;margin-bottom:0}
+        .widget-stats .stats-number{font-size:24px;font-weight:300;margin-bottom:10px}
+        .widget-stats .stats-progress .progress-bar{background:#fff}                                                                                                              </style>
 
 
 
@@ -124,29 +136,92 @@
         <?php echo $_side_bar_navigation; ?>
         <div class="static-content-wrapper">
             <div class="static-content">
-                    <div class="page-content"><!-- #page-content -->
-                            <div data-widget-group="group1">
+                    <div class="page-content" style="padding: 15px;"><!-- #page-content -->
+                            <div>
+
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="panel panel-default" style="overflow-x: hidden!important;"> 
+                                    <div class="col-md-3">
+                                        <div class="widget widget-stats bg-purple">
+                                            <div class="stats-icon stats-icon-lg"><i class="fa fa-shopping-cart fa-fw"></i></div>
+                                            <div class="stats-title">PURCHASES - THIS MONTH</div>
+                                            <div class="stats-number"><?php echo number_format($purchases,2); ?></div>
+                                            <div class="stats-progress progress">
+                                                <div class="progress-bar" style="width: 76.3%;"></div>
+                                            </div>
+                                            <div class="stats-desc">26% greater than last month</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="widget widget-stats bg-purple">
+                                            <div class="stats-icon stats-icon-lg"><i class="fa fa-shopping-cart fa-fw"></i></div>
+                                            <div class="stats-title">PO - THIS MONTH</div>
+                                            <div class="stats-number"><?php echo number_format($po_this_month,0); ?></div>
+                                            <div class="stats-progress progress">
+                                                <div class="progress-bar" style="width: 76.3%;"></div>
+                                            </div>
+                                            <div class="stats-desc">26% greater than last month</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="widget widget-stats bg-purple">
+                                            <div class="stats-icon stats-icon-lg"><i class="fa fa-shopping-cart fa-fw"></i></div>
+                                            <div class="stats-title">ISSUANCE - THIS MONTH</div>
+                                            <div class="stats-number"><?php echo number_format($issue_this_month,0); ?></div>
+                                            <div class="stats-progress progress">
+                                                <div class="progress-bar" style="width: 76.3%;"></div>
+                                            </div>
+                                            <div class="stats-desc">26% greater than last month</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-9">
+                                        <div class="panel panel-white">
+                                            <div class="panel-heading">
+                                                <div class="panel-tools">
+                                                    <a class="tools-action" href="#" data-toggle="collapse">
+                                                        <i class="pe-7s-angle-up"></i>
+                                                    </a>
+                                                    <a class="tools-action" href="#" data-toggle="dispose">
+                                                        <i class="pe-7s-close"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <canvas id="bar-chart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <div class="panel panel-default" style="overflow-x: hidden!important;">
+                                            <div class="panel-heading" style="background-color: #00a9dd;">
+                                                <h4 style="color: white;">PO for Approval</h4>
+                                            </div>
                                             <div class="panel-body table-responsive">
                                                 <div class="row" style="margin-top: 20px;">
                                                     <div class="col-xs-12 col-sm-12 <?php echo (in_array('7-1',$this->session->user_rights)?'':'hidden'); ?>">
-                                                      <div class="data-container table-responsive" >
+                                                        <div class="data-container table-responsive" >
                                                             <table id="tbl_po_list" class="table custom-design" c width="100%">
                                                                 <thead>
-                                                                    <th></th>
-                                                                    <th>PO #</th>
-                                                                    <th>Vendor</th>
-                                                                    <th>Terms </th>
-                                                                    <th>Posted by </th>
-                                                                    <th style="text-align: center;"> <i class="fa fa-paperclip"></i></th>
-                                                                    <th><center>Action</center></th>
+                                                                <th></th>
+                                                                <th>PO #</th>
+                                                                <th>Vendor</th>
+                                                                <th>Terms </th>
+                                                                <th>Posted by </th>
+                                                                <th style="text-align: center;"> <i class="fa fa-paperclip"></i></th>
+                                                                <th><center>Action</center></th>
                                                                 </thead>
                                                                 <tbody>
                                                                 </tbody>
                                                             </table>
-                                                      </div>
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -154,6 +229,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                     </div> <!-- #page-content -->
             </div>
@@ -192,171 +268,53 @@
 <!-- DATATABLE -->
 <script type="text/javascript" src="assets/plugins/datatables/jquery.dataTables.js"></script>
 <script type="text/javascript" src="assets/plugins/datatables/dataTables.bootstrap.js"></script>
-<script>
-var ctx = document.getElementById("salesChart").getContext('2d');
-var ctxIE = document.getElementById("testChart").getContext('2d');
-
-Chart.defaults.global.defaultFontColor = "#b7b7b7";
-
-  var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: ["Jan","Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
-          datasets: [
-            {
-              label: 'Income (Last Year)',
-              data: <?php echo json_encode($previous_year_income_monthly); ?>,
-              backgroundColor: [
-                  'rgba(255, 152, 0, .1)'
-              ],
-              borderColor: [
-                  'rgb(255, 152, 0)'
-              ],
-              borderWidth: 2
-            },
-            {
-              label: 'Income (Current Year)',
-              data: <?php echo json_encode($current_year_income_monthly); ?>,
-              backgroundColor: [
-                  'rgba(255, 255, 255, .1)'
-              ],
-              borderColor: [
-                  'rgb(255, 255, 255)'
-              ],
-              borderWidth: 2
-            }
-          ]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
-  });
-
-  var iEChart = new Chart(ctxIE, {
-      type: 'bar',
-      data: {
-          labels: ["Jan","Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
-          datasets: [
-            {
-              label: 'Income (Current Year)',
-              data: <?php echo json_encode($current_year_income_monthly); ?>,
-              backgroundColor: [
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)',
-                  'rgba(255, 152, 0, .2)'
-              ],
-              borderColor: [
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)',
-                  'rgb(255, 152, 0)'              
-              ],
-              borderWidth: 2
-            },
-            {
-              label: 'Expense (Current Year)',
-              data: <?php echo json_encode($expense_monthly); ?>,
-              backgroundColor: [
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)',
-                  'rgba(255, 255, 255, .1)'
-              ],
-              borderColor: [
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)',
-                  'rgb(255, 255, 255)'
-              ],
-              borderWidth: 2
-            }
-          ]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
-  });
-
-</script>
 
 <script>
-    var sparklineCharts = function(){
-            $("#sparkline1").sparkline([10,30,20,20,30,40,50], {
-                type: 'line',
-                width: '100%',
-                height: '40',
-                lineColor: '#ff9800',
-                fillColor: 'rgba(255, 152, 0, .1)',
-                lineWidth: '3',
-                spotColor: '#f44336',
-                maxSpotColor: '#f44336',
-                minSpotColor: '#f44336',
-                highlightSpotColor: '#00007f',
-                highlightLineColor: '#7f007f',
-                normalRangeColor: '#0000bf',
-                spotRadius: '0'
-            });
-    };
+    var ctx = document.getElementById("bar-chart").getContext('2d');
 
-    var sparkResize;
 
-    $(window).resize(function(e) {
-        clearTimeout(sparkResize);
-        sparkResize = setTimeout(sparklineCharts, 500);
+    Chart.defaults.global.defaultFontColor = "#b7b7b7";
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Jan","Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+            datasets: [
+                {
+                    label: 'ACCOUNT PAYABLES - 2017',
+                    data: [100,20,190,40,50,60,70,80,10,100,110,120],
+                    backgroundColor: [
+                        'rgba(255, 152, 0, .1)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 152, 0)'
+                    ],
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
     });
 
-    sparklineCharts();
+
 </script>
+
+
 
 <script>
 
     $(document).ready(function(){
         var dt; var _selectedID; var _selectRowObj;
+
+
 
         var initializeControls=(function(){
 
@@ -394,7 +352,7 @@ Chart.defaults.global.defaultFontColor = "#b7b7b7";
                             //alert(full.purchase_order_id);
 
                             var btn_approved='<button class="btn btn-success btn-sm" name="approve_po"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Approved this PO"><i class="fa fa-check" style="color: white;"></i> <span class=""></span></button>';
-                            var btn_conversation='<a id="link_conversation" href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-info btn-sm"  style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Open Conversation"><i class="fa fa-envelope"></i> </a>';
+                            var btn_conversation='<a id="link_conversation" href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-info btn-sm"  style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Open Conversation"><i class="fa fa-comments"></i> </a>';
 
                             return '<center>'+btn_approved+'&nbsp;'+btn_conversation+'</center>';
                         }
@@ -411,7 +369,7 @@ Chart.defaults.global.defaultFontColor = "#b7b7b7";
 
             var detailRows = [];
 
-           
+
             $('#tbl_po_list tbody').on( 'click', 'tr td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = dt.row( tr );

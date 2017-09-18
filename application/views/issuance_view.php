@@ -126,7 +126,7 @@ echo $_side_bar_navigation;
                                         <th>Department</th>
                                         <th>Purpose</th>
                                         <th>Status</th>
-                                        <th><center>Action</center></th>
+
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -159,6 +159,7 @@ echo $_side_bar_navigation;
                                         <th></th>
                                         <th>Slip #</th>
                                         <th>Department</th>
+                                        <th>Requisition #</th>
                                         <th>Remarks</th>
                                         <th><center>Action</center></th>
                                     </tr>
@@ -645,16 +646,7 @@ $(document).ready(function(){
                 { targets:[1],data: "requisition_no" },
                 { targets:[2],data: "department_name" },
                 { targets:[3],data: "purpose" },
-                { targets:[4],data: "stat" },
-                {
-                    targets:[5],
-                    render: function (data, type, full, meta){
-                        var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
-                        var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
-
-                        return '<center>'+btn_edit+'&nbsp;'+btn_trash+'</center>';
-                    }
-                }
+                { targets:[4],data: "stat" }
             ]
         });
 
@@ -672,9 +664,10 @@ $(document).ready(function(){
                 },
                 { targets:[1],data: "slip_no" },
                 { targets:[2],data: "department_name" },
-                { targets:[3],data: "remarks" },
+                { targets:[3],data: "requisition_no" },
+                { targets:[4],data: "remarks" },
                 {
-                    targets:[4],
+                    targets:[5],
                     render: function (data, type, full, meta){
                         var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
                         var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';

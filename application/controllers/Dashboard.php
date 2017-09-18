@@ -21,6 +21,9 @@ class Dashboard extends CORE_Controller {
         $data['_top_navigation']=$this->load->view('template/elements/top_navigation','',TRUE);
 
         $data['title']='Dashboard';
+        $data['purchases'] = 0;
+        $data['po_this_month'] = 0;
+        $data['issue_this_month'] = 0;
 
         $this->load->view('dashboard_view',$data);
     }

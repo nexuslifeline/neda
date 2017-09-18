@@ -598,6 +598,10 @@ $(document).ready(function(){
 
         });
 
+        if($('input[name="user_pword"]').val() && $('input[name="user_pword"]').val().length < 6){
+            showNotification({title:"Invalid!",stat:"error",msg:"Password should be atleast 6 characters! "});
+            stat=false;
+        }
 
         if($('input[name="user_confirm_pword"]').val()!=$('input[name="user_pword"]').val()){
             showNotification({title:"Error!",stat:"error",msg:"Password did not match."});

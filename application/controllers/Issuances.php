@@ -284,10 +284,12 @@ class Issuances extends CORE_Controller
                 'issuance_info.date_created',
                 'DATE_FORMAT(issuance_info.date_issued,"%m/%d/%Y") as date_issued',
                 'departments.department_id',
-                'departments.department_name'
+                'departments.department_name',
+                'rs.requisition_no'
             ),
             array(
-                array('departments','departments.department_id=issuance_info.issued_department_id','left')
+                array('departments','departments.department_id=issuance_info.issued_department_id','left'),
+                array('requisition_info as rs','rs.requisition_id=issuance_info.issuance_id','left')
                 //array('customers','customers.customer_id=issuance_info.issued_to_person','left')
             ),
             'issuance_info.issuance_id DESC'

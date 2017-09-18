@@ -22,8 +22,8 @@
             <div class="widget stay-on-collapse" id="widget-sidebar">
                 <nav role="navigation" class="widget-body">
                     <ul class="acc-menu">
-                        <li class="nav-separator"><span>Explore</span></li>
-                        <li class="<?php echo (in_array('7-1',$this->session->user_rights)?'':'hidden'); ?>"><a href="Dashboard"><i class="ti ti-home"></i><span>Dashboard</span><span class="badge badge-orange">0</span></a></li>
+
+                        <li class="<?php echo (in_array('7-1',$this->session->user_rights)?'':'hidden'); ?>"><a href="Dashboard"><i class="ti ti-home"></i><span>Review Board</span><!--<span class="badge badge-orange">0</span>--></a></li>
 
                         <li class="<?php echo (in_array('2',$this->session->parent_rights)?'':'hidden'); ?>"><a href="#"><i class="ti ti-package"></i><span>Purchasing</span></a>
                             <ul class="acc-menu">
