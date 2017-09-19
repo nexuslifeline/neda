@@ -117,7 +117,7 @@ class Products extends CORE_Controller
                 $m_products->is_tax_exempt =($this->input->post('is_tax_exempt',TRUE)==null?0:1);
 
                 $m_products->equivalent_points = $this->get_numeric_value($this->input->post('equivalent_points', TRUE));
-                $m_products->product_warn =$this->get_numeric_value( $this->input->post('product_warn', TRUE));
+                /*$m_products->product_warn =$this->get_numeric_value( $this->input->post('product_warn', TRUE));*/
                 $m_products->product_ideal =$this->get_numeric_value( $this->input->post('product_ideal', TRUE));
                 //$m_products->markup_percent = $this->input->post('markup_percent', TRUE);
                 $m_products->sale_price =$this->get_numeric_value($this->input->post('sale_price', TRUE));
@@ -168,7 +168,7 @@ class Products extends CORE_Controller
 
 
                 $m_products->equivalent_points = $this->get_numeric_value($this->input->post('equivalent_points', TRUE));
-                $m_products->product_warn =$this->get_numeric_value( $this->input->post('product_warn', TRUE));
+               /* $m_products->product_warn =$this->get_numeric_value( $this->input->post('product_warn', TRUE));*/
                 $m_products->product_ideal =$this->get_numeric_value( $this->input->post('product_ideal', TRUE));
                 //$m_products->markup_percent = $this->input->post('markup_percent', TRUE);
                 $m_products->sale_price =$this->get_numeric_value($this->input->post('sale_price', TRUE));

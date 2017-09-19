@@ -125,7 +125,7 @@ class Adjustments extends CORE_Controller
                 $m_adjustment->set('date_created','NOW()'); //treat NOW() as function and not string
 
 
-                $m_adjustment->department_id=$this->input->post('department',TRUE);
+               /* $m_adjustment->department_id=$this->input->post('department',TRUE);*/
                 $m_adjustment->adjustment_type=$this->input->post('adjustment_type',TRUE);
                 $m_adjustment->remarks=$this->input->post('remarks',TRUE);
                 $m_adjustment->date_adjusted=date('Y-m-d',strtotime($this->input->post('date_adjusted',TRUE)));
@@ -206,7 +206,7 @@ class Adjustments extends CORE_Controller
 
                 $m_adjustment->begin();
 
-                $m_adjustment->department_id=$this->input->post('department',TRUE);
+               /* $m_adjustment->department_id=$this->input->post('department',TRUE);*/
                 $m_adjustment->remarks=$this->input->post('remarks',TRUE);
                 $m_adjustment->adjustment_type=$this->input->post('adjustment_type',TRUE);
                 $m_adjustment->date_adjusted=date('Y-m-d',strtotime($this->input->post('date_adjusted',TRUE)));
@@ -225,7 +225,10 @@ class Adjustments extends CORE_Controller
                     'product_id'
                 );
 
-                $m_adjustment_items->delete_via_fk($adjustment_id); //delete previous items then insert those new
+                //$m_adjustment_items->delete_via_fk($adjustment_id); //delete previous items then insert those new
+                $m_adjustment_items->delete(array(
+                    'adjustment_id'=>$adjustment_id
+                ));
 
                 $prod_id=$this->input->post('product_id',TRUE);
                 $adjust_price=$this->input->post('adjust_price',TRUE);

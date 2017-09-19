@@ -59,7 +59,7 @@
                             <td width="70%" style="border-bottom: 1px solid black;"><?php echo $purchase_info->date_created; ?></td>
                         </tr>
                         <tr>
-                            <td width="30%">Mode of Procurement : </td>
+                            <td width="30%">&nbsp;</td>
                             <td width="70%" style="border-bottom: 1px solid black;"></td>
                         </tr>
                     </table>
@@ -75,11 +75,11 @@
             <tr>
                 <td style="border:1px solid black;" width="50%">
                     Place of Delivery : <?php echo $purchase_info->deliver_to_address; ?> <br />
-                    Date of Delivery :
+
                 </td>
                 <td style="border:1px solid black;" width="50%">
-                    Delivery Term: <?php echo $purchase_info->terms; ?> <br />
-                    Payment Term :
+                    Term: <?php echo $purchase_info->terms; ?> <br />
+
                 </td>
             </tr>
             <tr>
@@ -154,8 +154,8 @@
             </tr>
             <tr>
                 <td style="border:1px solid black;padding-left: 10px;" width="50%" valign="top">
-                    Fund Cluster : <br />
-                    Funds Available : <br /><br /><br />
+                    &nbsp; <br />
+                    &nbsp; <br /><br /><br />
 
                     <div style="width: 100%;">
                         <center>
@@ -169,9 +169,9 @@
                     </div>
                 </td>
                 <td style="border:1px solid black;padding: 20px;" width="50%" valign="top">
-                    ORS/BURS No : <br />
+                   <!-- ORS/BURS No : <br />
                     Date of the ORS/BURS No : <br />
-                    Amount : <br />
+                    Amount : <br />-->
                 </td>
             </tr>
         </tbody>

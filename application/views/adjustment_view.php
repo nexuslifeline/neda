@@ -16,7 +16,7 @@
     <?php echo $_def_css_files; ?>
 
     <link rel="stylesheet" href="assets/plugins/spinner/dist/ladda-themeless.min.css">
-    <link href="assets/css/dark-theme.css" rel="stylesheet">
+   <!-- <link href="assets/css/dark-theme.css" rel="stylesheet">-->
     <link type="text/css" href="assets/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
     <link type="text/css" href="assets/plugins/datatables/dataTables.themify.css" rel="stylesheet">
     <link href="assets/plugins/datapicker/datepicker3.css" rel="stylesheet">
@@ -212,19 +212,19 @@
                 <div style="border: 1px solid #a0a4a5;padding: 1%;border-radius: 5px;">
 
                     <div class="row">
-                        <div class="col-sm-4">
+                       <!-- <div class="col-sm-4">
                             Department * : <br />
                             <select name="department" id="cbo_departments" data-error-msg="Department is required." required>
                                 <option value="0">[ Create New Department ]</option>
-                                <?php foreach($departments as $department){ ?>
-                                    <option value="<?php echo $department->department_id; ?>" data-tax-type="<?php echo $department->department_id; ?>"><?php echo $department->department_name; ?></option>
-                                <?php } ?>
+                                <?php /*foreach($departments as $department){ */?>
+                                    <option value="<?php /*echo $department->department_id; */?>" data-tax-type="<?php /*echo $department->department_id; */?>"><?php /*echo $department->department_name; */?></option>
+                                <?php /*} */?>
                             </select>
                         </div>
+-->
 
 
-
-                        <div class="col-sm-3 col-sm-offset-5">
+                        <div class="col-sm-4">
                             Reference # : <br />
                             <div class="input-group">
                                 <span class="input-group-addon">
@@ -624,11 +624,13 @@ $(document).ready(function(){
 
 
 
+/*
 
         _cboDepartments=$("#cbo_departments").select2({
             placeholder: "Issue item to Department.",
             allowClear: true
         });
+*/
 
 
         _cboAdjustments=$("#cbo_adjustments").select2({
@@ -637,7 +639,7 @@ $(document).ready(function(){
 
         _cboAdjustments.select2('val',null);
 
-        _cboDepartments.select2('val',null);
+ /*       _cboDepartments.select2('val',null);*/
 
 
 
@@ -774,7 +776,7 @@ $(document).ready(function(){
             }
         });
 
-        //loads modal to create new department
+     /*   //loads modal to create new department
         _cboDepartments.on("select2:select", function (e) {
 
             var i=$(this).select2('val');
@@ -785,7 +787,7 @@ $(document).ready(function(){
                 clearFields($('#modal_new_department').find('form'));
             }
 
-        });
+        });*/
 
         //create new department
         $('#btn_create_department').click(function(){
@@ -847,10 +849,10 @@ $(document).ready(function(){
             _txnMode="new";
             //$('.toggle-fullscreen').click();
             _cboAdjustments.select2('val',null);
-            _cboDepartments.select2('val',null);
+          /*  _cboDepartments.select2('val',null);*/
             clearFields($('#frm_adjustments'));
             $('#tbl_items > tbody').html('');
-            $('#cbo_departments').select2('val', null);
+            /*$('#cbo_departments').select2('val', null);*/
             showList(false);
             reComputeTotal();
         });
@@ -890,7 +892,7 @@ $(document).ready(function(){
             });
 
             _cboAdjustments.select2('val',data.adjustment_type);
-            $('#cbo_departments').select2('val',data.department_id);
+           /* $('#cbo_departments').select2('val',data.department_id);*/
 
             $.ajax({
                 url : 'Adjustments/transaction/items/'+data.adjustment_id,

@@ -1450,15 +1450,15 @@ $(document).ready(function(){
                                             </div>
                                         </div>
 
-                                        <div class="form-group" style="margin-bottom:0px;">
-                                            <label class="">Warning Quantity :</label>
-                                            <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="fa fa-toggle-off"></i>
-                                                    </span>
-                                                <input type="text" name="product_warn" id="product_warn" class="form-control numeric">
-                                            </div>
-                                        </div>
+<!--                                        <div class="form-group" style="margin-bottom:0px;">-->
+<!--                                            <label class="">Warning Quantity :</label>-->
+<!--                                            <div class="input-group">-->
+<!--                                                    <span class="input-group-addon">-->
+<!--                                                        <i class="fa fa-toggle-off"></i>-->
+<!--                                                    </span>-->
+<!--                                                <input type="text" name="product_warn" id="product_warn" class="form-control numeric">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
                                       <!--  <div class="form-group" style="margin-bottom:0px;">
                                             <label class="">Ideal Quantity :</label>
