@@ -8,6 +8,40 @@ class Purchases_model extends CORE_Model {
         parent::__construct();
     }
 
+    function get_purchases_this_month(){
+        $result = $this->db->query("SELECT IFNULL(SUM(dii.dr_line_total_price),0) as purchases FROM `delivery_invoice_items` as dii
+        INNER JOIN `delivery_invoice` as di ON di.`dr_invoice_id`=dii.dr_invoice_id
+        WHERE di.date_delivered LIKE CONCAT(DATE_FORMAT(NOW(),'%Y-%m'),'%') AND di.is_deleted=0")->result();
+        return (count($result)>0?$result[0]->purchases:0);
+    }
+
+    function get_po_count_this_month(){
+        $result = $this->db->query("SELECT IFNULL(COUNT(po.purchase_order_id),0) as po_this_month FROM `purchase_order` as po WHERE po.date_created LIKE CONCAT(DATE_FORMAT(NOW(),'%Y-%m'),'%') AND po.is_deleted=0")->result();
+        return (count($result)>0?$result[0]->po_this_month:0);
+    }
+
+    function get_issue_count_this_month(){
+        $result = $this->db->query("SELECT IFNULL(COUNT(iss.issuance_id),0) as issue_this_month FROM `issuance_info` as iss WHERE iss.date_issued LIKE CONCAT(DATE_FORMAT(NOW(),'%Y-%m'),'%') AND iss.is_deleted=0")->result();
+        return (count($result)>0?$result[0]->issue_this_month:0);
+    }
+
+    function get_current_ap($month){
+        $result = $this->db->query("SELECT m.total_ap-m.total_payment as current_ap
+
+            FROM
+            
+            (SELECT IFNULL(SUM(dii.dr_line_total_price),0)as total_ap,
+            
+            IFNULL((SELECT SUM(pp.total_paid_amount) FROM `payable_payments` as pp WHERE pp.is_active=1 
+            AND pp.is_deleted=0 AND pp.date_paid LIKE CONCAT(DATE_FORMAT(NOW(),'%Y'),'-$month-%')),0)as total_payment
+            
+            FROM `delivery_invoice_items` as dii
+            INNER JOIN `delivery_invoice` as di ON di.`dr_invoice_id`=dii.`dr_invoice_id` WHERE di.is_deleted=0
+            AND di.date_delivered LIKE CONCAT(DATE_FORMAT(NOW(),'%Y'),'-$month-%')
+        ) as m")->result();
+        return (count($result)>0?$result[0]->current_ap:0);
+    }
+
 
     function get_po_balance_qty($id){
         $sql="SELECT SUM(x.Balance)as Balance

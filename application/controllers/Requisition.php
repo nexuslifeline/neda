@@ -75,7 +75,7 @@ class Requisition extends CORE_Controller
         switch ($txn){
             case 'list':
                 $response['data']=$this->row_response(
-                    'requisition_info.is_deleted=FALSE AND requisition_info.is_active=TRUE'
+                    'requisition_info.is_deleted=FALSE AND requisition_info.is_active=TRUE AND requisition_info.created_by_user='.$this->session->user_id
                 );
                 echo json_encode($response);
                 break;
@@ -259,7 +259,24 @@ class Requisition extends CORE_Controller
 
             case 'delete':
                 $m_requisitions=$this->Requisition_info_model;
+                $m_issuance = $this->Issuance_model;
+
                 $requisition_id=$this->input->post('requisition_id',TRUE);
+
+                //check if already issued
+                $issued = $m_issuance->get_list(array(
+                    'requisition_id' => $requisition_id,
+                    'is_deleted' => 0
+                ));
+
+                if(count($issued)>0){
+                    $response['title']='Restricted!';
+                    $response['stat']='warning';
+                    $response['msg']='Sorry, you cannot delete this record because it is already been issued!';
+                    echo json_encode($response);
+                    return;
+                }
+
 
                 $m_requisitions->set('date_deleted','NOW()'); //treat NOW() as function and not string, set date of deletion
                 $m_requisitions->deleted_by_user=$this->session->user_id; //deleted by user

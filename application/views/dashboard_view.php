@@ -282,7 +282,7 @@
             datasets: [
                 {
                     label: 'ACCOUNT PAYABLES - 2017',
-                    data: [100,20,190,40,50,60,70,80,10,100,110,120],
+                    data: <?php echo json_encode($account_payables); ?>,
                     backgroundColor: [
                         'rgba(255, 152, 0, .1)'
                     ],

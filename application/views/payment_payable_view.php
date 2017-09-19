@@ -225,17 +225,17 @@
                             </div>
                         </div>
 
-
+<!--
                         <div class="row">
                             <div class="col-lg-12">
                                 Department * : <br />
                                 <select id="cbo_branch" name="department" class="form-control">
-                                    <?php foreach($departments as $department){ ?>
-                                        <option value="<?php echo $department->department_id; ?>" selected><?php echo $department->department_name; ?></option>
-                                    <?php } ?>
+                                    <?php /*foreach($departments as $department){ */?>
+                                        <option value="<?php /*echo $department->department_id; */?>" selected><?php /*echo $department->department_name; */?></option>
+                                    <?php /*} */?>
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
 
                         <div class="row">
                             <div class="col-lg-6">
@@ -620,10 +620,10 @@ $(document).ready(function(){
             allowClear: false
         });
 
-        _cboBranch = $('#cbo_branch').select2({
+     /*   _cboBranch = $('#cbo_branch').select2({
             placeholder: "Please select branch.",
             allowClear: false
-        });
+        });*/
 
         _cboReceiptType = $('#cbo_receipt_type').select2({
             placeholder: "Please select receipt type.",

@@ -955,7 +955,7 @@ $(document).ready(function(){
                         var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
                         var btn_conversation='<a id="link_conversation" href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-info btn-sm"  style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Open Conversation"><i class="fa fa-comments"></i> </a>';
 
-                        return '<center>'+btn_edit+'&nbsp;'+btn_trash+'&nbsp;'+btn_conversation+'</center>';
+                        return '<center>'+btn_edit+'&nbsp;'+'</center>';
                     }
                 }
             ]

@@ -88,11 +88,11 @@ CREATE TABLE `categories` (
   `category_desc` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
   `date_created` DATETIME DEFAULT NULL,
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00',
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`category_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=12 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `chat` table : */
@@ -147,10 +147,10 @@ CREATE TABLE `delivery_invoice` (
   `total_before_tax` DECIMAL(20,4) DEFAULT 0.0000,
   `total_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
   `total_after_tax` DECIMAL(20,4) DEFAULT 0.0000,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_paid` BIT(1) DEFAULT 0,
-  `is_journal_posted` BIT(1) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_paid` TINYINT(4) DEFAULT 0,
+  `is_journal_posted` TINYINT(4) DEFAULT 0,
   `date_due` DATE DEFAULT '0000-00-00',
   `date_delivered` DATE DEFAULT '0000-00-00',
   `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
@@ -163,7 +163,7 @@ CREATE TABLE `delivery_invoice` (
   PRIMARY KEY USING BTREE (`dr_invoice_id`),
   UNIQUE KEY `dr_invoice_no` USING BTREE (`dr_invoice_no`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `delivery_invoice_items` table : */
@@ -185,7 +185,7 @@ CREATE TABLE `delivery_invoice_items` (
   `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`dr_invoice_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `departments` table : */
@@ -199,11 +199,11 @@ CREATE TABLE `departments` (
   `default_cost` TINYINT(4) DEFAULT 1 COMMENT '1=Purchase Cost 1, 2=Purchase Cost 2',
   `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00',
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`department_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `issuance_info` table : */
@@ -225,11 +225,11 @@ CREATE TABLE `issuance_info` (
   `modified_by_user` INTEGER(11) DEFAULT 0,
   `posted_by_user` INTEGER(11) DEFAULT 0,
   `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`issuance_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `issuance_items` table : */
@@ -252,7 +252,7 @@ CREATE TABLE `issuance_items` (
   `batch_no` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`issuance_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `item_types` table : */
@@ -265,7 +265,7 @@ CREATE TABLE `item_types` (
   `is_deleted` BIT(1) DEFAULT 0,
   PRIMARY KEY USING BTREE (`item_type_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `locations` table : */
@@ -328,10 +328,10 @@ CREATE TABLE `payable_payments` (
   `cancelled_by_user` INTEGER(11) DEFAULT 0,
   `created_by_user` INTEGER(11) DEFAULT 0,
   `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_journal_posted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_posted` BIT(1) DEFAULT 0,
+  `is_journal_posted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_posted` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`payment_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
@@ -371,10 +371,10 @@ CREATE TABLE `po_attachments` (
   `server_file_directory` VARCHAR(800) COLLATE latin1_swedish_ci DEFAULT '',
   `date_added` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `added_by_user` INTEGER(11) DEFAULT 0,
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`po_attachment_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=28 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `po_messages` table : */
@@ -386,10 +386,10 @@ CREATE TABLE `po_messages` (
   `message` TEXT COLLATE latin1_swedish_ci,
   `date_posted` DATETIME DEFAULT '0000-00-00 00:00:00',
   `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`po_message_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=112 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `products` table : */
@@ -432,14 +432,14 @@ CREATE TABLE `products` (
   `created_by_user` INTEGER(11) DEFAULT 0,
   `modified_by_user` INTEGER(11) DEFAULT 0,
   `deleted_by_user` INTEGER(11) DEFAULT 0,
-  `is_inventory` BIT(1) DEFAULT 1,
-  `is_tax_exempt` BIT(1) DEFAULT 0,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
+  `is_inventory` TINYINT(4) DEFAULT 1,
+  `is_tax_exempt` TINYINT(4) DEFAULT 0,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`product_id`),
   UNIQUE KEY `product_code` USING BTREE (`product_code`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=8 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order` table : */
@@ -461,9 +461,9 @@ CREATE TABLE `purchase_order` (
   `total_after_tax` DECIMAL(20,4) DEFAULT 0.0000,
   `approval_id` INTEGER(11) DEFAULT 2,
   `order_status_id` INTEGER(11) DEFAULT 1,
-  `is_email_sent` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_email_sent` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `date_deleted` DATETIME DEFAULT '0000-00-00 00:00:00',
@@ -476,7 +476,7 @@ CREATE TABLE `purchase_order` (
   UNIQUE KEY `po_no` USING BTREE (`po_no`),
   UNIQUE KEY `po_no_2` USING BTREE (`po_no`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order_items` table : */
@@ -496,7 +496,7 @@ CREATE TABLE `purchase_order_items` (
   `non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
   PRIMARY KEY USING BTREE (`po_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `refproduct` table : */
@@ -536,7 +536,7 @@ CREATE TABLE `requisition_info` (
   `is_active` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`requisition_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `requisition_items` table : */
@@ -557,7 +557,7 @@ CREATE TABLE `requisition_items` (
   `is_available` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`req_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `rights_links` table : */
@@ -570,7 +570,7 @@ CREATE TABLE `rights_links` (
   `controller` VARCHAR(155) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`link_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=52 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=54 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `salesperson` table : */
@@ -626,11 +626,11 @@ CREATE TABLE `suppliers` (
   `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
   `date_modified` DATETIME DEFAULT '0000-00-00 00:00:00',
   `credit_limit` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`supplier_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=2 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `tax_types` table : */
@@ -640,8 +640,8 @@ CREATE TABLE `tax_types` (
   `tax_type` VARCHAR(155) COLLATE latin1_swedish_ci DEFAULT '',
   `tax_rate` DECIMAL(11,2) DEFAULT 0.00,
   `description` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
-  `is_default` BIT(1) DEFAULT 0,
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_default` TINYINT(4) DEFAULT 0,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`tax_type_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
@@ -656,11 +656,11 @@ CREATE TABLE `units` (
   `unit_desc` VARCHAR(255) COLLATE latin1_swedish_ci DEFAULT NULL,
   `date_created` DATETIME DEFAULT NULL,
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00',
-  `is_deleted` BIT(1) DEFAULT 0,
-  `is_active` BIT(1) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
   PRIMARY KEY USING BTREE (`unit_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=5 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `user_accounts` table : */
@@ -680,8 +680,8 @@ CREATE TABLE `user_accounts` (
   `user_group_id` INTEGER(11) DEFAULT 0,
   `photo_path` VARCHAR(555) COLLATE latin1_swedish_ci DEFAULT '',
   `file_directory` VARCHAR(666) COLLATE latin1_swedish_ci DEFAULT '',
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `date_deleted` INTEGER(11) DEFAULT 0,
@@ -691,7 +691,7 @@ CREATE TABLE `user_accounts` (
   `is_online` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`user_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=34 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `user_group_rights` table : */
@@ -702,7 +702,7 @@ CREATE TABLE `user_group_rights` (
   `link_code` VARCHAR(20) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`user_rights_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=236 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `user_groups` table : */
@@ -711,13 +711,13 @@ CREATE TABLE `user_groups` (
   `user_group_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
   `user_group` VARCHAR(135) COLLATE latin1_swedish_ci DEFAULT '',
   `user_group_desc` VARCHAR(500) COLLATE latin1_swedish_ci DEFAULT '',
-  `is_active` BIT(1) DEFAULT 1,
-  `is_deleted` BIT(1) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  `is_deleted` TINYINT(4) DEFAULT 0,
   `date_created` DATETIME DEFAULT '0000-00-00 00:00:00',
   `date_modified` TIMESTAMP NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY USING BTREE (`user_group_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=9 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Data for the `approval_status` table  (LIMIT 0,500) */
@@ -725,22 +725,6 @@ AUTO_INCREMENT=9 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 INSERT INTO `approval_status` (`approval_id`, `approval_status`, `approval_description`, `is_active`, `is_deleted`) VALUES
   (1,'Approved','',1,0),
   (2,'Pending','',1,0);
-COMMIT;
-
-/* Data for the `categories` table  (LIMIT 0,500) */
-
-INSERT INTO `categories` (`category_id`, `category_code`, `category_name`, `category_desc`, `date_created`, `date_modified`, `is_deleted`, `is_active`) VALUES
-  (1,NULL,'Food Stock','',NULL,'0000-00-00 00:00:00',0,1),
-  (2,NULL,'DESSERTS','',NULL,'0000-00-00 00:00:00',0,1),
-  (3,NULL,'POULTRY','',NULL,'0000-00-00 00:00:00',0,1),
-  (4,NULL,'NOODLES','',NULL,'0000-00-00 00:00:00',0,1),
-  (5,NULL,'Machine','Machine',NULL,'0000-00-00 00:00:00',0,1),
-  (6,NULL,'Test','',NULL,'0000-00-00 00:00:00',0,1),
-  (7,NULL,'Office Supplies','',NULL,'0000-00-00 00:00:00',0,1),
-  (8,NULL,'Computers','',NULL,'0000-00-00 00:00:00',0,1),
-  (9,NULL,'xx','xx',NULL,'0000-00-00 00:00:00',0,1),
-  (10,NULL,'xx','xx',NULL,'0000-00-00 00:00:00',0,1),
-  (11,NULL,'category','1',NULL,'0000-00-00 00:00:00',0,1);
 COMMIT;
 
 /* Data for the `chat` table  (LIMIT 0,500) */
@@ -777,40 +761,6 @@ COMMIT;
 
 INSERT INTO `company_info` (`company_id`, `company_name`, `company_address`, `email_address`, `mobile_no`, `landline`, `tin_no`, `tax_type_id`, `registered_to`, `logo_path`) VALUES
   (1,'National Economic and Development Authority Regional Office III','Diosdado Macapagal Government Center, Maimpis, City of San Fernando, Pampanga','nedaregion3@gmail.com','0935-746-7611','(045) 322-3542','1234-5678-91112',2,'','assets/img/company/598fd89a4c6c1.jpg');
-COMMIT;
-
-/* Data for the `delivery_invoice` table  (LIMIT 0,500) */
-
-INSERT INTO `delivery_invoice` (`dr_invoice_id`, `dr_invoice_no`, `purchase_order_id`, `external_ref_no`, `contact_person`, `terms`, `duration`, `supplier_id`, `department_id`, `tax_type_id`, `journal_id`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `is_active`, `is_deleted`, `is_paid`, `is_journal_posted`, `date_due`, `date_delivered`, `date_created`, `date_modified`, `date_deleted`, `posted_by_user`, `modified_by_user`, `deleted_by_user`, `batch_no`) VALUES
-  (1,'P-INV-20170912-1',1,'','','','',1,2,NULL,0,'',0.0000,0.0000,0.0000,0.0000,1,0,0,0,'2017-09-12','2017-09-12','2017-09-12 21:41:25','2017-09-12 21:41:25','0000-00-00 00:00:00',1,0,0,NULL);
-COMMIT;
-
-/* Data for the `delivery_invoice_items` table  (LIMIT 0,500) */
-
-INSERT INTO `delivery_invoice_items` (`dr_invoice_item_id`, `dr_invoice_id`, `product_id`, `unit_id`, `dr_qty`, `dr_discount`, `dr_price`, `dr_line_total_discount`, `dr_line_total_price`, `dr_tax_rate`, `dr_tax_amount`, `dr_non_tax_amount`, `exp_date`, `batch_no`) VALUES
-  (1,1,1,3,50,0.0000,0.0000,0.0000,0.0000,12.0000,0.0000,0.0000,'1970-01-01',NULL),
-  (2,1,2,4,300,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,'1970-01-01',NULL);
-COMMIT;
-
-/* Data for the `departments` table  (LIMIT 0,500) */
-
-INSERT INTO `departments` (`department_id`, `department_code`, `department_name`, `department_desc`, `delivery_address`, `default_cost`, `date_created`, `date_modified`, `is_deleted`, `is_active`) VALUES
-  (1,'','Admin','',NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,1),
-  (2,'','IT Deparment','',NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,1),
-  (3,'','Kitchen','Kitchen',NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00',0,1);
-COMMIT;
-
-/* Data for the `issuance_info` table  (LIMIT 0,500) */
-
-INSERT INTO `issuance_info` (`issuance_id`, `slip_no`, `requisition_id`, `issued_department_id`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `date_issued`, `date_created`, `date_modified`, `date_deleted`, `modified_by_user`, `posted_by_user`, `deleted_by_user`, `is_active`, `is_deleted`) VALUES
-  (1,'SLP-20170913-1',1,2,'purpose',0.00,0.00,0.00,0.00,'2017-09-13','2017-09-13 14:15:06','2017-09-13 14:15:06','0000-00-00 00:00:00',0,1,0,1,0);
-COMMIT;
-
-/* Data for the `issuance_items` table  (LIMIT 0,500) */
-
-INSERT INTO `issuance_items` (`issuance_item_id`, `issuance_id`, `product_id`, `unit_id`, `issue_qty`, `issue_price`, `issue_discount`, `issue_tax_rate`, `issue_line_total_price`, `issue_line_total_discount`, `issue_tax_amount`, `issue_non_tax_amount`, `dr_invoice_id`, `exp_date`, `batch_no`) VALUES
-  (1,1,1,3,2.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,'0000-00-00',''),
-  (2,1,6,1,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0,'0000-00-00','');
 COMMIT;
 
 /* Data for the `item_types` table  (LIMIT 0,500) */
@@ -853,137 +803,12 @@ INSERT INTO `payment_methods` (`payment_method_id`, `payment_method`, `is_active
   (3,'Card',1,0);
 COMMIT;
 
-/* Data for the `po_attachments` table  (LIMIT 0,500) */
-
-INSERT INTO `po_attachments` (`po_attachment_id`, `purchase_order_id`, `orig_file_name`, `server_file_directory`, `date_added`, `added_by_user`, `is_deleted`) VALUES
-  (12,1,'Desert.jpg','assets/files/po/attachments/57a35f49a1d20.jpg','2016-08-04 15:29:13',1,0),
-  (13,1,'desktop.ini','assets/files/po/attachments/57a35f595fa24.ini','2016-08-04 15:29:29',10,0),
-  (14,1,'Koala.jpg','assets/files/po/attachments/57a36038bc160.jpg','2016-08-04 15:33:12',1,0),
-  (15,1,'Desert.jpg','assets/files/po/attachments/57a36735f2623.jpg','2016-08-04 16:03:01',1,0),
-  (16,1,'Hydrangeas.jpg','assets/files/po/attachments/57a3674c76975.jpg','2016-08-04 16:03:24',1,0),
-  (17,2,'Chrysanthemum.jpg','assets/files/po/attachments/57a3efd452bb6.jpg','2016-08-05 01:45:56',1,0),
-  (18,2,'Desert.jpg','assets/files/po/attachments/57a3efd460291.jpg','2016-08-05 01:45:56',1,0),
-  (19,2,'Lighthouse.jpg','assets/files/po/attachments/57a3efd46e90c.jpg','2016-08-05 01:45:56',1,0),
-  (20,2,'Penguins.jpg','assets/files/po/attachments/57a3efd47b42f.jpg','2016-08-05 01:45:56',1,0),
-  (21,4,'desktop.ini','assets/files/po/attachments/57a3fc8a14119.ini','2016-08-05 02:40:10',1,0),
-  (22,5,'Desert.jpg','assets/files/po/attachments/57a4b2fe12d70.jpg','2016-08-05 15:38:38',1,0),
-  (23,6,'Desert.jpg','assets/files/po/attachments/57a5011cef3fc.jpg','2016-08-05 21:11:56',10,0),
-  (24,1,'Tulips.jpg','assets/files/po/attachments/57acc3463da99.jpg','2016-08-11 18:26:14',1,0),
-  (25,5,'Chrysanthemum.jpg','assets/files/po/attachments/57ad049e86444.jpg','2016-08-11 23:05:02',1,0),
-  (26,1,'desktop.ini','assets/files/po/attachments/57af336b9a9ec.ini','2016-08-13 14:49:15',1,0),
-  (27,1,'Tulips.jpg','assets/files/po/attachments/57e32f8d94f64.jpg','2016-09-22 01:10:37',10,0);
-COMMIT;
-
-/* Data for the `po_messages` table  (LIMIT 0,500) */
-
-INSERT INTO `po_messages` (`po_message_id`, `purchase_order_id`, `user_id`, `message`, `date_posted`, `date_deleted`, `is_deleted`) VALUES
-  (51,1,1,'hi','2016-08-04 08:28:55','2016-08-04 08:58:40',1),
-  (52,1,10,'hello','2016-08-04 08:29:01','2016-08-04 09:27:35',1),
-  (53,4,1,'please send me attachment.','2016-08-04 08:31:32','2016-08-04 19:40:42',1),
-  (54,1,1,'ji','2016-08-04 08:44:39','2016-08-04 08:55:38',1),
-  (55,1,1,'k','2016-08-04 08:46:24','2016-08-04 08:55:12',1),
-  (56,1,1,'l','2016-08-04 08:47:39','2016-08-04 08:54:12',1),
-  (57,1,1,'hi','2016-08-04 08:59:55','2016-08-04 08:59:58',1),
-  (58,1,1,'k','2016-08-04 09:00:19','2016-08-04 09:00:22',1),
-  (59,1,1,'love','2016-08-04 09:00:28','2016-08-04 09:00:30',1),
-  (60,1,1,'hello','2016-08-04 09:14:28','0000-00-00 00:00:00',0),
-  (61,1,1,'please send me new attachments.','2016-08-04 09:18:15','0000-00-00 00:00:00',0),
-  (62,1,1,'kk\\','2016-08-04 09:25:32','2016-08-04 09:25:46',1),
-  (63,1,1,'kk','2016-08-04 09:25:33','2016-08-04 09:25:43',1),
-  (64,1,1,'hi','2016-08-04 09:26:46','0000-00-00 00:00:00',0),
-  (65,1,10,'im busy.','2016-08-04 09:27:02','2016-08-04 09:27:30',1),
-  (66,2,1,'hi','2016-08-04 18:48:42','0000-00-00 00:00:00',0),
-  (67,2,1,'kindly send me attachment.','2016-08-04 18:49:41','2016-09-12 12:42:15',1),
-  (68,4,1,'hello','2016-08-04 19:40:29','0000-00-00 00:00:00',0),
-  (69,5,1,'please send me attachment.','2016-08-05 08:39:01','0000-00-00 00:00:00',0),
-  (70,6,1,'please send attachment.','2016-08-05 14:10:48','0000-00-00 00:00:00',0),
-  (71,6,10,'yes sir. already attached.','2016-08-05 14:12:24','0000-00-00 00:00:00',0),
-  (72,6,10,'hi','2016-08-05 14:20:30','0000-00-00 00:00:00',0),
-  (73,5,1,'please','2016-08-06 17:04:12','0000-00-00 00:00:00',0),
-  (74,1,1,'testing','2016-08-11 11:24:13','0000-00-00 00:00:00',0),
-  (75,1,1,'hello','2016-08-11 11:27:12','0000-00-00 00:00:00',0),
-  (76,5,10,'please send me attachment.','2016-08-11 16:04:27','0000-00-00 00:00:00',0),
-  (77,5,1,'yes sir.','2016-08-11 16:04:44','0000-00-00 00:00:00',0),
-  (78,1,1,'hi','2016-08-13 07:49:02','0000-00-00 00:00:00',0),
-  (79,2,1,'','2016-09-12 12:42:09','2016-09-12 12:42:13',1),
-  (80,2,1,'please send me attachment.','2016-09-12 15:50:10','0000-00-00 00:00:00',0),
-  (81,1,10,'hello','2016-09-21 18:10:13','0000-00-00 00:00:00',0),
-  (82,28,1,'123456hello','2016-12-05 14:43:13','0000-00-00 00:00:00',0),
-  (83,28,1,'123456hello','2016-12-05 14:43:14','0000-00-00 00:00:00',0),
-  (84,28,1,'','2016-12-05 14:43:14','0000-00-00 00:00:00',0),
-  (85,28,1,'','2016-12-05 14:43:14','0000-00-00 00:00:00',0),
-  (86,28,1,'','2016-12-05 14:43:14','0000-00-00 00:00:00',0),
-  (87,28,1,'','2016-12-05 14:43:14','0000-00-00 00:00:00',0),
-  (88,28,1,'','2016-12-05 14:43:15','0000-00-00 00:00:00',0),
-  (89,28,1,' ','2016-12-05 14:43:30','0000-00-00 00:00:00',0),
-  (90,28,1,'','2016-12-05 14:43:31','0000-00-00 00:00:00',0),
-  (91,28,1,'','2016-12-05 14:43:31','0000-00-00 00:00:00',0),
-  (92,28,1,'','2016-12-05 14:43:31','0000-00-00 00:00:00',0),
-  (93,28,1,'','2016-12-05 14:43:31','0000-00-00 00:00:00',0),
-  (94,28,1,'','2016-12-05 14:43:31','0000-00-00 00:00:00',0),
-  (95,28,1,'','2016-12-05 14:43:31','0000-00-00 00:00:00',0),
-  (96,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (97,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (98,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (99,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (100,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (101,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (102,28,1,'','2016-12-05 14:43:32','0000-00-00 00:00:00',0),
-  (103,28,1,'','2016-12-05 14:43:33','0000-00-00 00:00:00',0),
-  (104,28,1,'','2016-12-05 14:43:33','0000-00-00 00:00:00',0),
-  (105,28,1,'','2016-12-05 14:43:33','0000-00-00 00:00:00',0),
-  (106,28,1,'','2016-12-05 14:43:33','0000-00-00 00:00:00',0),
-  (107,28,1,'','2016-12-05 14:43:33','0000-00-00 00:00:00',0),
-  (108,29,1,'Hello','2016-12-14 11:38:54','0000-00-00 00:00:00',0),
-  (109,1,1,'hi','2017-04-26 16:43:25','0000-00-00 00:00:00',0),
-  (110,1,1,'hello','2017-04-26 16:43:39','0000-00-00 00:00:00',0),
-  (111,4,1,'hello','2017-08-24 20:10:44','0000-00-00 00:00:00',0);
-COMMIT;
-
-/* Data for the `products` table  (LIMIT 0,500) */
-
-INSERT INTO `products` (`product_id`, `product_code`, `product_desc`, `product_desc1`, `unit`, `size`, `supplier_id`, `tax_type_id`, `refproduct_id`, `category_id`, `department_id`, `unit_id`, `equivalent_points`, `product_warn`, `product_ideal`, `purchase_cost`, `purchase_cost_2`, `markup_percent`, `sale_price`, `whole_sale`, `retailer_price`, `special_disc`, `discounted_price`, `dealer_price`, `distributor_price`, `public_price`, `valued_customer`, `income_account_id`, `expense_account_id`, `on_hand`, `item_type_id`, `date_created`, `date_modified`, `date_deleted`, `created_by_user`, `modified_by_user`, `deleted_by_user`, `is_inventory`, `is_tax_exempt`, `is_deleted`, `is_active`) VALUES
-  (1,'121','Bond Paper','','',NULL,NULL,2,NULL,7,0,3,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,48.00,1,'2017-09-12 21:39:31','2017-09-13 12:34:08','0000-00-00 00:00:00',1,1,0,1,0,0,1),
-  (2,'122','Ballpen','','',NULL,NULL,1,NULL,7,0,4,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,299.00,1,'2017-09-12 21:40:28','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1),
-  (3,'001','Folder','','',NULL,NULL,2,NULL,1,0,4,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-09-13 12:34:29','2017-09-13 12:34:33','0000-00-00 00:00:00',1,1,0,1,0,0,1),
-  (6,'145','Envelope','','',NULL,NULL,2,NULL,2,0,1,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,-1.00,1,'2017-09-13 12:47:37','2017-09-13 12:48:17','0000-00-00 00:00:00',1,1,0,1,0,0,1),
-  (7,'0911','Paste','','',NULL,NULL,1,NULL,1,0,2,0.00,0.00,0.00,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,NULL,NULL,0.00,1,'2017-09-13 12:48:00','0000-00-00 00:00:00','0000-00-00 00:00:00',1,0,0,1,0,0,1);
-COMMIT;
-
-/* Data for the `purchase_order` table  (LIMIT 0,500) */
-
-INSERT INTO `purchase_order` (`purchase_order_id`, `po_no`, `terms`, `duration`, `deliver_to_address`, `supplier_id`, `department_id`, `tax_type_id`, `contact_person`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `approval_id`, `order_status_id`, `is_email_sent`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `date_approved`, `approved_by_user`, `posted_by_user`, `deleted_by_user`, `modified_by_user`) VALUES
-  (1,'PO-20170912-1','',NULL,'San Fernando Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,1,2,0,1,0,'2017-09-12 21:41:16','2017-09-13 10:55:14','0000-00-00 00:00:00','2017-09-13 10:55:14',1,1,0,0),
-  (2,'PO-20170913-2','',NULL,'Angeles City, Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,1,1,0,1,0,'2017-09-13 11:46:24','2017-09-13 11:46:36','0000-00-00 00:00:00','2017-09-13 11:46:36',1,1,0,0);
-COMMIT;
-
-/* Data for the `purchase_order_items` table  (LIMIT 0,500) */
-
-INSERT INTO `purchase_order_items` (`po_item_id`, `purchase_order_id`, `product_id`, `unit_id`, `po_price`, `po_discount`, `po_line_total_discount`, `po_tax_rate`, `po_qty`, `po_line_total`, `tax_amount`, `non_tax_amount`) VALUES
-  (1,1,1,3,0.0000,0.0000,0.0000,12.0000,50,0.0000,0.0000,0.0000),
-  (2,1,2,4,0.0000,0.0000,0.0000,0.0000,300,0.0000,0.0000,0.0000),
-  (3,2,1,3,0.0000,0.0000,0.0000,12.0000,2,0.0000,0.0000,0.0000);
-COMMIT;
-
 /* Data for the `refproduct` table  (LIMIT 0,500) */
 
 INSERT INTO `refproduct` (`refproduct_id`, `product_type`, `description`, `created_by_user_id`, `modified_by_user_id`, `date_created`, `date_modified`, `is_deleted`) VALUES
   (1,'Companion Animals','Common house pets',0,0,'2017-04-03 10:53:40','0000-00-00 00:00:00',0),
   (2,'Livestock Animals','Farm animals',0,0,'2017-04-03 10:53:40','0000-00-00 00:00:00',0),
   (3,'All Product type','',0,0,'2017-04-03 10:53:40','0000-00-00 00:00:00',0);
-COMMIT;
-
-/* Data for the `requisition_info` table  (LIMIT 0,500) */
-
-INSERT INTO `requisition_info` (`requisition_id`, `requisition_no`, `department_id`, `purpose`, `center_code`, `fund_cluster`, `remarks`, `created_by_user`, `date_created`, `deleted_by_user`, `date_deleted`, `modified_by_user`, `date_modified`, `status`, `is_deleted`, `is_active`) VALUES
-  (1,'REQ-20170913-1',2,'purpose','','','',1,'2017-09-13 14:14:44',0,'0000-00-00 00:00:00',0,'0000-00-00 00:00:00',0,0,1);
-COMMIT;
-
-/* Data for the `requisition_items` table  (LIMIT 0,500) */
-
-INSERT INTO `requisition_items` (`req_item_id`, `requisition_id`, `product_id`, `unit_id`, `req_qty`, `req_cost`, `req_discount`, `req_line_total_discount`, `req_tax_rate`, `req_line_total`, `tax_amount`, `non_tax_amount`, `is_available`) VALUES
-  (1,1,1,3,2,0,0,0,12,0,0,0,1),
-  (2,1,6,1,1,0,0,0,12,0,0,0,0);
 COMMIT;
 
 /* Data for the `rights_links` table  (LIMIT 0,500) */
@@ -1004,7 +829,9 @@ INSERT INTO `rights_links` (`link_id`, `parent_code`, `link_code`, `link_name`, 
   (24,'6','6-5','Create User Account','Users'),
   (25,'6','6-6','Setup Company Info','Company'),
   (26,'7','7-1','Purchase Order for Approval','Dashboard'),
-  (51,'2','2-6','Requisition','Requisition');
+  (51,'2','2-6','Requisition','Requisition'),
+  (52,'8','8-1','Inventory Report','Inventory'),
+  (53,'8','8-2','Supplies and Materials Issued Report','Supplies_issued');
 COMMIT;
 
 /* Data for the `salesperson` table  (LIMIT 0,500) */
@@ -1014,123 +841,11 @@ INSERT INTO `salesperson` (`salesperson_id`, `salesperson_code`, `firstname`, `m
   (2,'1211','d','d','d',NULL,'d',1,'121',1,0,'2017-06-16 15:34:56','0000-00-00 00:00:00',12);
 COMMIT;
 
-/* Data for the `suppliers` table  (LIMIT 0,500) */
-
-INSERT INTO `suppliers` (`supplier_id`, `supplier_code`, `supplier_name`, `contact_name`, `contact_person`, `address`, `email_address`, `contact_no`, `tin_no`, `term`, `tax_type_id`, `photo_path`, `total_payable_amount`, `posted_by_user`, `date_created`, `date_modified`, `credit_limit`, `is_deleted`, `is_active`) VALUES
-  (1,'','National Bookstore','na','','na','',NULL,'','',0,'assets/img/anonymous-icon.png',0.00,1,'2017-09-12 21:40:47','0000-00-00 00:00:00',NULL,0,1);
-COMMIT;
-
 /* Data for the `tax_types` table  (LIMIT 0,500) */
 
 INSERT INTO `tax_types` (`tax_type_id`, `tax_type`, `tax_rate`, `description`, `is_default`, `is_deleted`) VALUES
   (1,'Non-vat',0.00,'',0,0),
   (2,'Vatted',12.00,'',1,0);
-COMMIT;
-
-/* Data for the `units` table  (LIMIT 0,500) */
-
-INSERT INTO `units` (`unit_id`, `unit_code`, `unit_name`, `unit_desc`, `date_created`, `date_modified`, `is_deleted`, `is_active`) VALUES
-  (1,NULL,'Pack','',NULL,'0000-00-00 00:00:00',0,1),
-  (2,NULL,'KG','',NULL,'0000-00-00 00:00:00',0,1),
-  (3,NULL,'box','box',NULL,'0000-00-00 00:00:00',0,1),
-  (4,NULL,'pc','',NULL,'0000-00-00 00:00:00',0,1);
-COMMIT;
-
-/* Data for the `user_accounts` table  (LIMIT 0,500) */
-
-INSERT INTO `user_accounts` (`user_id`, `user_name`, `user_pword`, `user_lname`, `user_fname`, `user_mname`, `user_address`, `user_email`, `user_mobile`, `user_telephone`, `user_bdate`, `user_group_id`, `photo_path`, `file_directory`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `modified_by_user`, `posted_by_user`, `deleted_by_user`, `is_online`) VALUES
-  (1,'admin','d033e22ae348aeb5660fc2140aec35850c4da997','Flores','Liezel','','Mabalacat City, Pampanga','','0935-746-7601','','2016-08-01',1,'assets/img/user/59959d3648bf1.jpg',NULL,1,0,NULL,'2017-08-17 21:42:15',0,1,0,0,1),
-  (10,'gelyn','356a192b7913b04c54574d18c28d46e6395428ab','Manalang','Gelyn Joy','','','joyeous_jhoye@yahoo.com','','','2016-08-04',2,'assets/img/user/57e17900670ab.jpg',NULL,1,1,NULL,'2017-01-27 17:07:08',2147483647,10,0,1,0),
-  (11,'mario','356a192b7913b04c54574d18c28d46e6395428ab','FLores','Mario','','','','','','2016-09-23',2,'assets/img/anonymous-icon.png',NULL,1,1,'2016-09-22 16:47:04','2017-01-27 17:07:22',2147483647,0,1,1,0),
-  (12,'alona','356a192b7913b04c54574d18c28d46e6395428ab','Faderon','Alona','','','','','','2016-12-19',1,'assets/img/user/59006af05888e.jpg',NULL,1,0,'2016-12-19 14:25:09','2017-08-06 21:36:06',0,1,1,0,1),
-  (13,'Grace','a46e558d11cb2400bab09c1ca969e615142ef3d6','Grace','Grace','','','','','','2016-12-19',4,'assets/img/anonymous-icon.png',NULL,1,1,'2016-12-19 16:39:58','2017-01-12 10:30:27',2147483647,0,1,1,0),
-  (14,'Arnel','c22171e9ccc3eaa1f43a19d86be801e0341c4999','Garcia','Arnel','Carlos','Bamban, Tarlac','acgarcia1720@yahoo.com','','','1972-06-17',4,'assets/img/anonymous-icon.png',NULL,1,1,'2016-12-19 17:09:22','2017-02-01 09:02:09',2147483647,0,1,1,0),
-  (15,'lanie','39a89dd158c8e9747943b00f84be79fc33fbd405','L','Lanie','','','','','','2017-01-12',4,'assets/img/anonymous-icon.png',NULL,1,1,'2017-01-12 10:30:49','2017-08-06 21:36:13',2147483647,0,1,1,0),
-  (16,'Lanie2','95438a383abe53ef9e00fe24590a3ea37f7ba85b','2','lanie','','','','','','2017-01-16',4,'assets/img/anonymous-icon.png',NULL,1,1,'2017-01-16 14:20:35','2017-08-06 21:36:16',2147483647,1,1,1,0),
-  (17,'Grace2','077564fb04323d23b1f76da35a5c35b419711fa4','2','grace','','','','','','2017-01-17',4,'assets/img/anonymous-icon.png',NULL,1,1,'2017-01-17 17:02:52','2017-08-06 21:36:18',2147483647,0,1,1,0),
-  (18,'Grace 3','e8032f26760bc5821bfa52d117f59d9c45803290','Kahitano','Grace','','','','','','2017-01-17',4,'assets/img/anonymous-icon.png',NULL,1,1,'2017-01-17 17:08:56','2017-08-06 21:36:21',2147483647,0,1,1,0),
-  (19,'Lorena','bc57ef5f5bd9045c94f2d60996e0da27fb80db6c','Villanueva','Lorena','Galapate','','','','','1979-09-18',1,'assets/img/user/588050fb761c0.jpg',NULL,1,1,'2017-01-18 11:45:41','2017-08-06 21:36:23',2147483647,1,1,1,0),
-  (20,'lanie3','c3b65c6048c8ddbd9422be4042b501b4049371d0','misalutsya','lanie','','','','','','2017-01-19',4,'assets/img/anonymous-icon.png',NULL,1,1,'2017-01-19 14:29:28','2017-08-06 21:36:26',2147483647,0,1,1,0),
-  (21,'Emer','639f520f959371b6eea61334d4fbb558fc70673c','Nabayra','Emer','Rufino','Don Cornelio Subd. Dau, Mabalacat, Pampanga','evrvetoptionsemer@gmail.com','639326195529','','1984-10-17',4,'assets/img/anonymous-icon.png','',1,1,'2017-01-24 10:05:37','2017-08-06 21:36:29',2147483647,0,1,1,0),
-  (22,'lanz','989b012f12c7dc9e17c56938699116e13705f66e','Pascua','Lanz','Pamintuan','Dau Mabt, Pamp','angelespetcarelani@gmail.com','09420968832','n/a','2017-07-24',1,'assets/img/anonymous-icon.png',NULL,1,1,'2017-01-26 09:15:53','2017-08-06 21:36:31',2147483647,22,1,1,0),
-  (23,'gracey','2bb09f0d4a725048662c0efc2af65a2261b9106f','Diaz','Grace','Estacio','07 Manarang St., Telabastagan, CSFP','evrvetoptionsgrace@gmail.com','0922-877-8592','045-455-4978','1981-10-07',1,'assets/img/anonymous-icon.png','',1,1,'2017-01-30 08:55:24','2017-08-06 21:36:33',2147483647,1,1,1,0),
-  (24,'lou','5fe2f28438a036ec293c537c9f345bb2ef3a083f','Dayrit','Lourdes','lgnacio','','evrvetoptionslou@gmail.com','','','2017-01-30',1,'assets/img/anonymous-icon.png','',1,1,'2017-01-30 17:03:53','2017-08-06 21:36:35',2147483647,1,1,1,0),
-  (25,'apcaudit','1a6ca6fd77ba0e72de97f6d92a283d4c9303127d','gampoy','gilbert','salazar','tinang concepcion tarlac','gretaaudit@gmail.com','09430935482','','1989-09-13',1,'assets/img/user/58906b9ac52c9.jpg','',1,1,'2017-01-31 09:05:46','2017-08-06 21:36:38',2147483647,25,1,1,0),
-  (26,'ARNEL GARCIA','9c3681b374b388106480eda7b8f258f68f5623ce','GARCIA','ARNEL','CARLOS','BAMBAN, TARLAC','evrvetoptionsarnel@gmail.com','09253012490','','1972-06-17',4,'assets/img/anonymous-icon.png','',1,1,'2017-02-01 09:09:15','2017-08-06 21:36:40',2147483647,0,1,1,0),
-  (27,'Anita','92c8b10157e05856af182a643de7dcea14472f74','Lulu','Anita','Miranda','Don Cornelio Subd, Mabalacat Pampanga','','','','1966-08-04',5,'assets/img/anonymous-icon.png','',1,1,'2017-02-03 09:33:46','2017-08-06 21:36:42',2147483647,0,19,1,0),
-  (28,'Nathalie','92c8b10157e05856af182a643de7dcea14472f74','Bognot','Nathalie','Fausto','Capas Tarlac','','','','1986-10-17',2,'assets/img/anonymous-icon.png','',1,1,'2017-02-03 10:09:09','2017-08-06 21:36:44',2147483647,0,19,1,0),
-  (29,'elsa.isla','dbcb2310dfdb313a67cc49adcaf0a9c17bc1beef','Isla','Elsa','Valdez','5422 Dalandan St. Dau Homesite, Mabalacat, Pampanga','evrvetoptionselsa@gmail.com','09333198902','6241218','1973-01-27',4,'assets/img/anonymous-icon.png','',1,1,'2017-02-22 09:47:36','2017-08-06 21:36:46',2147483647,0,24,1,0),
-  (30,'emil','84896d3e067884621c0f54334b8d840949665844','Aquinaldo','Emilio','','','','','','2017-04-04',6,'assets/img/anonymous-icon.png','',1,1,'2017-04-04 15:30:49','2017-08-06 21:36:49',2147483647,0,12,1,0),
-  (31,'Paul','a027184a55211cd23e3f3094f1fdc728df5e0500','Rueda','Paul','','','','','','2017-04-26',1,'assets/img/user/59006d107c755.jpg','',1,1,'2017-04-26 17:49:06','2017-08-06 21:36:51',2147483647,0,12,1,0),
-  (32,'june','356a192b7913b04c54574d18c28d46e6395428ab','June','June','','','','','','2017-08-17',7,'assets/img/user/59959c4c467e7.png','',1,0,'2017-08-17 21:40:01','2017-09-12 22:23:53',0,1,1,0,0),
-  (33,'arvin','356a192b7913b04c54574d18c28d46e6395428ab','Pogi','Arvin','','','','','','2017-08-24',8,'assets/img/anonymous-icon.png','',1,0,'2017-08-24 18:29:38','2017-09-12 22:26:13',0,1,1,0,0);
-COMMIT;
-
-/* Data for the `user_group_rights` table  (LIMIT 0,500) */
-
-INSERT INTO `user_group_rights` (`user_rights_id`, `user_group_id`, `link_code`) VALUES
-  (1,1,'1-1'),
-  (2,1,'1-2'),
-  (3,1,'1-3'),
-  (4,1,'1-4'),
-  (5,1,'1-5'),
-  (6,1,'2-1'),
-  (7,1,'2-2'),
-  (8,1,'2-3'),
-  (9,1,'2-4'),
-  (10,1,'2-5'),
-  (11,1,'3-1'),
-  (12,1,'3-2'),
-  (13,1,'3-3'),
-  (14,1,'4-2'),
-  (15,1,'4-3'),
-  (16,1,'4-4'),
-  (17,1,'5-1'),
-  (18,1,'5-2'),
-  (19,1,'5-3'),
-  (20,1,'6-1'),
-  (21,1,'6-2'),
-  (22,1,'6-3'),
-  (23,1,'6-4'),
-  (24,1,'6-5'),
-  (25,1,'6-6'),
-  (26,1,'7-1'),
-  (27,1,'9-1'),
-  (28,1,'9-2'),
-  (29,1,'4-4'),
-  (30,1,'8-1'),
-  (31,1,'8-2'),
-  (32,1,'5-4'),
-  (33,1,'2-6'),
-  (34,1,'8-3'),
-  (35,1,'9-3'),
-  (36,1,'6-7'),
-  (37,1,'9-4'),
-  (38,1,'9-6'),
-  (39,1,'9-8'),
-  (40,1,'9-7'),
-  (41,1,'9-5'),
-  (42,1,'8-4'),
-  (43,1,'4-4'),
-  (44,1,'10-1'),
-  (45,1,'9-9'),
-  (46,1,'6-8'),
-  (47,1,'9-10'),
-  (48,1,'1-6'),
-  (49,1,'9-13'),
-  (50,1,'6-9'),
-  (51,1,'2-6'),
-  (231,7,'2-1'),
-  (234,8,'2-2'),
-  (235,8,'2-3');
-COMMIT;
-
-/* Data for the `user_groups` table  (LIMIT 0,500) */
-
-INSERT INTO `user_groups` (`user_group_id`, `user_group`, `user_group_desc`, `is_active`, `is_deleted`, `date_created`, `date_modified`) VALUES
-  (1,'System Administrator','Can access all features.',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
-  (7,'PO User','PO User',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00'),
-  (8,'Group 1','Receiving',1,0,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

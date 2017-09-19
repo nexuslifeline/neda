@@ -26,6 +26,10 @@ class Reset extends CORE_Controller
         $this->db->query('TRUNCATE departments');
         $this->db->query('TRUNCATE units');
 
+        $this->db->query('TRUNCATE user_accounts');
+        $this->db->query('TRUNCATE user_group_rights');
+        $this->db->query('TRUNCATE user_groups');
+
         $this->db->query('TRUNCATE purchase_order');
         $this->db->query('TRUNCATE purchase_order_items');
 

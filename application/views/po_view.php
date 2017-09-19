@@ -815,9 +815,10 @@ $(document).ready(function(){
                     render: function (data, type, full, meta){
                         var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
                         var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
-                        var btn_message='<a href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-green btn-sm" name="message_po" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Message"><i class="fa fa-envelope-o"></i> </a>';
+                        var btn_message='<a href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-green btn-sm" name="message_po" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Message"><i class="fa fa-comments"></i> </a>';
+                        var btn_send='<button class="btn btn-primary btn-sm" name="email_supplier" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Email to Supplier"><i class="fa fa-envelope-o"></i> </button>';
 
-                        return '<center>'+btn_edit+'&nbsp;'+'&nbsp;'+btn_trash+'</center>';
+                        return '<center>'+btn_edit+'&nbsp;'+'&nbsp;'+btn_trash+'&nbsp;'+btn_message+'&nbsp;'+(full.approval_id=='1'?btn_send:'')+'&nbsp;'+'</center>';
                     }
                 }
             ]
@@ -1051,6 +1052,25 @@ $(document).ready(function(){
                 });*/
             }
         } );
+
+
+        $(document).on('click','button[name="email_supplier"]',function(){
+
+            _selectRowObj=$(this).closest('tr');
+            var d=dt.row(_selectRowObj).data();
+
+            $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"Purchases/transaction/email-supplier?id="+ d.purchase_order_id,
+                "beforeSend" : function(){
+                    //showSpinningProgress(btn);
+                }
+            }).done(function(response){
+                showNotification(response);
+                dt.row(_selectRowObj).data(response.row_updated[0]).draw();
+            });
+        });
 
 
 

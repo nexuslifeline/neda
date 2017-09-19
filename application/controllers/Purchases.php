@@ -15,6 +15,7 @@ class Purchases extends CORE_Controller
         $this->load->model('Purchase_items_model');
         $this->load->model('Delivery_invoice_model');
         $this->load->model('Departments_model');
+        $this->load->model('Company_model');
         $this->load->library('email');
         $this->load->model('Users_model');
 
@@ -225,6 +226,7 @@ class Purchases extends CORE_Controller
                     $m_purchases->duration=$this->input->post('duration',TRUE);
                     $m_purchases->deliver_to_address=$this->input->post('deliver_to_address',TRUE);
                     $m_purchases->contact_person=$this->input->post('contact_person',TRUE);
+                    $m_purchases->is_email_sent=0;
                     $m_purchases->supplier_id=$this->input->post('supplier',TRUE);
                     $m_purchases->department_id=$this->input->post('department',TRUE);
                     $m_purchases->remarks=$this->input->post('remarks',TRUE);
@@ -411,8 +413,8 @@ class Purchases extends CORE_Controller
                             )
                         );
 
-                        if(strlen($info[0]->user_email)>0){ //if email is found, notify the user who posted it
-                            $email_setting  = array('mailtype'=>'html');
+                        //if(strlen($info[0]->user_email)>0){ //if email is found, notify the user who posted it
+                           /* $email_setting  = array('mailtype'=>'html');
                             $this->email->initialize($email_setting);
 
                             $this->email->from('jdevsystems@jdevsolution.com', 'Paul Christian Rueda');
@@ -424,8 +426,8 @@ class Purchases extends CORE_Controller
                             $this->email->message('<p>Good Day!</p><br /><br /><p>Hi! your Purchase Order '.$info[0]->po_no.' is already approved. Kindly check your account.</p>');
                             //$this->email->set_mailtype('html');
 
-                            $this->email->send();
-                        }
+                            $this->email->send();*/
+                        //}
 
 
 
@@ -434,6 +436,119 @@ class Purchases extends CORE_Controller
                         $response['title']='Success!';
                         $response['stat']='success';
                         $response['msg']='Purchase order successfully approved.';
+                        echo json_encode($response);
+                    }
+                    break;
+                case 'email-supplier':
+                    $m_purchases=$this->Purchases_model;
+                    $m_company = $this->Company_model;
+                    $m_po_items = $this->Purchase_items_model;
+                    $purchase_order_id=$this->input->get('id',TRUE);
+
+
+                    //check if already approved
+                    $approved = $m_purchases->get_list(array(
+                        'purchase_order_id' => $purchase_order_id,
+                        'approval_id' => 1
+                    ));
+                    if(count($approved) == 0){
+                        $response['stat']='error';
+                        $response['title']='Failed!';
+                        $response['msg']='Sorry, this PO is not yet approved.';
+                        echo json_encode($response);
+                        return;
+                    }
+
+
+                    $info = $m_purchases->get_list($purchase_order_id,
+                        array(
+                            's.email_address',
+                            'purchase_order.po_no'
+                        ),
+
+                        array(
+                            array('suppliers as s','s.supplier_id=purchase_order.supplier_id','left')
+                        )
+
+                        );
+
+                    if(strlen($info[0]->email_address)>0){
+
+
+
+                        $info=$m_purchases->get_list(
+                            $purchase_order_id,
+                            'purchase_order.*,CONCAT_WS(" ",purchase_order.terms,purchase_order.duration)as term_description,suppliers.supplier_name,suppliers.address,suppliers.email_address,suppliers.contact_no,suppliers.tin_no',
+                            array(
+                                array('suppliers','suppliers.supplier_id=purchase_order.supplier_id','left')
+                            )
+                        );
+
+                        $company=$m_company->get_list();
+
+                        $data['purchase_info']=$info[0];
+                        $data['total_in_words'] = $this->convertNumberToWord($info[0]->total_after_tax);
+                        $data['company_info']=$company[0];
+                        $data['po_items']=$m_po_items->get_list(
+                            array('purchase_order_id'=>$purchase_order_id),
+                            'purchase_order_items.*,products.product_code,products.product_desc,units.unit_name',
+
+                            array(
+                                array('products','products.product_id=purchase_order_items.product_id','left'),
+                                array('units','units.unit_id=purchase_order_items.unit_id','left')
+                            )
+
+                        );
+                        $content =  $this->load->view('template/po_content_new',$data,TRUE);
+
+                        $config = Array(
+                            'protocol' => 'smtp',
+                            'smtp_host' => 'ssl://smtp.googlemail.com',
+                            'smtp_port' => 465,
+                            'smtp_user' => 'chris14rueda18@gmail.com',
+                            'smtp_pass' => '09141991',
+                            'smtp_timeout' => 30,
+                            'mailtype'  => 'html',
+                            'charset' => 'utf-8',
+                            'wordwrap' => TRUE
+                        );
+                        $this->load->library('email', $config);
+                        $this->email->set_newline("\r\n");
+                        $this->email->set_mailtype("html");
+
+                        //Add file directory if you need to attach a file
+                        // $this->email->attach($file_dir_name);
+
+                        $this->email->from('nedaprocurement', 'NEDA REGION III');
+                        $this->email->to($info[0]->email_address);
+
+                        $this->email->subject('PO#'.$info[0]->po_no);
+                        $this->email->message($content);
+
+                        if($this->email->send()){
+                            //Success email Sent
+                            $m_purchases->is_email_sent = TRUE;
+                            $m_purchases->modify($purchase_order_id);
+
+                            $response['stat']='success';
+                            $response['title']='Sent!';
+                            $response['msg']='PO successfully sent!';
+                            $response['row_updated'] = $this->row_response($purchase_order_id);
+                            echo json_encode($response);
+
+                        }else{
+                            //Email Failed To Send
+                            $response['stat']='error';
+                            $response['title']='Failed!';
+                            $response['msg']='Unable to send! Please check supplier email address.';
+                            echo json_encode($response);
+                        }
+
+                    }else{
+
+                        $response['stat']='error';
+                        $response['title']='Invalid Email!';
+                        $response['msg']='Sorry, the supplier email is missing!';
                         echo json_encode($response);
                     }
                     break;

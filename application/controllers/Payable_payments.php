@@ -85,7 +85,7 @@ class Payable_payments extends CORE_Controller
                 $m_payment->supplier_id=$this->input->post('supplier_id',TRUE);
 
 
-                $m_payment->department_id=$this->input->post('department',TRUE);
+                /*$m_payment->department_id=$this->input->post('department',TRUE);*/
                 $payment_method_id=$this->input->post('payment_method',TRUE);
                 $m_payment->payment_method_id=$payment_method_id;
 

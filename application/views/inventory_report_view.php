@@ -172,7 +172,7 @@
 
 
                                                             <div class="row">
-                                                                <div class="col-lg-9">
+                                                                <div class="col-lg-9" style="display: none;">
                                                                     Department * : <br />
                                                                     <select id="cbo_department" class="form-control">
                                                                         <option value="0">All Department</option>

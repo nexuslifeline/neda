@@ -129,7 +129,7 @@ class Products_model extends CORE_Model {
                 WHERE ai.is_active=1 AND ai.is_deleted=0 AND ai.adjustment_type='IN'
                 AND ai.date_adjusted BETWEEN '$start' AND '$end'
                 GROUP BY aii.product_id
-                ) as aIQ ON aiQ.product_id=p.product_id
+                ) as aIQ ON aIQ.product_id=p.product_id
                 
                 LEFT JOIN
                 
@@ -217,7 +217,7 @@ class Products_model extends CORE_Model {
     function get_product_history($product_id,$depid=0,$as_of_date=null){
         $this->db->query("SET @nBalance:=0.00;");
         $sql="  SELECT lQQ.*,@nBalance:=(@nBalance+(lQQ.in_qty-lQQ.out_qty)) as balance FROM
-                (SELECT lq.* FROM
+                (SELECT lQ.* FROM
 
                 (SELECT n.*,p.product_desc
 
@@ -309,7 +309,8 @@ class Products_model extends CORE_Model {
                 AND iit.product_id=$product_id ".($as_of_date==null?"":" AND ii.date_issued<='".$as_of_date."'")."
 
 
-                ) as m ORDER BY m.txn_date ASC) as n  LEFT JOIN products as p ON n.product_id=p.product_id) as lQ ORDER BY lQ.txn_date ASC,field(type,'Purchase Invoice','Adjustment In','Issuance','Adjustment Out') ASC LIMIT 18446744073709551615) as lQQ";
+                ) as m ORDER BY m.txn_date ASC) as n  LEFT JOIN products as p ON n.product_id=p.product_id) as lQ 
+                ORDER BY lQ.txn_date ASC,field(type,'Purchase Invoice','Adjustment In','Issuance','Adjustment Out') ASC LIMIT 18446744073709551615) as lQQ";
 
         return $this->db->query($sql)->result();
     }
