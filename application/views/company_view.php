@@ -261,7 +261,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-10 col-sm-offset-3">
                                                         <button id="btn_save" class="btn-primary btn" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;"><span class=""></span>  Save Changes</button>
-                                                        <button id="btn_cancel" class="btn-default btn" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;"">Cancel</button>
+                                                       <!-- <button id="btn_cancel" class="btn-default btn" style="text-transform: capitalize;font-family: Tahoma, Georgia, Serif;"">Cancel</button>-->
                                                     </div>
                                                 </div>
 
@@ -418,11 +418,13 @@
                 placeholder: "Please select Tax type",
                 allowClear: true
             });
+/*
 
             _businesstype=$("#business_type").select2({
                 placeholder: "Please select business type",
                 allowClear: true
             });
+*/
 
            // _company_info.select2('val', null)
 
@@ -629,7 +631,7 @@
             var _data=$('#frm_company').serializeArray();
             _data.push({name : "photo_path" ,value : $('img[name="img_company"]').attr('src')});
             _data.push({name : "tax_type_id" ,value : $('#tax_group').select2('val')});
-            _data.push({name : "business_type" ,value : $('#business_type').select2('val')});
+           /* _data.push({name : "business_type" ,value : $('#business_type').select2('val')});*/
 
             return $.ajax({
                 "dataType":"json",

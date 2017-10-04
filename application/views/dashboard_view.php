@@ -148,7 +148,7 @@
                                             <div class="stats-progress progress">
                                                 <div class="progress-bar" style="width: 76.3%;"></div>
                                             </div>
-                                            <div class="stats-desc">26% greater than last month</div>
+                                           <!-- <div class="stats-desc">26% greater than last month</div>-->
                                         </div>
                                     </div>
 
@@ -160,7 +160,7 @@
                                             <div class="stats-progress progress">
                                                 <div class="progress-bar" style="width: 76.3%;"></div>
                                             </div>
-                                            <div class="stats-desc">26% greater than last month</div>
+                                            <!--<div class="stats-desc">26% greater than last month</div>-->
                                         </div>
                                     </div>
 
@@ -172,7 +172,7 @@
                                             <div class="stats-progress progress">
                                                 <div class="progress-bar" style="width: 76.3%;"></div>
                                             </div>
-                                            <div class="stats-desc">26% greater than last month</div>
+                                           <!-- <div class="stats-desc">26% greater than last month</div>-->
                                         </div>
                                     </div>
                                 </div>
