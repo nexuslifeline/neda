@@ -74,6 +74,28 @@ class Purchase_request extends CORE_Controller
 
     function transaction($txn = null,$id_filter=null) {
         switch ($txn){
+            case 'pr-for-approval':
+                $m_request = $this->Purchase_request_info;
+                //$id = 1;
+                $response['data'] = $m_request->get_list(
+                    array(
+                        'pr_info.is_approved' => 0,
+                        'pr_info.is_deleted' => 0
+                    ),
+
+                    array(
+                        'pr_info.*',
+                        'CONCAT_WS(" ",ua.user_fname,ua.user_lname) as requested_by'
+                    ),
+
+                    array(
+                        array('user_accounts as ua','ua.user_id=pr_info.posted_by_user','left')
+                    )
+
+                );
+                echo json_encode($response);
+                break;
+
             case 'list':  //this returns JSON of Purchase request to be rendered on Datatable
                 $m_purchases=$this->Purchase_request_info;
                 $response['data']=$this->row_response(
@@ -283,6 +305,20 @@ class Purchase_request extends CORE_Controller
                 }
                 break;
 
+            case 'mark-approved':
+                $m_purchases=$this->Purchase_request_info;
+                $pr_info_id=$this->input->post('pr_info_id',TRUE);
+
+                //$m_purchases->set('date_approved','NOW()'); //treat NOW() as function and not string, set date of approval
+                //$m_purchases->approved_by_user=$this->session->user_id; //deleted by user
+                $m_purchases->is_approved = 1; //1 means approved
+                if($m_purchases->modify($pr_info_id)) {
+                    $response['title'] = 'Success!';
+                    $response['stat'] = 'success';
+                    $response['msg'] = 'Purchase request successfully approved.';
+                    echo json_encode($response);
+                }
+                break;
 
         }
 
@@ -302,8 +338,7 @@ class Purchase_request extends CORE_Controller
             $filter_value,
             array(
                 'pr_info.*',
-                'CONCAT_WS(" ",ua.user_fname,ua.user_lname) as request_by',
-                '0 as approve_status'
+                'CONCAT_WS(" ",ua.user_fname,ua.user_lname) as request_by'
             ),
             array(
                 array('user_accounts as ua','ua.user_id=pr_info.posted_by_user','left')

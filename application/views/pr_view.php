@@ -260,16 +260,16 @@
                                                             <tr>
                                                                 <th width="10%">Qty</th>
                                                                 <th width="10%">UM</th>
-                                                                <th width="30%">Item</th>
-                                                                <th width="20%" style="text-align: right;">Unit Price</th>
-                                                                <th width="12%" style="text-align: right; display: none;">Discount</th>
+                                                                <th width="70%">Item</th>
+                                                                <th width="0%" style="text-align: right;display: none;">Unit Price</th>
+                                                                <th width="0%" style="text-align: right; display: none;">Discount</th>
                                                                 <th style="display: none;">T.D</th> <!-- total discount -->
                                                                 <th style="display: none;">Tax %</th>
-                                                                <th width="20%" style="text-align: right;">Total</th>
+                                                                <th width="0%" style="text-align: right;display: none;">Total</th>
                                                                 <th style="display: none;">V.I</th> <!-- vat input -->
                                                                 <th style="display: none;">N.V</th> <!-- net of vat -->
                                                                 <td style="display: none;">Item ID</td><!-- product id -->
-                                                                <th><center>Action</center></th>
+                                                                <th width="10%"><center>Action</center></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody>
@@ -278,15 +278,15 @@
 
                                                             <tfoot>
                                                             <tr>
-                                                                <td colspan="6" style="height: 50px;">&nbsp;</td>
+                                                                <td colspan="4" style="height: 50px;">&nbsp;</td>
                                                             </tr>
-                                                            <tr>
+                                                            <tr style="display: none;">
                                                                 <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Discount :</strong></td>
                                                                 <td align="right" colspan="1" id="td_discount color="red">0.00</td>
                                                                 <td colspan="2" id="" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total Before Tax :</strong></td>
                                                                 <td align="right" colspan="1" id="td_before_tax" color="red">0.00</td>
                                                             </tr>
-                                                            <tr>
+                                                            <tr style="display: none;">
                                                                 <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Tax :</strong></td>
                                                                 <td align="right" colspan="1" id="td_tax" color="red">0.00</td>
                                                                 <td colspan="2" style="text-align: right;"><strong><i class="glyph-icon icon-star"></i> Total After Tax :</strong></td>
@@ -743,10 +743,11 @@
                     { targets:[3],data: "reason" },
                     { targets:[4],data: "remarks" },
                     {
-                        targets:[5],data: "approve_status",
+                        targets:[5],data: "is_approved",
                         render: function (data, type, full, meta){
                             var _attribute='';
-                            if(data.approval_status=="1"){
+                            //console.log(data.is_approved);
+                            if(data == "1"){
                                 _attribute=' class="fa fa-check-circle" style="color:green;" ';
                             }else{
                                 _attribute=' class="fa fa-times-circle" style="color:red;" ';
@@ -1464,11 +1465,11 @@
                 '<td width="10%"><input name="pr_qty[]" type="text" class="number form-control" value="'+ d.pr_qty+'"></td>'+
                 '<td width="5%">'+ d.unit_name+'</td>'+
                 '<td width="30%">'+d.product_desc+'</td>'+
-                '<td width="11%"><input name="pr_price[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.pr_price,4)+'" style="text-align:right;"></td>'+
+                '<td width="11%" style="display: none;"><input name="pr_price[]" type="text" class="numeric form-control" value="'+accounting.formatNumber(d.pr_price,4)+'" style="text-align:right;"></td>'+
                 '<td width="11%" style="display:none;"><input name="pr_discount[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.pr_discount,4)+'" style="text-align:right;"></td>'+
                 '<td style="display: none;" width="11%"><input name="pr_line_total_discount[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.pr_line_total_discount,4)+'" readonly></td>'+
                 '<td width="11%" style="display:none;"><input name="pr_tax_rate[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.pr_tax_rate,4)+'"></td>'+
-                '<td width="11%" align="right"><input name="pr_line_total[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.pr_line_total,4)+'" readonly></td>'+
+                '<td width="11%" style="display: none;" align="right"><input name="pr_line_total[]" type="text" class="numeric form-control" value="'+ accounting.formatNumber(d.pr_line_total,4)+'" readonly></td>'+
                 '<td style="display: none;"><input name="tax_amount[]" type="text" class="numeric form-control" value="'+ d.pr_tax_amount+'" readonly></td>'+
                 '<td style="display: none;"><input name="non_tax_amount[]" type="text" class="numeric form-control" value="'+ d.pr_non_tax_amount+'" readonly></td>'+
                 '<td style="display: none;"><input name="product_id[]" type="text" class="form-control" value="'+ d.product_id+'" readonly></td>'+

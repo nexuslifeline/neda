@@ -198,7 +198,7 @@
 
                                 </div>
 
-                                <div class="row">
+                                <div class="row <?php echo (in_array('7-1',$this->session->user_rights)?'':'hidden'); ?>">
                                     <div class="col-md-9">
                                         <div class="panel panel-default" style="overflow-x: hidden!important;">
                                             <div class="panel-heading" style="background-color: #00a9dd;">
@@ -206,7 +206,7 @@
                                             </div>
                                             <div class="panel-body table-responsive">
                                                 <div class="row" style="margin-top: 20px;">
-                                                    <div class="col-xs-12 col-sm-12 <?php echo (in_array('7-1',$this->session->user_rights)?'':'hidden'); ?>">
+                                                    <div class="col-xs-12 col-sm-12 ">
                                                         <div class="data-container table-responsive" >
                                                             <table id="tbl_po_list" class="table custom-design" c width="100%">
                                                                 <thead>
@@ -230,6 +230,36 @@
                                     </div>
                                 </div>
 
+                                <div class="row <?php echo (in_array('7-2',$this->session->user_rights)?'':'hidden'); ?>">
+                                    <div class="col-md-9">
+                                        <div class="panel panel-default" style="overflow-x: hidden!important;">
+                                            <div class="panel-heading" style="background-color: #00a9dd;">
+                                                <h4 style="color: white;">Purchase Request for Approval</h4>
+                                            </div>
+                                            <div class="panel-body table-responsive">
+                                                <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-xs-12 col-sm-12 ">
+                                                        <div class="data-container table-responsive" >
+                                                            <table id="tbl_pr_list" class="table custom-design" c width="100%">
+                                                                <thead>
+                                                                <th></th>
+                                                                <th>PR #</th>
+                                                                <th>Requested By</th>
+                                                                <th>Date Requested </th>
+                                                                <th>Purpose/Reason</th>
+                                                                <th><center>Action</center></th>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                     </div> <!-- #page-content -->
             </div>
@@ -312,7 +342,7 @@
 <script>
 
     $(document).ready(function(){
-        var dt; var _selectedID; var _selectRowObj;
+        var dt; var _selectedID; var _selectRowObj; var dtPr;
 
 
 
@@ -355,6 +385,36 @@
                             var btn_conversation='<a id="link_conversation" href="Po_messages?id='+full.purchase_order_id+'" target="_blank" class="btn btn-info btn-sm"  style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Open Conversation"><i class="fa fa-comments"></i> </a>';
 
                             return '<center>'+btn_approved+'&nbsp;'+btn_conversation+'</center>';
+                        }
+                    }
+                ]
+            });
+
+            dtPr=$('#tbl_pr_list').DataTable({
+                "dom": '<"toolbar">frtip',
+                "bLengthChange":false,
+                "ajax" : "Purchase_request/transaction/pr-for-approval",
+                "language": {
+                    "searchPlaceholder":"Search Purchase Order"
+                },
+                "columns": [
+                    {
+                        "targets": [0],
+                        "class":          "details-control",
+                        "orderable":      false,
+                        "data":           null,
+                        "defaultContent": ""
+                    },
+                    { targets:[1],data: "pr_no" },
+                    { targets:[2],data: "requested_by" },
+                    { targets:[3],data: "date_posted" },
+                    { targets:[4],data: "reason" },
+                    {
+                        targets:[5],
+                        render: function (data, type, full, meta){
+
+                            var btn_approved='<button class="btn btn-success btn-sm" name="approve_pr"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Approved this PO"><i class="fa fa-check" style="color: white;"></i> <span class=""></span></button>';
+                            return '<center>'+btn_approved+'&nbsp;</center>';
                         }
                     }
                 ]
@@ -425,6 +485,23 @@
                 });
             });
 
+            //*****************************************************************************************
+            $('#tbl_pr_list > tbody').on('click','button[name="approve_pr"]',function(){
+                _selectRowObj=$(this).closest('tr'); //hold dom of tr which is selected
+
+                var data=dtPr.row(_selectRowObj).data();
+                _selectedID=data.pr_info_id;
+
+
+                approvePurchaseRequest().done(function(response){
+                    showNotification(response);
+                    if(response.stat=="success"){
+                        dtPr.row(_selectRowObj).remove().draw();
+                    }
+
+                });
+            });
+
 
             //****************************************************************************************
             $('#tbl_po_list > tbody').on('click','button[name="mark_as_approved"]',function(){
@@ -458,6 +535,16 @@
                 "type":"POST",
                 "url":"Purchases/transaction/mark-approved",
                 "data":{purchase_order_id : _selectedID}
+
+            });
+        };
+
+        var approvePurchaseRequest=function(){
+            return $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"Purchase_request/transaction/mark-approved",
+                "data":{"pr_info_id" : _selectedID}
 
             });
         };
