@@ -236,6 +236,17 @@
                         </div>
                     </div>
 
+                    <div class="col-sm-4 col-sm-offset-3">
+                        Quote #:<br />
+                        <div class="input-group">
+                            <input type="text" name="po_no" class="form-control" placeholder="Qoute #">
+                            <span class="input-group-addon">
+                            <a href="#" id="link_browse_quote"><b>...</b></a>
+                        </span>
+                        </div>
+                    </div>
+
+
 
                 </div>
 
@@ -697,6 +708,42 @@
 </footer>
 
 
+    <div id="modal_quote_list" class="modal fade" tabindex="-1" role="dialog"><!--modal-->
+        <div class="modal-dialog" style="width: 80%;">
+            <div class="modal-content"><!---content--->
+                <div class="modal-header ">
+                    <button type="button" class="close"   data-dismiss="modal" aria-hidden="true">X</button>
+                    <h4 class="modal-title" style="color: white;"><span id="modal_mode"> </span>Quotation</h4>
+
+                </div>
+
+                <div class="modal-body" style="margin: 2%;">
+                    <table id="tbl_quote_list" class="table-striped custom-design" cellspacing="0" width="100%">
+                        <thead class="">
+                        <tr>
+                            <th></th>
+                            <th>Quote#</th>
+                            <th>PR#</th>
+                            <th>Supplier</th>
+                            <th>Total</th>
+                            <th><center>Action</center></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="text-transform: none;font-family: Tahoma, Georgia, Serif;">Cancel</button>
+                </div>
+            </div><!---content---->
+        </div>
+    </div><!---modal-->
 
 
 </div>
@@ -749,7 +796,7 @@
 
 $(document).ready(function(){
     var dt; var _txnMode; var _selectedID; var _selectRowObj; var _cboSuppliers; var _cboTaxType;
-    var _cboDepartments; var _defCostType;
+    var _cboDepartments; var _defCostType; var dtQuote;
 
 
     //_defCostType=1; //Luzon Area Purchase Cost is default, this will change when branch is specified
@@ -776,6 +823,35 @@ $(document).ready(function(){
 
 
     var initializeControls=function(){
+
+        dtQuote = $('#tbl_quote_list').DataTable({
+            "dom": '<"toolbar">frtip',
+            "bLengthChange":false,
+            "pageLength":15,
+            "ajax" : "Quotation_request/transaction/quotations",
+            "columns": [
+                {
+                    "targets": [0],
+                    "class":          "details-control",
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": ""
+                },
+                { targets:[1],data: "quote_no" },
+                { targets:[2],data: "pr_no" },
+                { targets:[3],data: "supplier_name" },
+                { targets:[4],data: "total_price" },
+
+                {
+                    targets:[5],
+                    render: function (data, type, full, meta){
+                        var btn_accept='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Accept">Accept</button>';
+
+                        return '<center>'+btn_accept+'</center>';
+                    }
+                }
+            ]
+        });
 
         dt=$('#tbl_purchases').DataTable({
             "dom": '<"toolbar">frtip',
@@ -1073,7 +1149,9 @@ $(document).ready(function(){
         });
 
 
-
+        $('#link_browse_quote').click(function(){
+            $('#modal_quote_list').modal('show');
+        });
 
 
         $('#tbl_purchases tbody').on('click','#btn_email',function(){

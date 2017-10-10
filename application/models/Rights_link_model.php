@@ -30,7 +30,8 @@ class Rights_link_model extends CORE_Model{
                                           (52,'8','8-1','Inventory Report','Inventory'),
                                           (53,'8','8-2','Supplies and Materials Issued Report','Supplies_issued'),
                                           (54,'2','2-7','Purchase Request','Purchase_request'),
-                                          (55,'7','7-2','Purchase Request for Approval','Dashboard')
+                                          (55,'7','7-2','Purchase Request for Approval','Dashboard'),
+                                          (56,'7','7-3','Quotation for Approval','Dashboard')
 
                                           ON DUPLICATE KEY UPDATE
                                           rights_links.parent_code=VALUES(rights_links.parent_code),

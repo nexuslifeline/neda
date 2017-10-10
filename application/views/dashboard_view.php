@@ -260,6 +260,38 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="row <?php echo (in_array('7-3',$this->session->user_rights)?'':''); ?>">
+                                    <div class="col-md-9">
+                                        <div class="panel panel-default" style="overflow-x: hidden!important;">
+                                            <div class="panel-heading" style="background-color: #00a9dd;">
+                                                <h4 style="color: white;">Quotation for Approval</h4>
+                                            </div>
+                                            <div class="panel-body table-responsive">
+                                                <div class="row" style="margin-top: 20px;">
+                                                    <div class="col-xs-12 col-sm-12 ">
+                                                        <div class="data-container table-responsive" >
+                                                            <table id="tbl_quote_list" class="table custom-design" c width="100%">
+                                                                <thead>
+                                                                <th></th>
+                                                                <th>Quote #</th>
+                                                                <th>PR #</th>
+                                                                <th>Supplier</th>
+                                                                <th>Date Quoted</th>
+                                                                <th><center>Action</center></th>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                     </div> <!-- #page-content -->
             </div>
@@ -342,7 +374,7 @@
 <script>
 
     $(document).ready(function(){
-        var dt; var _selectedID; var _selectRowObj; var dtPr;
+        var dt; var _selectedID; var _selectRowObj; var dtPr; var dtQuote; var _selectedPrID;
 
 
 
@@ -420,6 +452,36 @@
                 ]
             });
 
+            dtQuote=$('#tbl_quote_list').DataTable({
+                "dom": '<"toolbar">frtip',
+                "bLengthChange":false,
+                "ajax" : "Quotation_request/transaction/quote-for-approval",
+                "language": {
+                    "searchPlaceholder":"Search Purchase Order"
+                },
+                "columns": [
+                    {
+                        "targets": [0],
+                        "class":          "details-control",
+                        "orderable":      false,
+                        "data":           null,
+                        "defaultContent": ""
+                    },
+                    { targets:[1],data: "quote_no" },
+                    { targets:[2],data: "pr_no" },
+                    { targets:[3],data: "supplier_name" },
+                    { targets:[4],data: "date_quoted" },
+                    {
+                        targets:[5],
+                        render: function (data, type, full, meta){
+
+                            var btn_approved='<button class="btn btn-success btn-sm" name="approve_quote"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Approved this PO"><i class="fa fa-check" style="color: white;"></i> <span class=""></span></button>';
+                            return '<center>'+btn_approved+'&nbsp;</center>';
+                        }
+                    }
+                ]
+            });
+
              $('div.dataTables_filter input').addClass('dash_search_field');
         })();
 
@@ -428,7 +490,6 @@
 
 
             var detailRows = [];
-
 
             $('#tbl_po_list tbody').on( 'click', 'tr td.details-control', function () {
                 var tr = $(this).closest('tr');
@@ -467,6 +528,61 @@
 
                 }
             } );
+
+            $('#tbl_pr_list tbody').on( 'click', 'tr td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = dtPr.row( tr );
+                var idx = $.inArray( tr.attr('id'), detailRows );
+
+                if ( row.child.isShown() ) {
+                    tr.removeClass( 'details' );
+                    row.child.hide();
+
+                    // Remove from the 'open' array
+                    detailRows.splice( idx, 1 );
+                }
+                else {
+                    tr.addClass( 'details' );
+                    //console.log(row.data());
+                    var d=row.data();
+
+                    $.ajax({
+                        "dataType":"html",
+                        "type":"POST",
+                        "url":"Templates/layout/pr/"+ d.pr_info_id+'?type=approval',
+                        "beforeSend" : function(){
+                            row.child( '<center><br /><img src="assets/img/loader/ajax-loader-lg.gif" /><br /><br /></center>' ).show();
+                        }
+                    }).done(function(response){
+                        row.child( response,'no-padding' ).show();
+                        // Add to the 'open' array
+                        if ( idx === -1 ) {
+                            detailRows.push( tr.attr('id') );
+                        }
+                    });
+
+
+
+
+                }
+            } );
+
+            //*****************************************************************************************
+            $('#tbl_quote_list > tbody').on('click','button[name="approve_quote"]',function(){
+                _selectRowObj=$(this).closest('tr'); //hold dom of tr which is selected
+
+                var data=dtQuote.row(_selectRowObj).data();
+                _selectedID=data.quote_id;
+                _selectedPrID = data.pr_info_id;
+
+                approveQuotation().done(function(response){
+                    showNotification(response);
+                    if(response.stat=="success"){
+                        dtQuote.ajax.reload();
+                    }
+
+                });
+            });
 
 
             //*****************************************************************************************
@@ -525,7 +641,16 @@
 
 
 
+        //functions called on bindEventHandlers
+        var approveQuotation=function(){
+            return $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"Quotation_request/transaction/mark-approved",
+                "data":{quote_id : _selectedID,pr_info_id:_selectedPrID}
 
+            });
+        };
 
 
         //functions called on bindEventHandlers

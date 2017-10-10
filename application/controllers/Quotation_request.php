@@ -85,6 +85,53 @@ class Quotation_request extends CORE_Controller
     function transaction($txn = null)
     {
         switch ($txn) {
+            case 'quotations':
+                $m_quote = $this->Quotation_info_model;
+                $response['data'] = $m_quote->get_list(
+                    array(
+                        'quotation_info.is_approved' => 1,
+                        'quotation_info.is_active' => 1
+                    ),
+
+                    array(
+                        'quotation_info.*',
+                        'pr.pr_no',
+                        's.supplier_name'
+                    ),
+
+                    array(
+                        array('pr_info as pr','pr.pr_info_id=quotation_info.pr_info_id','left'),
+                        array('suppliers as s','s.supplier_id=quotation_info.supplier_id','left')
+                    )
+
+
+                );
+                echo json_encode($response);
+                break;
+            case 'quote-for-approval':
+                $m_quote = $this->Quotation_info_model;
+
+                $response['data'] = $m_quote->get_list(
+                    array(
+                        'quotation_info.is_approved' => 0,
+                        'quotation_info.is_active' => 1
+                    ),
+
+                    array(
+                        'quotation_info.*',
+                        'pr.pr_no',
+                        's.supplier_name'
+                    ),
+
+                    array(
+                        array('pr_info as pr','pr.pr_info_id=quotation_info.pr_info_id','left'),
+                        array('suppliers as s','s.supplier_id=quotation_info.supplier_id','left')
+                    )
+
+
+                );
+                echo json_encode($response);
+                break;
             case 'quote':
                 $m_quote = $this->Quotation_info_model;
                 $m_quote_items = $this->Quotation_items;
@@ -152,15 +199,35 @@ class Quotation_request extends CORE_Controller
                     'key' => $key
                 ));
 
-
-
                 $response['title'] = 'Success!';
                 $response['stat'] = 'success';
                 $response['msg'] = 'Quotation successfully submitted.';
                 echo json_encode($response);
 
+                break;
+
+            case 'mark-approved':
+                $m_quote=$this->Quotation_info_model;
+
+                $quote_id=$this->input->post('quote_id',TRUE);
+                $pr_info_di = $this->input->post('pr_info_id',TRUE);
+
+                $m_quote->is_active = 0;
+                $m_quote->modify(
+                    array(
+                        'pr_info_id' => $pr_info_di
+                    )
+                );
 
 
+                $m_quote->is_active = 1;
+                $m_quote->is_approved = 1; //1 means approved
+                if($m_quote->modify($quote_id)) {
+                    $response['title'] = 'Success!';
+                    $response['stat'] = 'success';
+                    $response['msg'] = 'Quotation successfully approved.';
+                    echo json_encode($response);
+                }
                 break;
 
         }
