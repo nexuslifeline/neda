@@ -18,6 +18,7 @@ class Purchase_request extends CORE_Controller
         $this->load->model('Company_model');
         $this->load->library('email');
         $this->load->model('Users_model');
+        $this->load->model('Request_links_model');
 
 
     }
@@ -62,6 +63,8 @@ class Purchase_request extends CORE_Controller
             )
 
         );
+        $data['suppliers'] = $this->Suppliers_model->get_list('is_deleted = 0');
+
 
         $data['title'] = 'Purchase Request';
         (in_array('2-1',$this->session->user_rights)?
@@ -155,8 +158,6 @@ class Purchase_request extends CORE_Controller
 
                 echo json_encode($response);
                 break;
-
-
 
             case 'create':
                 $m_purchases=$this->Purchase_request_info;
@@ -305,6 +306,7 @@ class Purchase_request extends CORE_Controller
                 }
                 break;
 
+
             case 'mark-approved':
                 $m_purchases=$this->Purchase_request_info;
                 $pr_info_id=$this->input->post('pr_info_id',TRUE);
@@ -320,6 +322,40 @@ class Purchase_request extends CORE_Controller
                 }
                 break;
 
+            case 'send-request-link':
+                $m_links = $this->Request_links_model;
+                $m_supplier = $this->Suppliers_model;
+
+                $supplierid = $this->input->post('supid');
+                $pr_id = $this->input->post('pr_id');
+
+                for($i=0;$i < count($supplierid); $i++){
+                    $key = md5(uniqid(''));
+
+                    //get email of current supplier
+                    $sup_info = $m_supplier->get_list($supplierid[$i]);
+                    $email = $sup_info[0]->email_address;
+
+                    if( $email != '' ){
+
+                    }
+
+                    $m_links->set('date_sent','NOW()');
+                    $m_links->sent_by_user = $this->session->user_id;
+                    $m_links->supplier_id = $supplierid[$i];
+                    $m_links->key = $key;
+                    $m_links->sent_to_email = $email;
+                    $m_links->pr_info_id = $pr_id;
+                    $m_links->save();
+
+                }
+
+                $response['title']='Success!';
+                $response['stat']='success';
+                $response['msg']='Successfully requested Quotation to suppliers.';
+                echo json_encode($response);
+
+                break;
         }
 
 

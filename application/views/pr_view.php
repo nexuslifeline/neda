@@ -34,6 +34,11 @@
             zoom: 80%;
         }
 
+        .select2-container{
+            min-width: 100%;
+            z-index: 99999999!important;
+        }
+
         #tbl_items td,#tbl_items tr,#tbl_items th{
             table-layout: fixed;
             border: 1px solid gray;
@@ -623,7 +628,7 @@
         </div><!---modal-->
 
 
-        <div id="modal_purchase_order" class="modal fade" role="dialog">
+     <!--   <div id="modal_purchase_order" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header " style="padding: 5px !important;">
@@ -637,9 +642,35 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
-
+        <div id="modal_send_request" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header " style="padding: 5px !important;">
+                            <h2 style="color:white; padding-left: 10px;">Request Quotation</h2>
+                        </div>
+                        <div class="modal-body" style="margin: 1%">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label>Please select supplier :</label>
+                                    <select name="request_supplier" id="cbo_request_supplier" multiple="multiple">
+                                        <?php foreach($suppliers as $supplier){ ?>
+                                            <option value="<?php echo $supplier->supplier_id; ?>"><?php echo $supplier->supplier_name; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <button id="btn_request" class="btn btn-primary"><span class=""></span> Request  Quotation </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <footer role="contentinfo">
             <div class="clearfix">
@@ -703,7 +734,7 @@
 
     $(document).ready(function(){
         var dt; var _txnMode; var _selectedID; var _selectRowObj; var _cboSuppliers; var _cboTaxType;
-        var _cboDepartments; var _defCostType;
+        var _cboDepartments; var _defCostType; var _selectedPRNo;
 
 
         //_defCostType=1; //Luzon Area Purchase Cost is default, this will change when branch is specified
@@ -760,12 +791,14 @@
                     {
                         targets:[6],
                         render: function (data, type, full, meta){
+
                             var btn_edit='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-pencil"></i> </button>';
                             var btn_trash='<button class="btn btn-red btn-sm" name="remove_info" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>';
                             var btn_message='<a href="pr_messages?id='+full.pr_info_id+'" target="_blank" class="btn btn-green btn-sm" name="message_po" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Message"><i class="fa fa-comments"></i> </a>';
-                            var btn_send='<button class="btn btn-primary btn-sm" name="email_supplier" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Email to Supplier"><i class="fa fa-envelope-o"></i> </button>';
 
-                            return '<center>'+btn_edit+'&nbsp;'+'&nbsp;'+btn_trash+'&nbsp;</center>';
+                            var btn_send='<button class="btn btn-primary btn-sm" name="send_request" style="margin-right:0px;" data-toggle="tooltip" data-placement="top" title="Send Quotation Request"><i class="fa fa-envelope-o"></i> </button>';
+
+                            return '<center>'+btn_edit+'&nbsp;'+'&nbsp;'+(full.is_approved == "1" ?"":btn_trash+'&nbsp;')+(full.is_approved == "1" ? btn_send : "")+'&nbsp;</center>';
                         }
                     }
                 ]
@@ -814,6 +847,10 @@
              }
              }
              });*/
+
+            _cboSuppliers=$('#cbo_request_supplier').select2({
+                allowClear: true
+            });
 
 
 
@@ -959,6 +996,37 @@
                 }
             } );
 
+            $('#btn_request').click(function(){
+
+                var supid = $('#cbo_request_supplier').select2('val');
+                var btn = $(this);
+                var data = [];
+
+                $.each(supid , function( i , x ){
+                    data.push({name:'supid[]',value: x });
+                });
+                data.push({name : 'pr_id',value : _selectedPRNo});
+
+                $.ajax({
+                    "dataType":"json",
+                    "type":"POST",
+                    "data" : data,
+                    "url":"Purchase_request/transaction/send-request-link",
+                    "beforeSend" : function(){
+                        showSpinningProgress(btn);
+                    }
+                }).done(function(response){
+                    showNotification(response);
+
+                    if(response.stat == "success"){
+                        showSpinningProgress(btn);
+                        $('#modal_send_request').modal('hide');
+                    }
+
+                    //dt.row(_selectRowObj).data(response.row_updated[0]).draw();
+                });
+            });
+
 
             $(document).on('click','button[name="email_supplier"]',function(){
 
@@ -979,6 +1047,29 @@
             });
 
 
+            $(document).on('click','button[name="send_request"]',function(){
+
+                _selectRowObj = $(this).closest('tr');
+                var d = dt.row(_selectRowObj).data();
+
+                _selectedPRNo = d.pr_info_id;
+                $('#modal_send_request').modal('show');
+
+                /*_selectRowObj=$(this).closest('tr');
+                var d=dt.row(_selectRowObj).data();
+
+                $.ajax({
+                    "dataType":"json",
+                    "type":"POST",
+                    "url":"Purchase_request/transaction/email-supplier?id="+ d.pr_info_id,
+                    "beforeSend" : function(){
+                        //showSpinningProgress(btn);
+                    }
+                }).done(function(response){
+                    showNotification(response);
+                    dt.row(_selectRowObj).data(response.row_updated[0]).draw();
+                });*/
+            });
 
 
 
@@ -1265,10 +1356,10 @@
                 $('img[name="img_user"]').attr('src','assets/img/anonymous-icon.png');
             });
 
-            $('input[name="file_upload[]"]').change(function(event){
+         /*   $('input[name="file_upload[]"]').change(function(event){
                 var _files=event.target.files;
-                /*$('#div_img_product').hide();
-                 $('#div_img_loader').show();*/
+                /!*$('#div_img_product').hide();
+                 $('#div_img_loader').show();*!/
                 var data=new FormData();
                 $.each(_files,function(key,value){
                     data.append(key,value);
@@ -1286,7 +1377,7 @@
                         $('img[name="img_user"]').attr('src',response.path);
                     }
                 });
-            });
+            });*/
 
 
         })();
