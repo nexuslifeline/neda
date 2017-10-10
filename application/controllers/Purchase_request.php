@@ -338,15 +338,45 @@ class Purchase_request extends CORE_Controller
 
                     if( $email != '' ){
 
+                        $config = Array(
+                            'protocol' => 'smtp',
+                            'smtp_host' => 'ssl://smtp.googlemail.com',
+                            'smtp_port' => 465,
+                            'smtp_user' => 'chris14rueda18@gmail.com',
+                            'smtp_pass' => '09141991',
+                            'smtp_timeout' => 30,
+                            'mailtype'  => 'html',
+                            'charset' => 'utf-8',
+                            'wordwrap' => TRUE
+                        );
+                        $this->load->library('email', $config);
+                        $this->email->set_newline("\r\n");
+                        $this->email->set_mailtype("html");
+
+                        //Add file directory if you need to attach a file
+                        // $this->email->attach($file_dir_name);
+
+                        $content = 'http://'.$_SERVER['SERVER_NAME'].'/Quotation_request/open/'.$supplierid[$i].'/'.$pr_id.'/'.$key;
+
+                        $this->email->from('nedaprocurement', 'NEDA REGION III');
+                        $this->email->to( $email );
+
+                        $this->email->subject('QUOTATION REQUEST');
+                        $this->email->message($content);
+
+                        if($this->email->send()){
+                            $m_links->set('date_sent','NOW()');
+                            $m_links->sent_by_user = $this->session->user_id;
+                            $m_links->supplier_id = $supplierid[$i];
+                            $m_links->key = $key;
+                            $m_links->sent_to_email = $email;
+                            $m_links->pr_info_id = $pr_id;
+                            $m_links->save();
+                        }
+
                     }
 
-                    $m_links->set('date_sent','NOW()');
-                    $m_links->sent_by_user = $this->session->user_id;
-                    $m_links->supplier_id = $supplierid[$i];
-                    $m_links->key = $key;
-                    $m_links->sent_to_email = $email;
-                    $m_links->pr_info_id = $pr_id;
-                    $m_links->save();
+
 
                 }
 

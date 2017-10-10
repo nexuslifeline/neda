@@ -1,5 +1,6 @@
 <html>
 
+
 <style>
     @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
     * {
@@ -17,11 +18,11 @@
         border-collapse: collapse;
     }
 
-    table > thead th{
+    table  th{
         border: 1px solid white;
     }
 
-    table > tbody td{
+    table  td{
         border: 1px solid white;
         padding: 3px;
         vertical-align: middle;
@@ -82,7 +83,6 @@
         text-align: center;
         border: none;
         border-radius: 5px;
-        z-index: 9999999;
 
         background: rgba(177,232,246,1);
         background: -moz-linear-gradient(left, rgba(177,232,246,1) 0%, rgba(149,234,227,0.13) 48%, rgba(118,237,207,0.13) 100%);
@@ -117,7 +117,6 @@
         width: 150px;
         border-radius: 3px;
         padding: 10px 15px;
-        margin: 0 auto 10px auto;
         display: block;
         text-align: center;
         font-size: 11px;
@@ -282,50 +281,53 @@
         <table>
             <tbody>
                 <tr>
+                    <td width="15%">PR # : </td>
+                    <td width="85%"><?php echo $request_info[0]->pr_no; ?></td>
+                </tr>
+                <tr>
                     <td>Sender : </td>
-                    <td>Paul Christian Rueda</td>
+                    <td><?php echo $request_info[0]->fullName; ?></td>
                 </tr>
                 <tr>
                     <td>Remarks : </td>
-                    <td>Please send your quotation as soon as possible.</td>
+                    <td><?php echo $request_info[0]->remarks; ?></td>
                 </tr>
+
             </tbody>
         </table>
 
-        <form>
-        <table>
+        <form id="frmItems" class="form">
+        <table id="tbl_items">
             <thead>
                 <tr>
-                    <th width="10%">#</th>
-                    <th width="50%">Product</th>
-                    <th width="20%">Qty</th>
-                    <th width="20%">Price</th>
+                    <th width="15%">#</th>
+                    <th width="40%">Product</th>
+                    <th width="15%">Qty</th>
+                    <th width="15%">Price</th>
+                    <th width="15%">Total</th>
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($items as $item){ ?>
                 <tr>
-                    <td>1002</td>
-                    <td>Bond Paper</td>
-                    <td>10</td>
-                    <td><input type="text" value="" /></td>
-
+                    <td align="center"><?php echo $item->product_code; ?></td>
+                    <td align="center"><?php echo $item->product_desc; ?></td>
+                    <td align="center"><?php echo number_format($item->pr_qty,0); ?></td>
+                    <td align="center"><input type="text" class="item-price" value="" data-prod-qty="<?php echo $item->pr_qty; ?>" data-prod-id="<?php echo $item->product_id; ?>" /></td>
+                    <td align="center"><input type="text" class="item-total" value="" readonly /></td>
                 </tr>
-                <tr>
-                    <td>1002</td>
-                    <td>Bond Paper</td>
-                    <td>10</td>
-                    <td><input type="text" value="" /></td>
-
-                </tr>
-                <tr>
-                    <td>1002</td>
-                    <td>Bond Paper</td>
-                    <td>10</td>
-                    <td><input type="text" value="" /></td>
-
-                </tr>
+                <?php } ?>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td align="right" colspan="3">Total</td>
+                    <td align="center" colspan="2"><h2 id="txtTotal">1002</h2></td>
+                </tr>
+            </tfoot>
         </table>
+
+
+        <button type="submit" id="btnSubmit">Submit</button>
         </form>
     </div>
 
@@ -343,4 +345,83 @@
     </ul>
 </div>
 </body>
+
+
+
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-1.10.2.min.js"></script> 							<!-- Load jQuery -->
+<script>
+    $(document).ready(function(){
+        var supid = <?php echo $supplier_id; ?>;
+        var prid = <?php echo $pr_info_id; ?>;
+        var key = <?php echo json_encode($key); ?>;
+
+        $(document).on('input.item-price','input',function(){
+            var row = $(this).closest('tr');
+            var qty = parseInt($(this).data('prod-qty'));
+            var price = parseInt($(this).val());
+
+            row.find('input.item-total').val( qty * price );
+
+            $('#txtTotal').html(getTotal());
+        });
+
+        $('#btnSubmit').click(function(  ){
+            event.preventDefault();
+            var data = getSerializeData();
+            var btn = $(this);
+            $.ajax({
+                "dataType":"json",
+                "type":"POST",
+                "url":"<?php echo base_url(); ?>Quotation_request/transaction/quote",
+                "data" : data,
+                "beforeSend" : function(){
+                    //showSpinningProgress(btn);
+                }
+            }).done(function(response){
+                alert(response.msg);
+                //btn.attr('disabled','true');
+            });
+
+        });
+
+        function getSerializeData(){
+
+            var rows = $('#tbl_items > tbody').find('tr'); var data = [];
+            $.each(rows,function(i,v){
+                var price = parseInt($(v).find('input.item-price').val());
+                var qty = parseInt($(v).find('input.item-price').data('prod-qty'));
+                var prodid = parseInt($(v).find('input.item-price').data('prod-id'));
+                var total = parseInt($(v).find('input.item-total').val());
+
+                data.push({"name":"price[]","value":price});
+                data.push({"name":"qty[]","value":qty});
+                data.push({"name":"prodid[]","value":prodid});
+                data.push({"name":"total[]","value":total});
+            });
+
+            data.push({"name":"supid","value":supid});
+            data.push({"name":"prid","value":prid});
+            data.push({"name":"grandtotal","value":$('#txtTotal').text()});
+            data.push({"name":"key","value":key});
+
+            return data;
+        }
+
+
+
+        function getTotal(){
+            var rows = $('#tbl_items > tbody').find('tr'); var total = 0;
+            $.each(rows,function(i,v){
+                var price = parseInt($(v).find('input.item-total').val());
+                total += price;
+            });
+            return total;
+        }
+
+    });
+</script>
+
+
+
+
 </html>
