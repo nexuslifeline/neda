@@ -410,7 +410,7 @@ CREATE TABLE `pr_info` (
   `is_approved` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`pr_info_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=8 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=9 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `pr_items` table : */
@@ -430,7 +430,7 @@ CREATE TABLE `pr_items` (
   `pr_non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
   PRIMARY KEY USING BTREE (`pr_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=14 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=15 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `products` table : */
@@ -537,6 +537,37 @@ CREATE TABLE `purchase_order_items` (
   PRIMARY KEY USING BTREE (`po_item_id`)
 ) ENGINE=InnoDB
 AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+;
+
+/* Structure for the `quotation_info` table : */
+
+CREATE TABLE `quotation_info` (
+  `quote_id` INTEGER(11) NOT NULL AUTO_INCREMENT,
+  `quote_no` VARCHAR(100) COLLATE latin1_swedish_ci DEFAULT '',
+  `request_link_key` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
+  `pr_info_id` INTEGER(11) DEFAULT 0,
+  `supplier_id` INTEGER(11) DEFAULT 0,
+  `total_price` DECIMAL(20,2) DEFAULT 0.00,
+  `date_quoted` DATETIME DEFAULT NULL,
+  `is_approved` TINYINT(4) DEFAULT 0,
+  `is_active` TINYINT(4) DEFAULT 1,
+  PRIMARY KEY USING BTREE (`quote_id`)
+) ENGINE=InnoDB
+AUTO_INCREMENT=22 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+;
+
+/* Structure for the `quotation_items` table : */
+
+CREATE TABLE `quotation_items` (
+  `quote_item_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `quote_id` INTEGER(11) DEFAULT 0,
+  `product_id` INTEGER(11) DEFAULT 0,
+  `quote_qty` DECIMAL(11,2) DEFAULT 9.00,
+  `qoute_price` DECIMAL(11,2) DEFAULT 0.00,
+  `quote_total_price` DECIMAL(11,2) DEFAULT 0.00,
+  PRIMARY KEY USING BTREE (`quote_item_id`)
+) ENGINE=InnoDB
+AUTO_INCREMENT=9 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `refproduct` table : */
@@ -908,7 +939,8 @@ INSERT INTO `pr_info` (`pr_info_id`, `pr_no`, `remarks`, `is_active`, `is_delete
   (4,'PR-20171004-4','s',1,0,1,'2017-10-04 23:16:59',1,'0000-00-00 00:00:00',0,'0000-00-00','sfsdf',1),
   (5,'PR-20171004-5','',1,0,1,'2017-10-04 23:22:08',0,'0000-00-00 00:00:00',0,'0000-00-00','sdfs',1),
   (6,'PR-20171004-6','remarks',1,1,1,'2017-10-04 23:23:39',0,'0000-00-00 00:00:00',1,'2017-10-04','purpose',0),
-  (7,'PR-20171004-7','sdfsdf',1,0,1,'2017-10-04 23:28:15',0,'0000-00-00 00:00:00',0,'0000-00-00','sdsf',0);
+  (7,'PR-20171004-7','sdfsdf',1,0,1,'2017-10-04 23:28:15',0,'0000-00-00 00:00:00',0,'0000-00-00','sdsf',1),
+  (8,'PR-20171010-8','',1,0,1,'2017-10-10 22:45:10',0,'0000-00-00 00:00:00',0,'0000-00-00','d',0);
 COMMIT;
 
 /* Data for the `pr_items` table  (LIMIT 0,500) */
@@ -918,7 +950,8 @@ INSERT INTO `pr_items` (`pr_item_id`, `pr_info_id`, `product_id`, `unit_id`, `pr
   (10,3,1,3,0.0000,0.0000,0.0000,0.0000,2,0.0000,0.0000,0.0000),
   (11,5,2,4,0.0000,0.0000,0.0000,0.0000,10,0.0000,0.0000,0.0000),
   (12,6,2,4,0.0000,0.0000,0.0000,0.0000,12,0.0000,0.0000,0.0000),
-  (13,7,1,3,0.0000,0.0000,0.0000,12.0000,12,0.0000,0.0000,0.0000);
+  (13,7,1,3,0.0000,0.0000,0.0000,12.0000,12,0.0000,0.0000,0.0000),
+  (14,8,1,3,0.0000,0.0000,0.0000,12.0000,1,0.0000,0.0000,0.0000);
 COMMIT;
 
 /* Data for the `products` table  (LIMIT 0,500) */
@@ -943,6 +976,18 @@ INSERT INTO `purchase_order_items` (`po_item_id`, `purchase_order_id`, `product_
   (3,2,1,3,0.0000,0.0000,0.0000,12.0000,2,0.0000,0.0000,0.0000);
 COMMIT;
 
+/* Data for the `quotation_info` table  (LIMIT 0,500) */
+
+INSERT INTO `quotation_info` (`quote_id`, `quote_no`, `request_link_key`, `pr_info_id`, `supplier_id`, `total_price`, `date_quoted`, `is_approved`, `is_active`) VALUES
+  (21,'Q-000000021','623',4,4,168.00,'2017-10-10 21:28:53',1,1);
+COMMIT;
+
+/* Data for the `quotation_items` table  (LIMIT 0,500) */
+
+INSERT INTO `quotation_items` (`quote_item_id`, `quote_id`, `product_id`, `quote_qty`, `qoute_price`, `quote_total_price`) VALUES
+  (8,21,2,3.00,56.00,168.00);
+COMMIT;
+
 /* Data for the `refproduct` table  (LIMIT 0,500) */
 
 INSERT INTO `refproduct` (`refproduct_id`, `product_type`, `description`, `created_by_user_id`, `modified_by_user_id`, `date_created`, `date_modified`, `is_deleted`) VALUES
@@ -959,7 +1004,7 @@ INSERT INTO `request_links` (`request_link_id`, `supplier_id`, `pr_info_id`, `ke
   (9,1,5,'9ac575b2bbc578af0fef9a141358dfdf','','2017-10-07 21:48:40',1,'0000-00-00 00:00:00',0),
   (10,2,5,'90ed5f3120441cb43acfd6b1c1a16420','','2017-10-07 21:48:40',1,'0000-00-00 00:00:00',0),
   (11,3,4,'d8973d58b88cec30fb9c613a74c3a96c','','2017-10-07 22:16:21',1,'0000-00-00 00:00:00',0),
-  (12,4,4,'623a7ad5495f67b68978bcbb7f9e3608','Orchids@yahoo.com','2017-10-07 22:16:21',1,'0000-00-00 00:00:00',0);
+  (12,4,4,'623a7ad5495f67b68978bcbb7f9e3608','Orchids@yahoo.com','2017-10-07 22:16:21',1,'2017-10-10 21:28:53',1);
 COMMIT;
 
 /* Data for the `requisition_info` table  (LIMIT 0,500) */
