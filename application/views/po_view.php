@@ -239,7 +239,7 @@
                     <div class="col-sm-4 col-sm-offset-3">
                         Quote #:<br />
                         <div class="input-group">
-                            <input type="text" name="po_no" class="form-control" placeholder="Qoute #">
+                            <input type="text" name="quote_no" class="form-control" placeholder="Qoute #">
                             <span class="input-group-addon">
                             <a href="#" id="link_browse_quote"><b>...</b></a>
                         </span>
@@ -845,7 +845,7 @@ $(document).ready(function(){
                 {
                     targets:[5],
                     render: function (data, type, full, meta){
-                        var btn_accept='<button class="btn btn-primary btn-sm" name="edit_info"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Accept">Accept</button>';
+                        var btn_accept='<button class="btn btn-primary btn-sm" name="accept_quote"  style="margin-left:-15px;" data-toggle="tooltip" data-placement="top" title="Accept">Accept</button>';
 
                         return '<center>'+btn_accept+'</center>';
                     }
@@ -1129,6 +1129,91 @@ $(document).ready(function(){
             }
         } );
 
+        $('#tbl_quote_list > tbody').on('click','button[name="accept_quote"]',function(){
+
+            $('#modal_quote_list').modal('hide');
+
+            _selectRowObj=$(this).closest('tr');
+            var data=dtQuote.row(_selectRowObj).data();
+            $('#cbo_suppliers').select2('val',data.supplier_id);
+
+
+            $('input,textarea').each(function(){
+                var _elem=$(this);
+                $.each(data,function(name,value){
+                    if(_elem.attr('name')==name&&_elem.attr('type')!='password'){
+                        _elem.val(value);
+                    }
+                });
+            });
+
+
+
+
+
+            $.ajax({
+                url : 'Quotation_request/transaction/quote-accept?id='+data.quote_id,
+                type : "GET",
+                cache : false,
+                dataType : 'json',
+                processData : false,
+                contentType : false,
+                beforeSend : function(){
+                    $('#tbl_items > tbody').html('<tr><td align="center" colspan="8"><br /><img src="assets/img/loader/ajax-loader-sm.gif" /><br /><br /></td></tr>');
+                },
+                success : function(response){
+                    var rows=response.data;
+                    $('#tbl_items > tbody').html('');
+
+                    var total_discount=0;
+                    var total_tax_amount=0;
+                    var total_non_tax_amount=0;
+                    var gross_amount=0;
+                    console.log(rows);
+
+                    $.each(rows,function(i,value){
+
+                        $('#tbl_items > tbody').append(newRowItem({
+                            po_qty : value.quote_qty,
+                            product_code : value.product_code,
+                            unit_id : value.unit_id,
+                            unit_name : value.unit_name,
+                            product_id: value.product_id,
+                            product_desc : value.product_desc,
+                            po_line_total_discount : 0,
+                            tax_exempt : false,
+                            po_tax_rate : 0,
+                            po_price : value.qoute_price,
+                            po_discount : 0,
+                            tax_type_id : null,
+                            po_line_total : value.quote_total_price,
+                            po_non_tax_amount: value.quote_total_price,
+                            po_tax_amount:0,
+                            batch_no:""
+                        }));
+
+                        //sum up all footer details
+                        total_discount+=getFloat(value.quote_total_price);
+                        total_tax_amount+=getFloat(value.quote_total_price);
+                        total_non_tax_amount+=getFloat(value.quote_total_price);
+                        gross_amount+=getFloat(value.quote_total_price);
+
+                    });
+
+
+                    reInitializeNumeric();
+                    //reInitializeExpireDate();
+
+
+                    reComputeTotal();
+
+
+                }
+            });
+
+
+        });
+
 
         $(document).on('click','button[name="email_supplier"]',function(){
 
@@ -1236,7 +1321,6 @@ $(document).ready(function(){
         });
 
 
-
         $('#tbl_purchases tbody').on('click','button[name="edit_info"]',function(){
             ///alert("ddd");
             _txnMode="edit";
@@ -1325,7 +1409,6 @@ $(document).ready(function(){
         });
 
 
-
         //track every changes on numeric fields
         $('#tbl_items tbody').on('keyup','input.numeric,input.number',function(){
             var row=$(this).closest('tr');
@@ -1358,10 +1441,6 @@ $(document).ready(function(){
 
 
         });
-
-
-
-
 
 
 
@@ -1400,6 +1479,7 @@ $(document).ready(function(){
                     createPurchaseOrder().done(function(response){
                         showNotification(response);
                         dt.row.add(response.row_added[0]).draw();
+                        dtQuote.ajax.reload();
                         clearFields($('#frm_purchases'));
                         showList(true);
                     }).always(function(){

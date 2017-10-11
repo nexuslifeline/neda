@@ -25,6 +25,8 @@ class Templates extends CORE_Controller {
         $this->load->model('Payable_payment_list_model');
         $this->load->model('Purchase_request_info');
         $this->load->model('Purchase_request_items');
+        $this->load->model('Quotation_info_model');
+        $this->load->model('Quotation_items');
         $this->load->library('M_pdf');
     }
 
@@ -35,29 +37,104 @@ class Templates extends CORE_Controller {
 
     function layout($layout=null,$filter_value=null,$type=null){
         switch($layout){
+            case 'quote': //purchase order
+                $m_quote=$this->Quotation_info_model;
+                $m_quote_items=$this->Quotation_items;
+                $m_company=$this->Company_model;
+                $type=$this->input->get('type',TRUE);
+
+                $info = $m_quote->get_list(
+                    $filter_value,
+                    array(
+                        'quotation_info.*'
+                    )
+                );
+
+                $company=$m_company->get_list();
+
+                $data['quote_info']=$info[0];
+                //$data['total_in_words'] = $this->convertNumberToWord($info[0]->total_after_tax);
+                $data['company_info']=$company[0];
+                $data['quote_items']=$m_quote_items->get_list(
+                    array('quote_id'=>$filter_value),
+                    'quotation_items.*,products.product_code,products.product_desc,units.unit_name',
+
+                    array(
+                        array('products','products.product_id=quotation_items.product_id','left'),
+                        array('units','units.unit_id=products.unit_id','left')
+                    )
+
+                );
+
+
+                //show only inside grid with menu buttons
+                if($type=='fullview'||$type==null){
+                    echo $this->load->view('template/quote_content_new',$data,TRUE);
+                    /*echo $this->load->view('template/pr_content_menus',$data,TRUE);*/
+                }
+
+                //for approval view on DASHBOARD
+                if($type=='approval'){
+
+                    //echo '<br /><hr /><center><strong>Purchase Order for Approval</strong></center><hr />';
+                    echo '<br />';
+                    echo $this->load->view('template/quote_content_new',$data,TRUE);
+                    /* echo $this->load->view('template/po_content_approval_menus',$data,TRUE);*/
+                }
+
+                //show only inside grid
+                if($type=='contentview'){
+                    echo $this->load->view('template/quote_content_new',$data,TRUE);
+                }
+
+                //download pdf
+                if($type=='pdf'){
+                    $file_name=$info[0]->po_no;
+                    //$pdfFilePath = $file_name.".pdf"; //generate filename base on id
+                    //$pdf = $this->m_pdf->load(); //pass the instance of the mpdf class
+                    $this->load->view('template/po_content_new',$data); //load the template
+                    //$pdf->setFooter('{PAGENO}');
+                    //$pdf->WriteHTML($content);
+                    //download it.
+                    //$pdf->Output($pdfFilePath,"D");
+
+                }
+
+                //preview on browser
+                if($type=='preview'){
+                    $this->load->view('template/po_content_new',$data); //load the template
+                    //$pdf->setFooter('{PAGENO}');
+                }
+
+
+
+                break;
+
             case 'pr': //purchase order
                 $m_pr=$this->Purchase_request_info;
                 $m_pr_items=$this->Purchase_request_items;
                 $m_company=$this->Company_model;
                 $type=$this->input->get('type',TRUE);
 
-                $info=$m_pr->get_list(
-                    $filter_value
-
+                $info = $m_pr->get_list(
+                    $filter_value,
+                    array(
+                        'pr_info.*'
+                    )
                 );
 
                 $company=$m_company->get_list();
 
                 $data['pr_info']=$info[0];
-                $data['total_in_words'] = $this->convertNumberToWord($info[0]->total_after_tax);
+                //$data['total_in_words'] = $this->convertNumberToWord($info[0]->total_after_tax);
                 $data['company_info']=$company[0];
                 $data['pr_items']=$m_pr_items->get_list(
                     array('pr_info_id'=>$filter_value),
                     'pr_items.*,products.product_code,products.product_desc,units.unit_name',
 
                     array(
-                        array('products','products.product_id=purchase_order_items.product_id','left'),
-                        array('units','units.unit_id=purchase_order_items.unit_id','left')
+                        array('products','products.product_id=pr_items.product_id','left'),
+                        array('units','units.unit_id=products.unit_id','left')
                     )
 
                 );
@@ -66,7 +143,7 @@ class Templates extends CORE_Controller {
                 //show only inside grid with menu buttons
                 if($type=='fullview'||$type==null){
                     echo $this->load->view('template/pr_content_new',$data,TRUE);
-                    echo $this->load->view('template/pr_content_menus',$data,TRUE);
+                    /*echo $this->load->view('template/pr_content_menus',$data,TRUE);*/
                 }
 
                 //for approval view on DASHBOARD
@@ -75,7 +152,7 @@ class Templates extends CORE_Controller {
                     //echo '<br /><hr /><center><strong>Purchase Order for Approval</strong></center><hr />';
                     echo '<br />';
                     echo $this->load->view('template/pr_content_new',$data,TRUE);
-                    echo $this->load->view('template/po_content_approval_menus',$data,TRUE);
+                   /* echo $this->load->view('template/po_content_approval_menus',$data,TRUE);*/
                 }
 
                 //show only inside grid

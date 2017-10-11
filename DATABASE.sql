@@ -487,6 +487,7 @@ AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 CREATE TABLE `purchase_order` (
   `purchase_order_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `po_no` VARCHAR(75) COLLATE latin1_swedish_ci DEFAULT '',
+  `quote_id` INTEGER(11) DEFAULT 0,
   `terms` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   `duration` VARCHAR(55) COLLATE latin1_swedish_ci DEFAULT '',
   `deliver_to_address` VARCHAR(755) COLLATE latin1_swedish_ci DEFAULT '',
@@ -516,7 +517,7 @@ CREATE TABLE `purchase_order` (
   UNIQUE KEY `po_no` USING BTREE (`po_no`),
   UNIQUE KEY `po_no_2` USING BTREE (`po_no`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=6 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `purchase_order_items` table : */
@@ -536,7 +537,7 @@ CREATE TABLE `purchase_order_items` (
   `non_tax_amount` DECIMAL(20,4) DEFAULT 0.0000,
   PRIMARY KEY USING BTREE (`po_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=7 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `quotation_info` table : */
@@ -551,9 +552,10 @@ CREATE TABLE `quotation_info` (
   `date_quoted` DATETIME DEFAULT NULL,
   `is_approved` TINYINT(4) DEFAULT 0,
   `is_active` TINYINT(4) DEFAULT 1,
+  `is_po_created` TINYINT(4) DEFAULT 0,
   PRIMARY KEY USING BTREE (`quote_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=22 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=23 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `quotation_items` table : */
@@ -567,7 +569,7 @@ CREATE TABLE `quotation_items` (
   `quote_total_price` DECIMAL(11,2) DEFAULT 0.00,
   PRIMARY KEY USING BTREE (`quote_item_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=9 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=10 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `refproduct` table : */
@@ -658,7 +660,7 @@ CREATE TABLE `rights_links` (
   `controller` VARCHAR(155) COLLATE latin1_swedish_ci DEFAULT '',
   PRIMARY KEY USING BTREE (`link_id`)
 ) ENGINE=InnoDB
-AUTO_INCREMENT=56 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
+AUTO_INCREMENT=57 CHARACTER SET 'latin1' COLLATE 'latin1_swedish_ci'
 ;
 
 /* Structure for the `salesperson` table : */
@@ -940,7 +942,7 @@ INSERT INTO `pr_info` (`pr_info_id`, `pr_no`, `remarks`, `is_active`, `is_delete
   (5,'PR-20171004-5','',1,0,1,'2017-10-04 23:22:08',0,'0000-00-00 00:00:00',0,'0000-00-00','sdfs',1),
   (6,'PR-20171004-6','remarks',1,1,1,'2017-10-04 23:23:39',0,'0000-00-00 00:00:00',1,'2017-10-04','purpose',0),
   (7,'PR-20171004-7','sdfsdf',1,0,1,'2017-10-04 23:28:15',0,'0000-00-00 00:00:00',0,'0000-00-00','sdsf',1),
-  (8,'PR-20171010-8','',1,0,1,'2017-10-10 22:45:10',0,'0000-00-00 00:00:00',0,'0000-00-00','d',0);
+  (8,'PR-20171010-8','',1,0,1,'2017-10-10 22:45:10',0,'0000-00-00 00:00:00',0,'0000-00-00','d',1);
 COMMIT;
 
 /* Data for the `pr_items` table  (LIMIT 0,500) */
@@ -963,9 +965,12 @@ COMMIT;
 
 /* Data for the `purchase_order` table  (LIMIT 0,500) */
 
-INSERT INTO `purchase_order` (`purchase_order_id`, `po_no`, `terms`, `duration`, `deliver_to_address`, `supplier_id`, `department_id`, `tax_type_id`, `contact_person`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `approval_id`, `order_status_id`, `is_email_sent`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `date_approved`, `approved_by_user`, `posted_by_user`, `deleted_by_user`, `modified_by_user`) VALUES
-  (1,'PO-20170912-1','',NULL,'San Fernando Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,2,2,0,1,0,'2017-09-12 21:41:16','2017-09-12 21:41:25','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
-  (2,'PO-20170916-2','',NULL,'San Jose, San Simon, Pampanga',1,NULL,NULL,'','san jose, san simon, pampanga',0.0000,0.0000,0.0000,0.0000,2,2,0,1,0,'2017-09-16 11:37:57','2017-09-16 11:53:40','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0);
+INSERT INTO `purchase_order` (`purchase_order_id`, `po_no`, `quote_id`, `terms`, `duration`, `deliver_to_address`, `supplier_id`, `department_id`, `tax_type_id`, `contact_person`, `remarks`, `total_discount`, `total_before_tax`, `total_tax_amount`, `total_after_tax`, `approval_id`, `order_status_id`, `is_email_sent`, `is_active`, `is_deleted`, `date_created`, `date_modified`, `date_deleted`, `date_approved`, `approved_by_user`, `posted_by_user`, `deleted_by_user`, `modified_by_user`) VALUES
+  (1,'PO-20170912-1',0,'',NULL,'San Fernando Pampanga',1,2,NULL,'','',0.0000,0.0000,0.0000,0.0000,2,2,0,1,0,'2017-09-12 21:41:16','2017-09-12 21:41:25','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
+  (2,'PO-20170916-2',0,'',NULL,'San Jose, San Simon, Pampanga',1,NULL,NULL,'','san jose, san simon, pampanga',0.0000,0.0000,0.0000,0.0000,2,2,0,1,0,'2017-09-16 11:37:57','2017-09-16 11:53:40','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
+  (3,'PO-20171011-3',0,'',NULL,'jj',4,NULL,NULL,'','',0.0000,168.0000,0.0000,168.0000,2,1,0,1,0,'2017-10-11 11:54:49','2017-10-11 11:54:49','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
+  (4,'PO-20171011-4',21,'',NULL,'San Jose',4,NULL,NULL,'','',0.0000,168.0000,0.0000,168.0000,2,1,0,1,0,'2017-10-11 12:03:08','2017-10-11 12:03:08','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0),
+  (5,'PO-20171011-5',21,'',NULL,'San Jose, San Simon',4,NULL,NULL,'','',0.0000,168.0000,0.0000,168.0000,2,1,0,1,0,'2017-10-11 12:04:21','2017-10-11 12:04:21','0000-00-00 00:00:00','0000-00-00 00:00:00',0,1,0,0);
 COMMIT;
 
 /* Data for the `purchase_order_items` table  (LIMIT 0,500) */
@@ -973,19 +978,24 @@ COMMIT;
 INSERT INTO `purchase_order_items` (`po_item_id`, `purchase_order_id`, `product_id`, `unit_id`, `po_price`, `po_discount`, `po_line_total_discount`, `po_tax_rate`, `po_qty`, `po_line_total`, `tax_amount`, `non_tax_amount`) VALUES
   (1,1,1,3,0.0000,0.0000,0.0000,12.0000,50,0.0000,0.0000,0.0000),
   (2,1,2,4,0.0000,0.0000,0.0000,0.0000,300,0.0000,0.0000,0.0000),
-  (3,2,1,3,0.0000,0.0000,0.0000,12.0000,2,0.0000,0.0000,0.0000);
+  (3,2,1,3,0.0000,0.0000,0.0000,12.0000,2,0.0000,0.0000,0.0000),
+  (4,3,2,4,56.0000,0.0000,0.0000,0.0000,3,168.0000,0.0000,168.0000),
+  (5,4,2,4,56.0000,0.0000,0.0000,0.0000,3,168.0000,0.0000,168.0000),
+  (6,5,2,4,56.0000,0.0000,0.0000,0.0000,3,168.0000,0.0000,168.0000);
 COMMIT;
 
 /* Data for the `quotation_info` table  (LIMIT 0,500) */
 
-INSERT INTO `quotation_info` (`quote_id`, `quote_no`, `request_link_key`, `pr_info_id`, `supplier_id`, `total_price`, `date_quoted`, `is_approved`, `is_active`) VALUES
-  (21,'Q-000000021','623',4,4,168.00,'2017-10-10 21:28:53',1,1);
+INSERT INTO `quotation_info` (`quote_id`, `quote_no`, `request_link_key`, `pr_info_id`, `supplier_id`, `total_price`, `date_quoted`, `is_approved`, `is_active`, `is_po_created`) VALUES
+  (21,'Q-000000021','623',4,4,168.00,'2017-10-10 21:28:53',1,1,1),
+  (22,'Q-000000022','623a7ad5495f67b68978bcbb7f9e3608',4,4,1800.00,'2017-10-11 15:54:07',0,1,0);
 COMMIT;
 
 /* Data for the `quotation_items` table  (LIMIT 0,500) */
 
 INSERT INTO `quotation_items` (`quote_item_id`, `quote_id`, `product_id`, `quote_qty`, `qoute_price`, `quote_total_price`) VALUES
-  (8,21,2,3.00,56.00,168.00);
+  (8,21,2,3.00,56.00,168.00),
+  (9,22,2,3.00,600.00,1800.00);
 COMMIT;
 
 /* Data for the `refproduct` table  (LIMIT 0,500) */
@@ -1004,7 +1014,7 @@ INSERT INTO `request_links` (`request_link_id`, `supplier_id`, `pr_info_id`, `ke
   (9,1,5,'9ac575b2bbc578af0fef9a141358dfdf','','2017-10-07 21:48:40',1,'0000-00-00 00:00:00',0),
   (10,2,5,'90ed5f3120441cb43acfd6b1c1a16420','','2017-10-07 21:48:40',1,'0000-00-00 00:00:00',0),
   (11,3,4,'d8973d58b88cec30fb9c613a74c3a96c','','2017-10-07 22:16:21',1,'0000-00-00 00:00:00',0),
-  (12,4,4,'623a7ad5495f67b68978bcbb7f9e3608','Orchids@yahoo.com','2017-10-07 22:16:21',1,'2017-10-10 21:28:53',1);
+  (12,4,4,'623a7ad5495f67b68978bcbb7f9e3608','Orchids@yahoo.com','2017-10-07 22:16:21',1,'2017-10-11 15:54:07',1);
 COMMIT;
 
 /* Data for the `requisition_info` table  (LIMIT 0,500) */
@@ -1044,7 +1054,8 @@ INSERT INTO `rights_links` (`link_id`, `parent_code`, `link_code`, `link_name`, 
   (52,'8','8-1','Inventory Report','Inventory'),
   (53,'8','8-2','Supplies and Materials Issued Report','Supplies_issued'),
   (54,'2','2-7','Purchase Request','Purchase_request'),
-  (55,'7','7-2','Purchase Request for Approval','Dashboard');
+  (55,'7','7-2','Purchase Request for Approval','Dashboard'),
+  (56,'7','7-3','Quotation for Approval','Dashboard');
 COMMIT;
 
 /* Data for the `salesperson` table  (LIMIT 0,500) */
@@ -1165,6 +1176,7 @@ INSERT INTO `user_group_rights` (`user_rights_id`, `user_group_id`, `link_code`)
   (53,1,'8-2'),
   (54,1,'2-7'),
   (55,1,'7-2'),
+  (56,1,'7-3'),
   (234,8,'2-2'),
   (235,8,'2-3');
 COMMIT;

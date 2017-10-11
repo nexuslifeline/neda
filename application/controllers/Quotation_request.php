@@ -90,7 +90,8 @@ class Quotation_request extends CORE_Controller
                 $response['data'] = $m_quote->get_list(
                     array(
                         'quotation_info.is_approved' => 1,
-                        'quotation_info.is_active' => 1
+                        'quotation_info.is_active' => 1,
+                        'quotation_info.is_po_created' => 0
                     ),
 
                     array(
@@ -205,7 +206,6 @@ class Quotation_request extends CORE_Controller
                 echo json_encode($response);
 
                 break;
-
             case 'mark-approved':
                 $m_quote=$this->Quotation_info_model;
 
@@ -228,6 +228,32 @@ class Quotation_request extends CORE_Controller
                     $response['msg'] = 'Quotation successfully approved.';
                     echo json_encode($response);
                 }
+                break;
+            case 'quote-accept':
+                $m_items = $this->Quotation_items;
+
+                $quote_id = $this->input->get('id');
+
+                $response['data'] = $m_items->get_list(
+                    array(
+                        'quotation_items.quote_id' => $quote_id
+                    ),
+
+                    array(
+                        'quotation_items.*',
+                        'p.product_code',
+                        'p.product_desc',
+                        'u.unit_name'
+                    ),
+
+                    array(
+                        array('products as p','p.product_id=quotation_items.product_id','left'),
+                        array('units as u','u.unit_id=p.unit_id','left')
+                    )
+                );
+
+                echo json_encode($response);
+
                 break;
 
         }

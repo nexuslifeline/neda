@@ -18,6 +18,7 @@ class Purchases extends CORE_Controller
         $this->load->model('Company_model');
         $this->load->library('email');
         $this->load->model('Users_model');
+        $this->load->model('Quotation_info_model');
 
 
     }
@@ -216,12 +217,28 @@ class Purchases extends CORE_Controller
                         echo json_encode($response);
                         exit;
                     }*/
+                    $quote_id = 0;
+                    if( $this->input->post('quote_no',TRUE) !=null ){
+                        //get quote id
+                        $m_quote = $this->Quotation_info_model;
+                        $quotations = $m_quote->get_list(
+                            array(
+                                'quotation_info.quote_no' => $this->input->post('quote_no',TRUE)
+                            )
+                        );
+
+                        if(count($quotations) > 0){
+                            $quote_id = $quotations[0]->quote_id;
+                        }
+
+                    }
 
 
                     $m_purchases->begin();
 
                     $m_purchases->set('date_created','NOW()'); //treat NOW() as function and not string
                     //$m_purchases->po_no=$this->input->post('po_no',TRUE);
+                    $m_purchases->quote_id = $quote_id;
                     $m_purchases->terms=$this->input->post('terms',TRUE);
                     $m_purchases->duration=$this->input->post('duration',TRUE);
                     $m_purchases->deliver_to_address=$this->input->post('deliver_to_address',TRUE);
@@ -275,7 +292,15 @@ class Purchases extends CORE_Controller
                     $m_purchases->modify($po_id);
 
 
+                    if($quote_id > 0){
+                        $m_quote->is_po_created = 1;
+                        $m_quote->modify($quote_id);
+                    }
+
+
                     $m_purchases->commit();
+
+
 
 
 
